@@ -1,0 +1,45 @@
+ { 
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "hotel.json",
+  "title": "Hotel",
+  "type": "object",
+  "properties": {
+      "nights": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 10
+      },
+      "name": {
+        "type": "string",
+        "minLength": 2,
+        "maxLength": 100
+      },
+      "pictures": {
+        "type": "array",
+        "items": { "type": "string", "format": "uri" },
+        "minItems": 1,
+        "uniqueItems": true
+      },
+      "stars": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 5
+      },
+      "distanceToHaram": {
+        "description": "distance to the haram in meters",
+        "type": "number",
+        "minimum": 1
+      },
+      "walkToHaram": {
+        "description": "time taken to walk to the haram in minutes",
+        "type": "number",
+        "minimum": 1
+      },
+      "numberOfBeds":{
+        "description": "number of beds in hotel room",
+        "type": "number",
+        "minimum": 1
+      }
+      }
+    }
+      

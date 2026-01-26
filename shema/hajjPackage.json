@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "hajjPackage.json",
+  "title": "Package",
+  "description": "Hajj package details",
+  "type": "object",
+  "properties": {
+    "ppp" : {
+      "description": "price per night in £", 
+      "type": "number"
+      },
+    "total_days":{
+      "description": "total number of days in package",
+      "type": "integer",
+      "minimum": 10
+    },
+    "tier":{
+      "description": "type of hajj package e.g. luxury, premium, economy, and number of stars",
+      "type": "string",
+      "enum": ["luxury", "premium", "economy"]
+    },
+    "stars":{
+      "description": "star rating (1-5)",
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5
+    },
+    "isShifting":{
+      "description": "True if shifting package, False if non shifting",
+      "type": "boolean"
+    },
+    "makkahHotel": {
+      "description": "Makkah hotel details",
+      "$ref": "hotel.json"
+    },
+    "madinahHotel":{
+      "description": "Madinah hotel details",
+      "$ref": "hotel.json"
+    },
+    "isVisaIncluded":{
+      "description": "True if visa included in package, False if visa not included",
+      "type": "boolean"
+    }
+  }
+}
