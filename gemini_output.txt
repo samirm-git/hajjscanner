@@ -1,0 +1,9 @@
+
+{"name":"Emaar Grand Hotel","stars":3,"hasFreeWifi":true,"hasAC":true,"otherAmenities":"24-hour front desk, concierge service, daily housekeeping, room service, on-site restaurant serving international and local cuisines.","distanceToHaram":700}
+{
+"name": "Al Rawda Al Aqeeq Hotel",
+"hasFreeWifi": true,
+"otherAmenities": "laundry service, room service, dry cleaning, luggage storage, safety deposit boxes, designated smoking area, daily housekeeping",
+"distanceToHaram": 600,
+"walkToHaram": 8
+}

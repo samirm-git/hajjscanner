@@ -1,6 +1,6 @@
 import requests, re
 from bs4 import BeautifulSoup
-from hotelImageExtractor import extractHotelInformation, HEADING_TAGS
+from hotelScraper import extractHotelInformation, HEADING_TAGS
 
 def totalNightsExtractor(soup):
   for tag in soup.find_all(HEADING_TAGS):
@@ -43,19 +43,25 @@ if makkahHotel is None:
 
 hotelInfo = extractHotelInformation(soup)
 
-makkahHotelImages = hotelInfo["makkah"]["images"]
-madinahHotelImages = hotelInfo["madinah"]["images"]
-otherImages = hotelInfo["other"]["images"]
+
+makkahHotel = hotelInfo["makkah"]
+madinahHotel = hotelInfo["madinah"]
+otherHotel = hotelInfo["other"]
 
 
+print("")
 print(price)
 print(f"totalNights: {totalNights}")
 print(nonshifting)
 print(makkahHotel)
 
 print("")
-print(f"makkahHotelImages: {makkahHotelImages}")
+print(f"makkahHotelImages: {makkahHotel['images']}")
 print("")
-print(f"madinahHotelImages: {madinahHotelImages}")
+print(f"madinahHotelImages: {madinahHotel['images']}")
 print("")
-print(f"otherImages: {otherImages}")
+print(f"otherImages: {otherHotel['images']}")
+print("")
+print(f"makkah hotel info: {makkahHotel}")
+print("")
+print(f"madinah hotel info: {madinahHotel}")

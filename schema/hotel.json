@@ -1,5 +1,5 @@
  { 
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schema": "https://json-schema.org/draft-07/schema",
   "$id": "hotel.json",
   "title": "Hotel",
   "type": "object",
@@ -14,7 +14,7 @@
         "minLength": 2,
         "maxLength": 100
       },
-      "pictures": {
+      "images": {
         "type": "array",
         "items": { "type": "string", "format": "uri" },
         "minItems": 1,
@@ -22,8 +22,21 @@
       },
       "stars": {
         "type": "integer",
+        "description": "hotel star rating from 1 to 5",
         "minimum": 1,
         "maximum": 5
+      },
+      "hasFreeWifi":{
+        "type":"boolean",
+        "description": "True if hotel provides free wifi. False otherwise"
+      },
+      "hasAC":{
+        "type":"boolean",
+        "description": "True if hotel room has air conditioning (AC). False otherwise"
+      },
+      "otherAmenities":{
+        "type":"string",
+        "description": "Description of any other amenities the hotel provides"
       },
       "distanceToHaram": {
         "description": "distance to the haram in meters",
@@ -40,6 +53,7 @@
         "type": "number",
         "minimum": 1
       }
-      }
+      },
+      "required": ["name"]
     }
       
