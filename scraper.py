@@ -1,5 +1,5 @@
-import requests, re
-from bs4 import BeautifulSoup
+import re
+from helpers import makeRequest, getSoup
 from hotelScraper import extractHotelInformation, HEADING_TAGS
 
 def totalNightsExtractor(soup):
@@ -10,19 +10,13 @@ def totalNightsExtractor(soup):
       return match.group(1)
   return None
     
-
-
 url = "https://alamanahtravel.co.uk/14-days-5-star-non-shifting-hajj-package/"
 url2 = "https://www.safamarwahtravel.co.uk/deals/5-star-17-days-non-shifting-hajj-package/"
 url3 = "https://www.alhaqtravel.co.uk/book/24-days-shifting-hajj-packages/"
 
-headers = {
-    "User-Agent": "Chrome/117.0.0.0",
-    # "Referer": "https://alamanahtravel.co.uk/",
-}
-resp = requests.get(url3, headers=headers)
 
-soup = BeautifulSoup(resp.text, "html.parser")
+resp = makeRequest(url3)
+soup = getSoup(resp.text, parser="lxml")
 visible_text = soup.get_text(" ", strip=True)
 # print(soup.prettify())
 # package_div = soup.find("div", class_="detail_package")
@@ -53,7 +47,6 @@ print("")
 print(price)
 print(f"totalNights: {totalNights}")
 print(nonshifting)
-print(makkahHotel)
 
 print("")
 print(f"makkahHotelImages: {makkahHotel['images']}")
