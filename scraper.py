@@ -1,5 +1,5 @@
 import re
-from helpers import makeRequest, getSoup
+from helpers import makeRequest, getSoup, removeFooterHeaderNav
 from hotelScraper import extractHotelInformation, HEADING_TAGS
 
 def totalNightsExtractor(soup):
@@ -17,6 +17,7 @@ url3 = "https://www.alhaqtravel.co.uk/book/24-days-shifting-hajj-packages/"
 
 resp = makeRequest(url3)
 soup = getSoup(resp.text, parser="lxml")
+soup = removeFooterHeaderNav(soup)
 visible_text = soup.get_text(" ", strip=True)
 # print(soup.prettify())
 # package_div = soup.find("div", class_="detail_package")
