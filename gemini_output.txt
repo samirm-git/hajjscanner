@@ -4,6 +4,59 @@
 "name": "Al Rawda Al Aqeeq Hotel",
 "hasFreeWifi": true,
 "otherAmenities": "laundry service, room service, dry cleaning, luggage storage, safety deposit boxes, designated smoking area, daily housekeeping",
-"distanceToHaram": 600,
-"walkToHaram": 8
+"distanceToHaram"alkToHaram: 600,
+"w": 8
+}
+{
+  "name": "Emaar Grand Hotel",
+  "stars": 3,
+  "hasFreeWifi": true,
+  "hasAC": true,
+  "otherAmenities": "24-hour front desk, concierge service, daily housekeeping, room service, and an on-site restaurant serving a variety of international and local cuisines",
+  "distanceToHaram": 700
+}
+{
+  "name": "Al Rawda Al Aqeeq Hotel",
+  "stars": 3,
+  "hasFreeWifi": true,
+  "otherAmenities": "laundry service, room service, dry cleaning, luggage storage, safety deposit boxes, designated smoking area, daily housekeeping",
+  "distanceToHaram": 600,
+  "walkToHaram": 8
+}
+{"name": "Emaar Grand Hotel", "images": ["https://example.com/emaar_grand_hotel.jpg"], "stars": 3, "hasFreeWifi": true, "hasAC": true, "otherAmenities": "24-hour front desk, concierge service, daily housekeeping, room service, on-site restaurant serving international and local cuisines.", "distanceToHaram": 700, "walkToHaram": 8, "numberOfBeds": 2}
+{
+  "name": "Emaar Grand Hotel",
+  "stars": 3,
+  "hasFreeWifi": true,
+  "hasAC": true,
+  "otherAmenities": "24-hour front desk, concierge service, daily housekeeping, room service, on-site restaurant, flat-screen TVs, private bathrooms, city views",
+  "distanceToHaram": 700
+}
+{
+  "name": "Al Rawda Al Aqeeq Hotel",
+  "stars": 4,
+  "hasFreeWifi": true,
+  "otherAmenities": "laundry service, room service, dry cleaning, luggage storage, safety deposit boxes, designated smoking area, daily housekeeping",
+  "distanceToHaram": 600,
+  "walkToHaram": 8
+}
+{"name":"Emaar Grand Hotel","stars":3,"hasFreeWifi":true,"hasAC":true,"otherAmenities":"24-hour front desk, concierge service, daily housekeeping, room service, on-site restaurant serving international and local cuisines","distanceToHaram":700}
+{"name":"Al Rawda Al Aqeeq Hotel","hasFreeWifi":true,"otherAmenities":"laundry service, room service, dry cleaning, luggage storage, safety deposit boxes, designated smoking area, daily housekeeping","distanceToHaram":600,"walkToHaram":8}
+{"name":"Makkah Hotel","otherAmenities":"Mina Tent, Return Flight, Visa, Transfers, Ziyarats. Hajj Draft & Qurbani can be included on demand.","numberOfBeds":4}
+{
+"name": "Makkah Hotel",
+"stars": 5,
+"hasAC": true,
+"otherAmenities": "Overlooking the Holy Haram Mosque and the Kaaba. Features two air-conditioned and carpeted 10,000-seat prayer halls with views over the Holy Haram. Rooms offer city, mountain, Kaaba or Holy Haram Mosque views, a desk and a sofa. Suites have a separate living room with dining area. Executive rooms offer access to an executive lounge. Dining options include Arabic flavors at Al Fayhaa restaurant, international cuisine at Lagenda, and Arabian coffee at Jasmin Caffe. Guests can enjoy foot massages at the Reflexology Health Centre. There is an extensive onsite shopping mall with 450 brand shops and a food court. Located on the doorstep of the Kaaba and the ZamZam Well, with other important Islamic holy sites less than 5 miles away.",
+"distanceToHaram": 1,
+"walkToHaram": 1
+}
+{"name":"Hilton Suites","otherAmenities":"elegant rooms, dining, and stunning views of Mecca"}
+{"name": "Emaar Grand Hotel", "stars": 3, "hasFreeWifi": true, "hasAC": true, "otherAmenities": "24-hour front desk, concierge service, daily housekeeping, room service, on-site restaurant serving a variety of international and local cuisines", "distanceToHaram": 700}
+{
+  "name": "Al Rawda Al Aqeeq Hotel",
+  "hasFreeWifi": true,
+  "otherAmenities": "laundry service, room service, dry cleaning, luggage storage, safety deposit boxes, designated smoking area, daily housekeeping",
+  "distanceToHaram": 600,
+  "walkToHaram": 8
 }

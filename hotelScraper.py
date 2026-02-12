@@ -40,14 +40,13 @@ def jsonUperCaseTypes(obj):
   else:
     return obj
 
-def LLMPrompter(container, hotelSchema):
-  text = container.get_text(" ", strip=True)
+def LLMPrompter(containerText, hotelSchema):
   with genai.Client(api_key=GEMINI_KEY) as client:
     response = client.models.generate_content(
     model="gemini-2.5-flash",
     contents=f"""You are extracting hotel information from the following website text.
 Text:
-  {text}
+  {containerText}
 """,
     config=GenerateContentConfig(response_mime_type="application/json", response_schema=hotelSchema)
       )
@@ -91,8 +90,8 @@ def extractHotelInformation(soup):
         if id(container) in seen:
           continue
        
-        headingText = " ".join(h.get_text(" ", strip=True) for h in container.find_all(HEADING_TAGS))            
-        fullText = container.get_text(" ", strip=True) # Use fullText as a fall back e.g. call AI model with fullText
+        headingText = " ".join(h.get_text(strip=True) for h in container.find_all(HEADING_TAGS))            
+        fullText = container.get_text(strip=True) # Use fullText as a fall back e.g. call AI model with fullText
 
         makkahFound = bool(CITY_PATTERNS["makkah"].search(headingText))
         madinahFound = bool(CITY_PATTERNS["madinah"].search(headingText))
@@ -102,18 +101,18 @@ def extractHotelInformation(soup):
         if makkahFound:
           for descendant in container.find_all(CONTAINER_TAGS):
             seen.add(id(descendant))
-          temp = LLMPrompter(container, hotelSchema)
-          if temp:
-            makkah_info.update(json.loads(temp))
+          llmOutText = LLMPrompter(fullText, hotelSchema)
+          if llmOutText:
+            makkah_info.update(json.loads(llmOutText))
           
           makkah_info['images'].update(extractHotelImages(container))
 
         elif madinahFound:
           for descendant in container.find_all(CONTAINER_TAGS):
             seen.add(id(descendant))
-          temp = LLMPrompter(container, hotelSchema)
-          if temp:
-            madinah_info.update(json.loads(temp))
+          llmOutText = LLMPrompter(fullText, hotelSchema)
+          if llmOutText:
+            madinah_info.update(json.loads(llmOutText))
           
           madinah_info['images'].update(extractHotelImages(container))
 
