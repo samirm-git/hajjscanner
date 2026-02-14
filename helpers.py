@@ -1,5 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
+from pathlib import Path
+import json
 
 def makeRequest(url):
   headers = {
@@ -26,3 +28,15 @@ def removeFooterHeaderNav(soup):
     tag.decompose()
 
   return soup
+
+def loadHotelSchema():
+  hotelSchemaPath = Path(__file__).parent / "schema" / "hotel.json"
+  with open(hotelSchemaPath, 'r') as f:
+    hotelSchema = json.load(f)
+  return hotelSchema
+
+def loadHajjPackageSchema():
+  path = Path(__file__).parent / "schema" / "hajjPackage.json"
+  with open(path, 'r') as f:
+    hajjPackageSchema = json.load(f)
+  return hajjPackageSchema
