@@ -1,6 +1,22 @@
-import re
+import re, json
 from helpers import makeRequest, getSoup, removeFooterHeaderNav, loadHajjPackageSchema
 from hotelScraper import scrapeHotelInformation, HEADING_TAGS 
+from validator import validateData
+
+# def findOverviewBlock(soup):
+#   ##MANY PACKAGE WEBPAGE'S HAVE AN OVERVIEW BLOCK NEAR THE TOP OF THE BODY
+#   overviewRegex = re.compile(r"(?:overview|highlights?|inclusions?|summary)", re.IGNORECASE)
+#   overviews = soup.find_all(HEADING_TAGS, string=overviewRegex)
+#   if not overviews:
+#     return None
+#   overviewContainers = []
+#   for o in overviews:
+#     o = o.find_parent("div") or o 
+#     if o not in overviewContainers:
+#       overviewContainers.append(o)
+  
+#   return overviewContainers
+    
 
 def tempScraper(text):
     # price = findPrice(text)
@@ -43,50 +59,62 @@ def scrapeTotalDays(soup):
     text = tag.get_text(strip = True)
     match = re.search(r"(\d+)[-\s]?(?:night|day)s?", text, re.IGNORECASE)
     if match:
-      return match.group(1)
-  return None
+      return int(match.group(1))
+  return 
 
 def scrapePPP(soup): 
   priceRegex = re.compile(r"([£$€])\s?(\d+(?:,\d{3})*(?:\.\d{2})?)", re.IGNORECASE)
-  priceText = soup.find(string=priceRegex)
-  if priceText:
-    match = priceRegex.match(str(priceText))
+  #can do re.search(r"...", soup.get_text(strip=True)) for faster searching (not sure how much faster)
+  #but then we would not know which container the matching text comes from which may be useful e.g. finding the parent container for more context (although not doing this currently).
+  #moreover, with soup.find(...) we can filter the containers we are searching through e.g heading [h1, h2, ..., h6] containers.
+  priceContainer = soup.find(string=priceRegex)
+  if priceContainer:
+    match = priceRegex.match(priceContainer.get_text(strip=True))
     currency = match.group(1)
     #TODO: CONVERT CURRENCY TO STANDARD CURRENCY PRICE TO STANDARD CURRENCY E.G £
-    price = match.group(2)
-    return price
+    price = int(match.group(2))
+    return int(price)
   else:
     return None
 
 def scrapeTier(soup):
-  return None
+  tierRegex = re.compile(r"luxury|premium|economy", re.IGNORECASE)
+  tierContainer = soup.find(string=tierRegex)
+  if tierContainer:
+    return tierRegex.search(tierContainer.get_text(strip=True)).group(1)
+  else: 
+    return None
 
 def scrapeStars(soup):
+  starsRegex = re.compile(r'\b([1-5])\s*(?:-?\s*star|stars?)\b', re.IGNORECASE)
+  starContainer = soup.find(string=starsRegex)
+  if starContainer:
+    return int(starsRegex.search(starContainer.get_text(strip=True)).group(1))
   return None
 
 def scrapeIsShifting(soup):
-  return None
+  nonshifting = bool(re.search(r"\bnon[-\s]?shifting\b", soup.get_text(strip=True), re.IGNORECASE))  
+  if nonshifting:
+    return False
+  else:
+    return True
 
 def scrapeIsVisaIncluded(soup):
-  return None
-
-def findOverviewBlock(soup):
-  ##MANY PACKAGE WEBPAGE'S HAVE AN OVERVIEW BLOCK NEAR THE TOP OF THE BODY
-  overviewRegex = re.compile(r"(?:overview|highlights?|inclusions?|summary)", re.IGNORECASE)
-  overviews = soup.find_all(HEADING_TAGS, string=overviewRegex)
-  print(f"type(overviews): {type(overviews)}")
-  if not overviews:
-    return None
-  overviewContainers = []
-  for o in overviews:
-    o = o.find_parent("div") or o 
-    if o not in overviewContainers:
-      overviewContainers.append(o)
+  isVisaIncludedRegex = re.compile(r'\b(?:visa|visas?)\s+(?:is\s+)?(?:included|covered|provided|arranged|taken\s+care\s+of)\b|\b(?:includes?|with|including)\s+(?:visa|visas?)\b', re.IGNORECASE)
+  isVisaIncluded = bool(isVisaIncludedRegex.search(soup.get_text(strip=True)))
+  if isVisaIncluded:
+    return True
+  else:
+    visaRegex = re.compile('visa', re.IGNORECASE)
+    visaContainer = soup.find(string=visaRegex)
+    if not visaContainer:
+      return False
+    else:
+      #REQUIRES FURTHER ANALYSIS. MAYBE PASS THE PARENT DIV TO LLM
+      return 
   
-  return overviewContainers
-    
 
-  
+
 url = "https://alamanahtravel.co.uk/14-days-5-star-non-shifting-hajj-package/"
 url2 = "https://www.safamarwahtravel.co.uk/deals/5-star-17-days-non-shifting-hajj-package/"
 url3 = "https://www.alhaqtravel.co.uk/book/24-days-shifting-hajj-packages/"
@@ -96,7 +124,7 @@ packageSchema = loadHajjPackageSchema()
 packageInfoResolvers = {
   'ppp': scrapePPP,
   'total_days': scrapeTotalDays,
-  'tier': scrapeTier,
+  # 'tier': scrapeTier,
   'stars': scrapeStars,
   'isShifting': scrapeIsShifting,
   'makkahHotel': scrapeHotelInformation,
@@ -112,26 +140,31 @@ soup = removeFooterHeaderNav(soup)
 if soup.find("main"):
   soup = soup.find("main")
 
-text = soup.get_text(" ", strip=True)
+for key in packageInfoResolvers.keys():
+  if packageInfo.get(key, False):
+    continue
 
+  if key == 'makkahHotel':
+    pass
+    packageInfo[key] = packageInfoResolvers[key](soup, 'makkah')
+  elif key == 'madinahHotel':
+    pass
+    packageInfo[key] = packageInfoResolvers[key](soup, 'madinah')
+  else:
+    value = packageInfoResolvers[key](soup)
+    if value:
+      packageInfo[key] = value
+  
 
-overviewContainers = findOverviewBlock(soup)
+print(f"packageInfo: {packageInfo}")
+print("----------------------------")
+print(f"packageInfo stars: {packageInfo['stars']}")
 
-for container in overviewContainers:
-  print(f"packageInfo: {packageInfo}")
-  for key in packageInfoResolvers.keys():
-    if packageInfo.get(key, False):
-      continue
+with open('scraperoutput.text','a') as f:
+  json.dump(packageInfo, f, indent=4)
+  f.write('\n')
 
-    if key == 'makkahHotel':
-      packageInfo[key] = packageInfoResolvers[key](container, 'makkah')
-    elif key == 'madinahHotel':
-      packageInfo[key] = packageInfoResolvers[key](container, 'madinah')
-    else:
-      packageInfo[key] = packageInfoResolvers[key](container) 
-    
-print(f"packageInfo end: {packageInfo}")
-
+validateData(packageInfo)
 
 
 

@@ -1,0 +1,23 @@
+import json
+from pathlib import Path
+from jsonschema import validate
+from referencing import Registry, Resource
+from referencing.jsonschema import DRAFT7
+
+
+def validateData(dict):
+  # Load schemas
+  path = Path(__file__).parent / "schema" 
+  with open(path / "hajjPackage.json") as f:
+      hajjPackageSchema = json.load(f)
+
+  with open(path / "hotel.json") as f:
+      hotelSchema = json.load(f)
+
+  # Create registry for handling $ref
+  registry = Registry().with_resources([
+      ("hotel.json", Resource.from_contents(hotelSchema, default_specification=DRAFT7))
+  ])
+
+
+  validate(instance=dict, schema=hajjPackageSchema, registry=registry)

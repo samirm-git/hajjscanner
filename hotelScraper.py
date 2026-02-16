@@ -39,7 +39,6 @@ def jsonUperCaseTypes(obj):
     return obj
 
 def LLMPrompter(containerText, hotelSchema):
-  print("MADE IT TO LLM PROMPTER")
   with genai.Client(api_key=GEMINI_KEY) as client:
     response = client.models.generate_content(
     model="gemini-2.5-flash",
@@ -59,10 +58,10 @@ Text:
     
 
 def scrapeHotelImages(container_soup):
-  hotelImgs = set()
+  hotelImgs = []
   imgs = container_soup.find_all("img") #I think you can add a regex expression as a another parameter to make sure the image src does not include 'placeholder'
   if not len(imgs) > 3:
-    return set() 
+    return []
   for img in imgs:
     src = (img.get("data-src") or img.get("data-original") or img.get("data-lazy") or img.get("src"))
     if not src:
@@ -70,7 +69,7 @@ def scrapeHotelImages(container_soup):
     elif bool(BAD_IMAGE.search(src)):
         continue
     else:
-       hotelImgs.add(src)
+       hotelImgs.append(src)
   
   return hotelImgs
 
@@ -89,7 +88,7 @@ def checkCityInHotelText(text, desiredCity):
 def scrapeHotelInformation(soup, city):
   hotelSchema = jsonUperCaseTypes(loadHotelSchema())
 
-  cityInfo = {'images':set()}
+  cityInfo = {'images':[]}
   seen = set()
 
   for container in soup.find_all(CONTAINER_TAGS):
@@ -104,11 +103,10 @@ def scrapeHotelInformation(soup, city):
         seen.add(id(descendant))
 
     fullText = container.get_text(strip=True) # Use fullText as a fall back e.g. call AI model with fullText
-    llmOutText = LLMPrompter(fullText, hotelSchema)
-    
-    if llmOutText:
-      cityInfo.update(json.loads(llmOutText))
+    llmOutput = LLMPrompter(fullText, hotelSchema)
+    if llmOutput:
+      cityInfo.update(json.loads(llmOutput))
       
-    cityInfo['images'].update(scrapeHotelImages(container))
+    cityInfo['images'].extend(scrapeHotelImages(container))
 
   return cityInfo

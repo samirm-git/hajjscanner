@@ -15,7 +15,7 @@
       "minimum": 10
     },
     "tier":{
-      "description": "type of hajj package e.g. luxury, premium, economy, and number of stars",
+      "description": "type of hajj package: luxury, premium, or economy",
       "type": "string",
       "enum": ["luxury", "premium", "economy"]
     },
@@ -41,5 +41,6 @@
       "description": "True if visa included in package, False if visa not included",
       "type": "boolean"
     }
-  }
+  },
+  "required": ["ppp", "isShifting"]
 }
