@@ -7,27 +7,27 @@
   "properties": {
     "ppp" : {
       "description": "price per night in £", 
-      "type": "number"
+      "type": ["number", "null"]
       },
     "total_days":{
       "description": "total number of days in package",
-      "type": "integer",
+      "type": ["integer", "null"],
       "minimum": 10
     },
     "tier":{
       "description": "type of hajj package: luxury, premium, or economy",
-      "type": "string",
+      "type": ["string", "null"],
       "enum": ["luxury", "premium", "economy"]
     },
     "stars":{
       "description": "star rating (1-5)",
-      "type": "integer",
+      "type": ["integer", "null"],
       "minimum": 1,
       "maximum": 5
     },
     "isShifting":{
       "description": "True if shifting package, False if non shifting",
-      "type": "boolean"
+      "type": ["boolean", "null"]
     },
     "makkahHotel": {
       "description": "Makkah hotel details",
@@ -39,8 +39,8 @@
     },
     "isVisaIncluded":{
       "description": "True if visa included in package, False if visa not included",
-      "type": "boolean"
+      "type": ["boolean", "null"]
     }
   },
-  "required": ["ppp", "isShifting"]
+  "required": ["ppp", "total_days", "stars", "isShifting", "makkahHotel", "madinahHotel", "isVisaIncluded"]
 }

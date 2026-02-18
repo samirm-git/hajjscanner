@@ -19,5 +19,6 @@ def validateData(dict):
       ("hotel.json", Resource.from_contents(hotelSchema, default_specification=DRAFT7))
   ])
 
+  instance = json.loads(json.dumps(dict))
 
-  validate(instance=dict, schema=hajjPackageSchema, registry=registry)
+  validate(instance=instance, schema=hajjPackageSchema, registry=registry)

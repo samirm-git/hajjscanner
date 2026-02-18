@@ -184,3 +184,103 @@
   "distanceToHaram": 700
 }
 {"name":"Al Rawda Al Aqeeq Hotel","hasFreeWifi":true,"otherAmenities":"laundry service, room service, dry cleaning, luggage storage, safety deposit boxes, designated smoking area, daily housekeeping","distanceToHaram":600,"walkToHaram":8}
+{
+    "name": "Emaar Grand Hotel",
+    "stars": 3,
+    "hasFreeWifi": true,
+    "hasAC": true,
+    "otherAmenities": "24-hour front desk, concierge service, daily housekeeping, room service, on-site restaurant serving a variety of international and local cuisines.",
+    "distanceToHaram": 700
+}
+{
+"name": "Al Rawda Al Aqeeq Hotel",
+"hasFreeWifi": true,
+"otherAmenities": "laundry service, room service, dry cleaning, luggage storage, safety deposit boxes, designated smoking area, daily housekeeping",
+"distanceToHaram": 600,
+"walkToHaram": 8
+}
+{"name":"Emaar Grand Hotel","stars":3,"hasFreeWifi":true,"hasAC":true,"otherAmenities":"24-hour front desk, concierge service, daily housekeeping, room service, on-site restaurant serving international and local cuisines","distanceToHaram":700}
+{"name":"Al Rawda Al Aqeeq Hotel","hasFreeWifi":true,"hasAC":false,"otherAmenities":"laundry service, room service, dry cleaning, luggage storage, safety deposit boxes, designated smoking area, daily housekeeping","distanceToHaram":600,"walkToHaram":8}
+{"name":"Emaar Grand Hotel","stars":3,"hasFreeWifi":true,"hasAC":true,"otherAmenities":"24-hour front desk, concierge service, daily housekeeping, room service, on-site restaurant serving a variety of international and local cuisines.","distanceToHaram":700}
+{"name":"Al Rawda Al Aqeeq Hotel","hasFreeWifi":true,"otherAmenities":"laundry service, room service, dry cleaning, luggage storage, safety deposit boxes, designated smoking area, daily housekeeping","distanceToHaram":600,"walkToHaram":8}
+{
+  "nights": 10,
+  "name": "Makkah Hotel",
+  "stars": 5,
+  "numberOfBeds": 4
+}
+{"name":"Makkah Hotel","stars":5,"otherAmenities":"Two air-conditioned and carpeted 10,000-seat prayer halls. Rooms offer a desk and a sofa. Suites feature a separate living room with dining area. Executive rooms give access to the executive lounge. Al Fayhaa restaurant, Lagenda (international cuisine), Jasmin Caffe, Reflexology Health Centre (foot massages), extensive onsite shopping mall with 450 brand shops and a food court."}
+{"name":"Makkah Hotel","stars":5,"numberOfBeds":4}
+{
+  "name": "Makkah Hotel",
+  "stars": 5,
+  "hasAC": true,
+  "otherAmenities": "Overlooking the Holy Haram Mosque and the Kaaba, two air-conditioned and carpeted 10,000-seat prayer halls, city, mountain, Kaaba or Holy Haram Mosque views from rooms, desk and a sofa in rooms, suites with separate living room and dining area, executive rooms with access to executive lounge, Al Fayhaa restaurant, Lagenda restaurant, Jasmin Caffe, Reflexology Health Centre (foot massages), extensive onsite shopping mall with 450 brand shops and a food court."
+}
+{"name":"Makkah Hotel","stars":5,"numberOfBeds":4}
+{
+  "name": "Makkah Hotel",
+  "stars": 5,
+  "hasAC": true,
+  "otherAmenities": "Overlooking the Holy Haram Mosque and the Kaaba, two air-conditioned and carpeted 10,000-seat prayer halls, city/mountain/Kaaba/Holy Haram Mosque views, desk, sofa, separate living room with dining area (suites), executive lounge (executive rooms), Al Fayhaa restaurant, Lagenda international cuisine, Jasmin Caffe, Reflexology Health Centre (foot massages), extensive onsite shopping mall with 450 brand shops and a food court."
+}
+{"name":"Makkah Hotel","stars":5,"numberOfBeds":4}
+{
+  "name": "Makkah Hotel",
+  "stars": 5,
+  "hasAC": true,
+  "otherAmenities": "Two air-conditioned and carpeted 10,000-seat prayer halls, desk and a sofa in rooms, suites with separate living room and dining area, executive rooms with executive lounge access, Al Fayhaa restaurant (Arabic cuisine), Lagenda restaurant (international cuisine), Jasmin Caffe (Arabian coffee), Reflexology Health Centre (foot massages), extensive onsite shopping mall with 450 brand shops and a food court."
+}
+{"name":"Makkah Hotel","stars":5,"hasFreeWifi":false,"hasAC":false,"otherAmenities":"Hotel in Makkah - (you can upgrade)","distanceToHaram":800,"walkToHaram":10,"numberOfBeds":2}
+{"name":"Makkah Hotel","stars":5,"hasFreeWifi":false,"hasAC":true,"otherAmenities":"Overlooking the Holy Haram Mosque and the Kaaba; two air-conditioned and carpeted 10,000-seat prayer halls; all rooms have city, mountain, Kaaba or Holy Haram Mosque views; each room offers a desk and a sofa; suite features a separate living room with dining area; executive room gives access to the executive lounge; Al Fayhaa restaurant (Arabic flavors); Lagenda restaurant (international cuisine); Jasmin Caffe (Arabian coffee); Reflexology Health Centre (foot massages); extensive onsite shopping mall with 450 brand shops and a food court."}
+{"name":"Makkah Hotel","stars":5,"numberOfBeds":4.0}
+{"name":"Makkah Hotel","stars":5,"otherAmenities":"The hotel features two air-conditioned and carpeted 10,000-seat prayer halls with views over the Holy Haram. Rooms offer city, mountain, Kaaba, or Holy Haram Mosque views, a desk, and a sofa. Suites include a separate living room with dining area, and executive rooms offer access to an executive lounge. Dining options include Al Fayhaa restaurant for Arabic flavors, Lagenda for international cuisine, and Jasmin Caffe for Arabian coffee. Guests can enjoy foot massages at the Reflexology Health Centre. There is an extensive onsite shopping mall with 450 brand shops and a food court. The hotel is on the doorstep of the Kaaba and the ZamZam Well.","distanceToHaram":1}
+{"name":"Makkah Hotel","stars":5,"numberOfBeds":4}
+{
+  "name": "Makkah Hotel",
+  "stars": 5,
+  "otherAmenities": "Two carpeted 10,000-seat prayer halls (air-conditioned), rooms with desk and sofa, suites with separate living room and dining area, executive rooms with executive lounge access, Al Fayhaa restaurant (Arabic cuisine), Lagenda restaurant (international cuisine), Jasmin Caffe (Arabian coffee), Reflexology Health Centre (foot massages), extensive onsite shopping mall with 450 brand shops and a food court."
+}
+{
+  "nights": 10,
+  "name": "Makkah Hotel",
+  "images": null,
+  "stars": 5,
+  "hasFreeWifi": null,
+  "hasAC": null,
+  "otherAmenities": null,
+  "distanceToHaram": null,
+  "walkToHaram": null,
+  "numberOfBeds": 4
+}
+{"nights": null, "name": "Makkah Hotel", "images": null, "stars": 5, "hasFreeWifi": null, "hasAC": null, "otherAmenities": null, "distanceToHaram": null, "walkToHaram": null, "numberOfBeds": 4}
+{"nights": 10, "name": "Makkah Hotel", "images": null, "stars": 5, "hasFreeWifi": null, "hasAC": null, "otherAmenities": null, "distanceToHaram": null, "walkToHaram": null, "numberOfBeds": 4}
+{"nights": null, "name": "Makkah Hotel", "images": null, "stars": 5, "hasFreeWifi": null, "hasAC": null, "otherAmenities": null, "distanceToHaram": null, "walkToHaram": null, "numberOfBeds": 4}
+{"nights":null,"name":"Makkah Hotel","images":null,"stars":5,"hasFreeWifi":null,"hasAC":null,"otherAmenities":null,"distanceToHaram":null,"walkToHaram":null,"numberOfBeds":4}
+{
+  "nights": null,
+  "name": "Makkah Hotel",
+  "images": null,
+  "stars": 5,
+  "hasFreeWifi": null,
+  "hasAC": true,
+  "otherAmenities": "Two carpeted 10,000-seat prayer halls, rooms with city, mountain, Kaaba or Holy Haram Mosque views, desk, sofa, suite with separate living room and dining area, executive room with access to executive lounge, Al Fayhaa restaurant, Lagenda restaurant, Jasmin Caffe, Reflexology Health Centre, onsite shopping mall with 450 brand shops and a food court.",
+  "distanceToHaram": null,
+  "walkToHaram": null,
+  "numberOfBeds": null
+}
+{"nights":null,"name":"Makkah Hotel","images":null,"stars":5,"hasFreeWifi":null,"hasAC":null,"otherAmenities":null,"distanceToHaram":null,"walkToHaram":null,"numberOfBeds":4}
+{
+  "nights": 3,
+  "name": "Makkah Hotel",
+  "images": [
+    "http://example.com/makkahhotel.jpg"
+  ],
+  "stars": 5,
+  "hasFreeWifi": false,
+  "hasAC": true,
+  "otherAmenities": "Two carpeted 10,000-seat prayer halls, desk and a sofa in rooms. Suites feature a separate living room with dining area. Executive rooms offer access to an executive lounge. Al Fayhaa restaurant, Lagenda international cuisine, Jasmin Caffe for Arabian coffee. Reflexology Health Centre for foot massages. Onsite shopping mall with 450 brand shops and a food court.",
+  "distanceToHaram": 1,
+  "walkToHaram": 1,
+  "numberOfBeds": 1
+}

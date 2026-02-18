@@ -24,8 +24,15 @@ def jsonUperCaseTypes(obj):
     for key, value in obj.items():
       if key in unsupported:
         continue
-      elif key == "type" and isinstance(value, str):
-        result[key] = value.upper()
+      elif key == "type":
+        if isinstance(value, str):
+          result[key] = value.upper()
+        elif isinstance(value, list):
+          assert len(value) == 2, "must only be max 2 types. The second type should be null"
+          assert value[1] == "null", "must only be max 2 types. The second type should be null"
+          result[key] = value[0].upper()
+          result['nullable'] = True
+        
       elif key in ["$schema", "$id", "title"]:
         # Skip JSON Schema metadata
         continue
@@ -87,8 +94,9 @@ def checkCityInHotelText(text, desiredCity):
 
 def scrapeHotelInformation(soup, city):
   hotelSchema = jsonUperCaseTypes(loadHotelSchema())
+  print(hotelSchema)
 
-  cityInfo = {'images':[]}
+  hotelInfo = {}
   seen = set()
 
   for container in soup.find_all(CONTAINER_TAGS):
@@ -105,8 +113,17 @@ def scrapeHotelInformation(soup, city):
     fullText = container.get_text(strip=True) # Use fullText as a fall back e.g. call AI model with fullText
     llmOutput = LLMPrompter(fullText, hotelSchema)
     if llmOutput:
-      cityInfo.update(json.loads(llmOutput))
-      
-    cityInfo['images'].extend(scrapeHotelImages(container))
+      hotelInfo.update(json.loads(llmOutput))
 
-  return cityInfo
+    hotelImages = scrapeHotelImages(container)
+    if hotelImages:   
+      if hotelInfo.get('images', False):
+        hotelInfo['images'].extend(hotelImages)
+      else:
+        hotelInfo["images"] = scrapeHotelImages(container)
+  
+
+  if hotelInfo == {}:
+    return None
+  else:
+    return hotelInfo
