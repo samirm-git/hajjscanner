@@ -45,16 +45,21 @@ def jsonUperCaseTypes(obj):
   else:
     return obj
 
-def LLMPrompter(containerText, hotelSchema):
-  with genai.Client(api_key=GEMINI_KEY) as client:
-    response = client.models.generate_content(
-    model="gemini-2.5-flash",
-    contents=f"""You are extracting hotel information from the following website text.
+def remove_property(schema: dict, propName: str) -> None:
+  schema.get("properties", {}).pop(propName, None)
+  if "required" in schema:
+      while propName in schema["required"]:
+          schema["required"].remove(propName)
+
+def LLMPrompter(client, containerText, hotelSchema):
+  response = client.models.generate_content(
+  model="gemini-2.5-flash",
+  contents=f"""You are extracting hotel information from the following website text.
 Text:
-  {containerText}
+{containerText}
 """,
-    config=GenerateContentConfig(response_mime_type="application/json", response_schema=hotelSchema)
-      )
+  config=GenerateContentConfig(response_mime_type="application/json", response_schema=hotelSchema)
+    )
 
   with open('gemini_output.txt','a') as f:
     f.write('\n')
@@ -65,7 +70,7 @@ Text:
     
 
 def scrapeHotelImages(container_soup):
-  hotelImgs = []
+  hotelImgs = set()
   imgs = container_soup.find_all("img") #I think you can add a regex expression as a another parameter to make sure the image src does not include 'placeholder'
   if not len(imgs) > 3:
     return []
@@ -76,7 +81,7 @@ def scrapeHotelImages(container_soup):
     elif bool(BAD_IMAGE.search(src)):
         continue
     else:
-       hotelImgs.append(src)
+       hotelImgs.add(src)
   
   return hotelImgs
 
@@ -94,36 +99,43 @@ def checkCityInHotelText(text, desiredCity):
 
 def scrapeHotelInformation(soup, city):
   hotelSchema = jsonUperCaseTypes(loadHotelSchema())
-  print(hotelSchema)
+  remove_property(hotelSchema, 'images')
+  # print(hotelSchema)
 
   hotelInfo = {}
   seen = set()
 
-  for container in soup.find_all(CONTAINER_TAGS):
-    if id(container) in seen:
-      continue
-    
-    headingText = " ".join(h.get_text(strip=True) for h in container.find_all(HEADING_TAGS))            
-    if not checkCityInHotelText(headingText, desiredCity=city.lower()):
-      continue
-    
-    for descendant in container.find_all(CONTAINER_TAGS):
-        seen.add(id(descendant))
+  with genai.Client(api_key=GEMINI_KEY) as client:
+    for container in soup.find_all(CONTAINER_TAGS):
+      if id(container) in seen:
+        continue
+      
+      headingText = " ".join(h.get_text(strip=True) for h in container.find_all(HEADING_TAGS))            
+      if not checkCityInHotelText(headingText, desiredCity=city.lower()):
+        continue
+      
+      for descendant in container.find_all(CONTAINER_TAGS):
+          seen.add(id(descendant))
 
-    fullText = container.get_text(strip=True) # Use fullText as a fall back e.g. call AI model with fullText
-    llmOutput = LLMPrompter(fullText, hotelSchema)
-    if llmOutput:
-      hotelInfo.update(json.loads(llmOutput))
+      fullText = container.get_text(strip=True) # Use fullText as a fall back e.g. call AI model with fullText
+      llmOutput = LLMPrompter(client, fullText, hotelSchema)
+      if llmOutput:
+        try:
+          hotelInfo.update(json.loads(llmOutput))
+        except json.JSONDecodeError as e:
+          print(f"llmOutput not valid json: {llmOutput}")
+          print(e)
 
-    hotelImages = scrapeHotelImages(container)
-    if hotelImages:   
-      if hotelInfo.get('images', False):
-        hotelInfo['images'].extend(hotelImages)
-      else:
-        hotelInfo["images"] = scrapeHotelImages(container)
-  
+      hotelImages = scrapeHotelImages(container)
+      if hotelImages:   
+        if hotelInfo.get('images', False):
+          hotelInfo['images'].update(hotelImages)
+        else:
+          hotelInfo["images"] = hotelImages
+    
 
   if hotelInfo == {}:
     return None
   else:
+    hotelInfo["images"] = list(hotelInfo["images"])
     return hotelInfo

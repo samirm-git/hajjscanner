@@ -21,7 +21,8 @@ def scrapePPP(soup):
     match = priceRegex.match(priceContainer.get_text(strip=True))
     currency = match.group(1)
     #TODO: CONVERT CURRENCY TO STANDARD CURRENCY PRICE TO STANDARD CURRENCY E.G £
-    price = int(match.group(2))
+    price = match.group(2)
+    price = price.replace(",", '').strip()
     return int(price)
   else:
     return None

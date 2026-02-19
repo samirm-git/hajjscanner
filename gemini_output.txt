@@ -284,3 +284,18 @@
   "walkToHaram": 1,
   "numberOfBeds": 1
 }
+{"nights":3,"name":"Hilton Suites Hotel","images":["Swissotel Al Maqam Makkah 2","Swissotel Makkah","Swissotel Makkah","Swissotel Al Maqam Makkah 4","Swissotel Makkah","Swissotel Al Maqam Makkah 8"],"stars":5,"hasFreeWifi":true,"hasAC":true,"otherAmenities":"Wheelchair Friendly, City View, Half board buffet in Hotel","distanceToHaram":700,"walkToHaram":7,"numberOfBeds":2}
+{"nights":3,"name":"Hilton Suites Hotel","images":["https://example.com/hilton_makkah_1.jpg","https://example.com/hilton_makkah_2.jpg"],"stars":5,"hasFreeWifi":true,"hasAC":true,"otherAmenities":"Half board buffet in Hotel","distanceToHaram":708,"walkToHaram":8.5,"numberOfBeds":2}
+{"nights":3,"name":"Hilton Suites Hotel","images":["Swissotel Al Maqam Makkah 2","Swissotel Makkah","Swissotel Al Maqam Makkah 4","Swissotel Makkah","Swissotel Al Maqam Makkah 8"],"stars":5,"hasFreeWifi":true,"hasAC":true,"otherAmenities":"Wheelchair Friendly, City View, Half board buffet in Hotel","distanceToHaram":588,"walkToHaram":7,"numberOfBeds":null}
+{"nights":3,"name":"Hilton Suites Hotel","images":null,"stars":5,"hasFreeWifi":true,"hasAC":true,"otherAmenities":"Wheelchair Friendly, City View, Half board buffet","distanceToHaram":null,"walkToHaram":7,"numberOfBeds":null}
+{
+  "nights": 3,
+  "name": "Hilton Suites Hotel",
+  "stars": 5,
+  "hasFreeWifi": true,
+  "hasAC": true,
+  "otherAmenities": "Wheelchair Friendly, City View, Half board buffet in Hotel",
+  "distanceToHaram": null,
+  "walkToHaram": 8,
+  "numberOfBeds": null
+}
