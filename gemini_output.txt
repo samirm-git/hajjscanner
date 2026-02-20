@@ -299,3 +299,114 @@
   "walkToHaram": 8,
   "numberOfBeds": null
 }
+null
+{"nights":3,"name":"Hilton Suites","stars":5,"hasFreeWifi":false,"hasAC":false,"otherAmenities":"elegant rooms, dining, and stunning views of Mecca","distanceToHaram":500,"walkToHaram":6,"numberOfBeds":2}
+{
+"nights": null,
+"name": "Hilton Suites",
+"stars": null,
+"hasFreeWifi": null,
+"hasAC": null,
+"otherAmenities": "elegant rooms, dining, and stunning views of Mecca.",
+"distanceToHaram": null,
+"walkToHaram": null,
+"numberOfBeds": null
+}
+{
+"nights": null,
+"name": "Hilton Suites",
+"stars": null,
+"hasFreeWifi": null,
+"hasAC": null,
+"otherAmenities": "elegant rooms, dining, and stunning views of Mecca",
+"distanceToHaram": null,
+"walkToHaram": null,
+"numberOfBeds": null
+}
+{
+"nights": null,
+"name": "Hilton Suites",
+"stars": null,
+"hasFreeWifi": null,
+"hasAC": null,
+"otherAmenities": "elegant rooms, dining, and stunning views of Mecca.",
+"distanceToHaram": null,
+"walkToHaram": null,
+"numberOfBeds": null
+}
+null
+null
+{
+"nights": null,
+"name": "Hilton Suites",
+"stars": null,
+"hasFreeWifi": null,
+"hasAC": null,
+"otherAmenities": "elegant rooms, dining, and stunning views of Mecca.",
+"distanceToHaram": null,
+"walkToHaram": null,
+"numberOfBeds": null
+}
+{
+  "nights": null,
+  "name": "Hilton Suites",
+  "stars": null,
+  "hasFreeWifi": null,
+  "hasAC": null,
+  "otherAmenities": "elegant rooms, dining, and stunning views of Mecca.",
+  "distanceToHaram": null,
+  "walkToHaram": null,
+  "numberOfBeds": null
+}
+null
+null
+null
+null
+{
+"nights": null,
+"name": "Emaar Grand Hotel",
+"stars": 3,
+"hasFreeWifi": true,
+"hasAC": true,
+"otherAmenities": "Flat-screen TVs, private bathrooms, city views, 24-hour front desk, concierge service, daily housekeeping, room service, on-site restaurant serving international and local cuisines.",
+"distanceToHaram": 700,
+"walkToHaram": null,
+"numberOfBeds": null
+}
+{"nights": null, "name": "Al Rawda Al Aqeeq Hotel", "stars": null, "hasFreeWifi": true, "hasAC": null, "otherAmenities": "laundry service, room service, dry cleaning, luggage storage, safety deposit boxes, designated smoking area, daily housekeeping", "distanceToHaram": 600, "walkToHaram": 8, "numberOfBeds": null}
+{"nights":10,"name":"Makkah Hotel","stars":5,"hasFreeWifi":null,"hasAC":null,"otherAmenities":null,"distanceToHaram":null,"walkToHaram":null,"numberOfBeds":4}
+null
+{"nights":10,"name":"Makkah Hotel","stars":5,"hasFreeWifi":null,"hasAC":null,"otherAmenities":"Room Type:Quad - (still you can upgrade)","distanceToHaram":null,"walkToHaram":null,"numberOfBeds":4}
+{
+  "nights": null,
+  "name": "Makkah Hotel",
+  "stars": 5,
+  "hasFreeWifi": null,
+  "hasAC": true,
+  "otherAmenities": "Carpeted 10,000-seat prayer halls, rooms with city/mountain/Kaaba/Holy Haram Mosque views, desk, sofa, suites with separate living room and dining area, executive rooms with executive lounge access, Al Fayhaa restaurant (Arabic cuisine), Lagenda restaurant (international cuisine), Jasmin Caffe (Arabian coffee), Reflexology Health Centre (foot massages), extensive onsite shopping mall with 450 brand shops and a food court.",
+  "distanceToHaram": null,
+  "walkToHaram": null,
+  "numberOfBeds": null
+}
+{
+  "nights": null,
+  "name": "Makkah Hotel",
+  "stars": 5,
+  "hasFreeWifi": null,
+  "hasAC": null,
+  "otherAmenities": null,
+  "distanceToHaram": null,
+  "walkToHaram": null,
+  "numberOfBeds": 4
+}
+{
+  "nights": 1,
+  "name": "Makkah Hotel",
+  "stars": 5,
+  "hasFreeWifi": false,
+  "hasAC": true,
+  "otherAmenities": "prayer halls, city, mountain, Kaaba or Holy Haram Mosque views, desk, sofa, separate living room with dining area (suite), executive lounge (executive room), Al Fayhaa restaurant, Lagenda restaurant, Jasmin Caffe, Reflexology Health Centre, extensive onsite shopping mall with 450 brand shops and a food court",
+  "distanceToHaram": 50,
+  "walkToHaram": 1,
+  "numberOfBeds": 1
+}

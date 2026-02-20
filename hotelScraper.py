@@ -65,8 +65,14 @@ Text:
     f.write('\n')
     f.writelines(response.text)
 
+  try:
+    output = json.loads(response.text)
+    return output
+  except json.JSONDecodeError as e:
+    print(f"llmOutput not valid json: {response.text}")
+    print(e)
+    return None
 
-  return response.text
     
 
 def scrapeHotelImages(container_soup):
@@ -100,6 +106,7 @@ def checkCityInHotelText(text, desiredCity):
 def scrapeHotelInformation(soup, city):
   hotelSchema = jsonUperCaseTypes(loadHotelSchema())
   remove_property(hotelSchema, 'images')
+  #TODO: ADD MANUAL SCRAPPING FOR ALL OTHER FIELDS. ONLY CALL LLM IF FIELDS ARE MISSING OR TO COMPARE ANSWERS
   # print(hotelSchema)
 
   hotelInfo = {}
@@ -120,12 +127,11 @@ def scrapeHotelInformation(soup, city):
       fullText = container.get_text(strip=True) # Use fullText as a fall back e.g. call AI model with fullText
       llmOutput = LLMPrompter(client, fullText, hotelSchema)
       if llmOutput:
-        try:
-          hotelInfo.update(json.loads(llmOutput))
-        except json.JSONDecodeError as e:
-          print(f"llmOutput not valid json: {llmOutput}")
-          print(e)
-
+        hotelInfo.update(llmOutput)
+      else:
+        print(f"fullText NO LLMOUTPUT: {fullText}")
+        print(f"llmOutput: {llmOutput}")
+     
       hotelImages = scrapeHotelImages(container)
       if hotelImages:   
         if hotelInfo.get('images', False):
@@ -136,6 +142,8 @@ def scrapeHotelInformation(soup, city):
 
   if hotelInfo == {}:
     return None
+  if hotelInfo.get("images", False):
+      hotelInfo["images"] = list(hotelInfo["images"])
   else:
-    hotelInfo["images"] = list(hotelInfo["images"])
-    return hotelInfo
+      hotelInfo["images"] = None
+  return hotelInfo

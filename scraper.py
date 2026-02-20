@@ -64,19 +64,8 @@ def scrapeIsVisaIncluded(soup):
       return None
   
 
-if __name__ == "__main__":
-  url = "https://alamanahtravel.co.uk/14-days-5-star-non-shifting-hajj-package/"
-  url2 = "https://www.safamarwahtravel.co.uk/deals/5-star-17-days-non-shifting-hajj-package/"
-  url3 = "https://www.alhaqtravel.co.uk/book/24-days-shifting-hajj-packages/"
-  url4 = "https://duatravels.co.uk/package/shifting-luxury-hajj-package/"
-
-  urls = [url, url2, url3, url4]
-  if sys.argv[1]:
-    userChosenUrl = int(sys.argv[1])
-  else:
-    userChosenUrl = 0 
-
-  packageSchema = loadHajjPackageSchema()
+def scrapePackage(url):
+  print(f"url: {url}")
   packageInfoResolvers = {
     'ppp': scrapePPP,
     'total_days': scrapeTotalDays,
@@ -90,7 +79,7 @@ if __name__ == "__main__":
   packageInfo = {}
 
 
-  resp = makeRequest(urls[userChosenUrl])
+  resp = makeRequest(url)
   soup = getSoup(resp.text, parser="lxml")
   soup = removeFooterHeaderNav(soup)
   if soup.find("main"):
@@ -108,8 +97,6 @@ if __name__ == "__main__":
       packageInfo[key] = packageInfoResolvers[key](soup)
     
 
-  # print(f"packageInfo: {packageInfo}")
-
   fname = urls[userChosenUrl][8:-1].replace("/","").replace("\\","")
   with open(f'scraperOutputs/{fname}.txt','a') as f:
     f.write("=====================================")
@@ -117,6 +104,22 @@ if __name__ == "__main__":
     f.write('\n')
 
   validateData(packageInfo)
+
+if __name__ == "__main__":
+  url = "https://alamanahtravel.co.uk/14-days-5-star-non-shifting-hajj-package/"
+  url2 = "https://www.safamarwahtravel.co.uk/deals/5-star-17-days-non-shifting-hajj-package/"
+  url3 = "https://www.alhaqtravel.co.uk/book/24-days-shifting-hajj-packages/"
+  url4 = "https://duatravels.co.uk/package/shifting-luxury-hajj-package/"
+
+  urls = [url, url2, url3, url4]
+  if sys.argv[1]:
+    userChosenUrl = int(sys.argv[1])
+  else:
+    userChosenUrl = 0
+
+  scrapePackage(urls[userChosenUrl]) 
+
+
 
 
 
