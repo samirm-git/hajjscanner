@@ -2,58 +2,58 @@
   "$schema": "https://json-schema.org/draft-07/schema",
   "$id": "hotel.json",
   "title": "Hotel",
-  "type": "object",
+  "type": ["object", "null"],
   "properties": {
       "nights": {
-        "type": "integer",
+        "type": ["integer", "null"],
         "minimum": 1,
         "maximum": 10
       },
       "name": {
-        "type": "string",
+        "type": ["string", "null"],
         "minLength": 2,
         "maxLength": 100
       },
       "images": {
-        "type": "array",
+        "type": ["array", "null"],
         "items": { "type": "string", "format": "uri" },
         "minItems": 1,
         "uniqueItems": true
       },
       "stars": {
-        "type": "integer",
+        "type": ["integer", "null"],
         "description": "hotel star rating from 1 to 5",
         "minimum": 1,
         "maximum": 5
       },
       "hasFreeWifi":{
-        "type":"boolean",
+        "type":["boolean", "null"],
         "description": "True if hotel provides free wifi. False otherwise"
       },
       "hasAC":{
-        "type":"boolean",
+        "type":["boolean", "null"],
         "description": "True if hotel room has air conditioning (AC). False otherwise"
       },
       "otherAmenities":{
-        "type":"string",
+        "type":["string", "null"],
         "description": "Description of any other amenities the hotel provides"
       },
       "distanceToHaram": {
         "description": "distance to the haram in meters",
-        "type": "number",
+        "type": ["number", "null"],
         "minimum": 1
       },
       "walkToHaram": {
         "description": "time taken to walk to the haram in minutes",
-        "type": "number",
+        "type": ["number","null"],
         "minimum": 1
       },
       "numberOfBeds":{
         "description": "number of beds in hotel room",
-        "type": "number",
+        "type": ["number","null"],
         "minimum": 1
       }
       },
-      "required": ["name"]
+      "required": ["nights", "name", "images", "stars", "hasFreeWifi", "hasAC", "distanceToHaram", "walkToHaram", "numberOfBeds"]
     }
       
