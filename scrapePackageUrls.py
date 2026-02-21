@@ -1,4 +1,4 @@
-import re
+import re, sys
 from helpers import makeRequest, getSoup, removeFooterHeaderNav
 from pprint import pprint
 
@@ -24,33 +24,42 @@ def scrapeLinksHomePage(soup):
   return None, None
 
 def filterPackages(packageList):
-  packageUrls, caltalougeUrls = [], []
+  packageAllUrls = {'package':[], 'catalogue':[]}
   for package in packageList:
     resp = makeRequest(package['url'])
     soup = getSoup(resp.text, 'lxml')
     soup = removeFooterHeaderNav(soup)
     numberOfLinks = len(soup.find_all("a", href=True))
     if numberOfLinks > 10:
-      caltalougeUrls.append(package['url'])
+      packageAllUrls['catalogue'].append(package['url'])
       print(f"CATALOGUE PAGE: {package['url']} :  {numberOfLinks}")
     else:
-      packageUrls.append(package['url'])
+      packageAllUrls['package'].append(package['url'])
       print(f"PACKAGE PAGE: {package['url']} :  {numberOfLinks}")
   
-  return packageUrls, caltalougeUrls
+  return packageAllUrls
 
 
 def scrapePackages(packageUrls):
   for package in packageUrls:
     continue
   ##TODO: CALL THE SCRAPER.PY ON ALL THE PACKAGES 
+  ##TODO: SET UP BOTO3 (AWS PYTHON SDK) TO SEND OUTPUT JSON FILES TO S3 STORAGE
+  ##TODO: FINISH scrapeLinksFromHomePage() function
+  ##TODO: HANDLE WEBPAGES THAT HAVE MULTIPLE SITEMAPS E.G. sitemap/offer (see alamanah travel)
   return 0
 
+
+if __name__ == "__main__":
+  if len(sys.argv) > 2:
+    userChosenUrl = int(sys.argv[1])
+  else:
+    userChosenUrl = 2
 
 with open('providers.txt','r') as f:
   providerList = f.read().splitlines()
 
-sitemapurl = providerList[2] + "sitemap.xml"
+sitemapurl = providerList[userChosenUrl] + "sitemap.xml"
 
 print(sitemapurl)
 resp = makeRequest(sitemapurl)
@@ -58,25 +67,22 @@ resp = makeRequest(sitemapurl)
 match resp.status_code:
   case 200 | 304:
     soup = getSoup(resp.text, parser="xml")
-    hajjPackageUrls, umrahPackageUrls = scrapeLinksSitemap(soup)
+    hajjList, umrahList = scrapeLinksSitemap(soup)
   case 301:
     soup = getSoup(resp.text, parser="lxml")
-    hajjPackageUrls, umrahPackageUrls = scrapeLinksHomePage(soup)
+    hajjList, umrahList = scrapeLinksHomePage(soup)
 
 print("")
 print("")
-hajjPackageUrls, hajjCatalogueUrls = filterPackages(hajjPackageUrls)
-umrahPackageUrls, umrahCatalogueUrls = filterPackages(umrahPackageUrls)
+hajjPackageAndCatalogue = filterPackages(hajjList)
+# umrahPackageUrls, umrahCatalogueUrls = filterPackages(umrahPackageUrls)
 
+print(hajjPackageAndCatalogue)
 
-if hajjPackageUrls:
-  out = scrapePackages(hajjPackageUrls)
-  if len(out) < 6:
-    scrapeLinksHomePage(hajjCatalogueUrls)
+if len(hajjPackageAndCatalogue['packag']) < 10:
+  scrapeLinksHomePage(hajjPackageAndCatalogue['catalogue'])
 
-if umrahPackageUrls:
-  out = scrapePackages(umrahPackageUrls)
-  if len(out) < 6:
-    scrapeLinksHomePage(umrahCatalogueUrls)
-# umrahPackageUrls = filterPackages(umrahPackageUrls)
+if hajjPackageAndCatalogue['package']:
+  scrapePackages(hajjPackageAndCatalogue['package'])
+  
 
