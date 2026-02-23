@@ -1,10 +1,9 @@
 import re, json, sys
-import boto3
-from botocore.exceptions import ClientError
 from dotenv import load_dotenv
 from helpers import makeRequest, getSoup, removeFooterHeaderNav, loadHajjPackageSchema
 from hotelScraper import scrapeHotelInformation, HEADING_TAGS 
 from validator import validateData
+from upload import uploadPackageDataToS3
 
 load_dotenv()
 def scrapeTotalDays(soup):
@@ -14,6 +13,10 @@ def scrapeTotalDays(soup):
     if match:
       return int(match.group(1))
   return None
+
+def scrapeCompanyFromUrl(url):
+  match = re.search(r'(?:www\.)?([^.]+)\.', url.split('//')[-1])
+  return match.group(1) if match else ''
 
 def scrapePPP(soup): 
   priceRegex = re.compile(r"([£$€])\s?(\d+(?:,\d{3})*(?:\.\d{2})?)", re.IGNORECASE)
@@ -67,13 +70,6 @@ def scrapeIsVisaIncluded(soup):
       #REQUIRES FURTHER ANALYSIS. MAYBE PASS THE PARENT DIV TO LLM
       return None
   
-def uploadToS3(jsonData):
-  s3 = boto3.client('s3')
-  try:
-    response = s3.put_object(Bucket='hajjpackagedata', Key='raw/alhaqtravel/alhaq1', Body=jsonData, ContentType='application/json')
-  except ClientError as e:
-    print(e)
-
 
 def scrapePackage(url):
   print(f"url: {url}")
@@ -96,6 +92,7 @@ def scrapePackage(url):
   if soup.find("main"):
     soup = soup.find("main")
 
+  packageInfo['company'] = scrapeCompanyFromUrl(url)
   for key in packageInfoResolvers.keys():
     if packageInfo.get(key, False):
       continue
@@ -115,7 +112,7 @@ def scrapePackage(url):
     f.write('\n')
 
   validateData(packageInfo)
-  uploadToS3(json.dumps(packageInfo, indent=4))
+  return packageInfo
 
 if __name__ == "__main__":
   url = "https://alamanahtravel.co.uk/14-days-5-star-non-shifting-hajj-package/"
@@ -124,14 +121,10 @@ if __name__ == "__main__":
   url4 = "https://duatravels.co.uk/package/shifting-luxury-hajj-package/"
 
   urls = [url, url2, url3, url4]
-  if len(sys.argv) > 2:
+  if len(sys.argv) >= 2:
     userChosenUrl = int(sys.argv[1])
   else:
     userChosenUrl = 2
-
-  s3 = boto3.client('s3')
-  response = s3.list_buckets()
-  print(response)
 
   temp = {
     "ppp": 7360,
@@ -191,10 +184,10 @@ if __name__ == "__main__":
     "isvisaincluded": None
 } 
   
-  temp2 = json.dumps(temp, indent=4)
-  uploadToS3(temp2) 
-  # scrapePackage(urls[userChosenUrl]) 
-
+  # temp2 = json.dumps(temp, indent=4)
+  # uploadPackageDataToS3(temp2, 'alhaqtravel') 
+  packageInfo = scrapePackage(urls[userChosenUrl]) 
+  uploadPackageDataToS3(json.dumps(packageInfo, indent=4), packageInfo["company"])
 
 
 

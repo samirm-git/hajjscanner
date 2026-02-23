@@ -126,13 +126,13 @@ def scrapeHotelInformation(soup, city):
 
       fullText = container.get_text(strip=True) # Use fullText as a fall back e.g. call AI model with fullText
       llmOutput = LLMPrompter(client, fullText, hotelSchema)
+      hotelImages = scrapeHotelImages(container)
       if llmOutput:
         hotelInfo.update(llmOutput)
       else:
         print(f"fullText NO LLMOUTPUT: {fullText}")
         print(f"llmOutput: {llmOutput}")
      
-      hotelImages = scrapeHotelImages(container)
       if hotelImages:   
         if hotelInfo.get('images', False):
           hotelInfo['images'].update(hotelImages)

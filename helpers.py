@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from pathlib import Path
 import json
+import re
 
 def makeRequest(url):
   headers = {
@@ -40,3 +41,4 @@ def loadHajjPackageSchema():
   with open(path, 'r') as f:
     hajjPackageSchema = json.load(f)
   return hajjPackageSchema
+

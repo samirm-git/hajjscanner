@@ -5,6 +5,10 @@
   "description": "Hajj package details",
   "type": "object",
   "properties": {
+    "company":{
+    "description": "company name",
+    "type": "string"
+    },
     "ppp" : {
       "description": "price per night in £", 
       "type": ["number", "null"]
@@ -42,5 +46,5 @@
       "type": ["boolean", "null"]
     }
   },
-  "required": ["ppp", "total_days", "stars", "isShifting", "makkahHotel", "madinahHotel", "isVisaIncluded"]
+  "required": ["company","ppp", "total_days", "stars", "isShifting", "makkahHotel", "madinahHotel", "isVisaIncluded"]
 }

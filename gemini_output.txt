@@ -410,3 +410,72 @@ null
   "walkToHaram": 1,
   "numberOfBeds": 1
 }
+{
+  "nights": null,
+  "name": "Emaar Grand Hotel",
+  "stars": 3,
+  "hasFreeWifi": true,
+  "hasAC": true,
+  "otherAmenities": "flat-screen TVs, private bathrooms, city views, 24-hour front desk, concierge service, daily housekeeping, room service, on-site restaurant serving international and local cuisines",
+  "distanceToHaram": 700,
+  "walkToHaram": null,
+  "numberOfBeds": null
+}
+{
+  "nights": null,
+  "name": "Al Rawda Al Aqeeq Hotel",
+  "stars": null,
+  "hasFreeWifi": true,
+  "hasAC": null,
+  "otherAmenities": "laundry service, room service, dry cleaning, luggage storage, safety deposit boxes, designated smoking area, daily housekeeping",
+  "distanceToHaram": 600,
+  "walkToHaram": 8,
+  "numberOfBeds": null
+}
+null
+{
+  "nights": null,
+  "name": "Hilton Suites",
+  "stars": null,
+  "hasFreeWifi": null,
+  "hasAC": null,
+  "otherAmenities": "Luxurious hotel near Masjid al-Haram with elegant rooms, dining, and stunning views of Mecca.",
+  "distanceToHaram": null,
+  "walkToHaram": null,
+  "numberOfBeds": null
+}
+null
+{
+  "nights": null,
+  "name": "Hilton Suites",
+  "stars": null,
+  "hasFreeWifi": null,
+  "hasAC": null,
+  "otherAmenities": "elegant rooms, dining, and stunning views of Mecca",
+  "distanceToHaram": null,
+  "walkToHaram": null,
+  "numberOfBeds": null
+}
+{
+  "nights": 10,
+  "name": "Makkah Hotel",
+  "stars": 5,
+  "hasFreeWifi": null,
+  "hasAC": null,
+  "otherAmenities": null,
+  "distanceToHaram": null,
+  "walkToHaram": null,
+  "numberOfBeds": 4
+}
+{
+  "nights": 3,
+  "name": "Makkah Hotel",
+  "stars": 5,
+  "hasFreeWifi": false,
+  "hasAC": true,
+  "otherAmenities": "Arabic flavors at Al Fayhaa restaurant, international cuisine at Lagenda, Arabian coffee at Jasmin Caffe, foot massages at Reflexology Health Centre, extensive onsite shopping mall with 450 brand shops and a food court.",
+  "distanceToHaram": 50,
+  "walkToHaram": 1,
+  "numberOfBeds": 2
+}
+{"nights": 10, "name": "Hilton Suites Hotel", "stars": 5, "hasFreeWifi": true, "hasAC": true, "otherAmenities": "Wheelchair Friendly, City View, Half board buffet in Hotel", "distanceToHaram": null, "walkToHaram": 7, "numberOfBeds": null}
