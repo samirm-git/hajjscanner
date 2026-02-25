@@ -1,6 +1,5 @@
 import re, sys
 from helpers import makeRequest, getSoup, removeFooterHeaderNav
-from pprint import pprint
 from scraper import scrapePackage
 from upload import uploadPackageDataToS3
 
