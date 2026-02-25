@@ -12,7 +12,7 @@ CONTAINER_TAGS = ["div", "section", "article", "td", "tr"]
 HEADING_TAGS = ["h1", "h2", "h3", "h4", "h5", "h6", "small", "strong"]
 CITY_PATTERNS = {
     "makkah": re.compile(r"\b(makkah|mecca|meccah|makah)\b", re.IGNORECASE),
-    "madinah": re.compile(r"\b(madinah|medina)\b", re.IGNORECASE),
+    "madinah": re.compile(r"\b(madinah|medina|medinah|madina)\b", re.IGNORECASE),
 }
 BAD_IMAGE = re.compile(r"(icon|place[-_]?holder)", re.IGNORECASE)
   
@@ -54,7 +54,8 @@ def remove_property(schema: dict, propName: str) -> None:
 def LLMPrompter(client, containerText, hotelSchema):
   response = client.models.generate_content(
   model="gemini-2.5-flash",
-  contents=f"""You are extracting hotel information from the following website text.
+  contents=f"""Extract hotel information from the text below. Infer where reasonable (e.g. 'Quad'=4 beds, 'days'='nights', drive time is not walk time). Do any necessary metric conversions e.g. miles to metres. Use null if genuinely unavailable.
+
 Text:
 {containerText}
 """,
@@ -92,22 +93,29 @@ def scrapeHotelImages(container_soup):
   return hotelImgs
 
 
-def checkCityInHotelText(text, desiredCity):
-  otherCity = 'madinah' if desiredCity == 'makkah' else 'makkah'
-  if CITY_PATTERNS[desiredCity].search(text):
-    if CITY_PATTERNS[otherCity].search(text):
-      return False
-    else:
-      return True
+def checkCityinText(text, city):
+  if CITY_PATTERNS[city].search(text):
+    return True
   else:
     return False
 
 
-def scrapeHotelInformation(soup, city):
-  hotelSchema = jsonUperCaseTypes(loadHotelSchema())
-  remove_property(hotelSchema, 'images')
+def getChildContainerIDs(container):
+  out = set()
+  for descendant in container.find_all(CONTAINER_TAGS):
+    out.add(id(descendant))
+  
+  return out
+
+
   #TODO: ADD MANUAL SCRAPPING FOR ALL OTHER FIELDS. ONLY CALL LLM IF FIELDS ARE MISSING OR TO COMPARE ANSWERS
   # print(hotelSchema)
+def scrapeHotelInformation(soup, city):
+  city = city.lower()
+  otherCity = 'madinah' if city == 'makkah' else 'makkah'
+  hotelSchema = jsonUperCaseTypes(loadHotelSchema())
+  remove_property(hotelSchema, 'images')
+
 
   hotelInfo = {}
   seen = set()
@@ -116,28 +124,35 @@ def scrapeHotelInformation(soup, city):
     for container in soup.find_all(CONTAINER_TAGS):
       if id(container) in seen:
         continue
-      
-      headingText = " ".join(h.get_text(strip=True) for h in container.find_all(HEADING_TAGS))            
-      if not checkCityInHotelText(headingText, desiredCity=city.lower()):
-        continue
-      
-      for descendant in container.find_all(CONTAINER_TAGS):
-          seen.add(id(descendant))
 
-      fullText = container.get_text(strip=True) # Use fullText as a fall back e.g. call AI model with fullText
-      llmOutput = LLMPrompter(client, fullText, hotelSchema)
-      if llmOutput:
-        hotelInfo.update(llmOutput)
+      headingText = " ".join(h.get_text(strip=True) for h in container.find_all(HEADING_TAGS))            
+      if not headingText:
+        seen.update(getChildContainerIDs(container))
+
+      elif not checkCityinText(headingText, city):
+        # print(f"Did not find desired city: {city}")
+        seen.update(getChildContainerIDs(container))
+      
+      elif checkCityinText(headingText, otherCity):
+        pass
+        # print(f"Found other city: {otherCity}")
+        
       else:
-        print(f"fullText NO LLMOUTPUT: {fullText}")
-        print(f"llmOutput: {llmOutput}")
-     
-      hotelImages = scrapeHotelImages(container)
-      if hotelImages:   
-        if hotelInfo.get('images', False):
-          hotelInfo['images'].update(hotelImages)
-        else:
-          hotelInfo["images"] = hotelImages
+        # print(f"found container with desired city: {city}, and no other city: {otherCity} in heading text")
+        seen.update(getChildContainerIDs(container)) 
+
+        fullText = container.get_text("\n", strip=True) # Use fullText as a fall back e.g. call AI model with fullText
+        
+        llmOutput = LLMPrompter(client, fullText, hotelSchema)
+        hotelImages = scrapeHotelImages(container)
+        if llmOutput:
+          hotelInfo.update(llmOutput)
+
+        if hotelImages:   
+          if hotelInfo.get('images', False):
+            hotelInfo['images'].update(hotelImages)
+          else:
+            hotelInfo["images"] = hotelImages
     
 
   if hotelInfo == {}:

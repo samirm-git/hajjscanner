@@ -7,7 +7,7 @@
       "nights": {
         "type": ["integer", "null"],
         "minimum": 1,
-        "maximum": 10
+        "maximum": 20
       },
       "name": {
         "type": ["string", "null"],
@@ -46,6 +46,11 @@
       "walkToHaram": {
         "description": "time taken to walk to the haram in minutes",
         "type": ["number","null"],
+        "minimum": 1
+      },
+      "driveToHaram":{
+        "description": "time taken to drive to haram in minutes",
+        "type": ["number", "null"],
         "minimum": 1
       },
       "numberOfBeds":{
