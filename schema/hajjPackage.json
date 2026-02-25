@@ -9,6 +9,11 @@
     "description": "company name",
     "type": "string"
     },
+    "url":{
+      "description": "url to package details",
+      "type": "string",
+      "format": "uri"
+    },
     "ppp" : {
       "description": "price per night in £", 
       "type": ["number", "null"]

@@ -1,6 +1,8 @@
 import re, sys
 from helpers import makeRequest, getSoup, removeFooterHeaderNav
 from pprint import pprint
+from scraper import scrapePackage
+from upload import uploadPackageDataToS3
 
 
 def scrapeLinksSitemap(soup):
@@ -41,8 +43,10 @@ def filterPackages(packageList):
 
 
 def scrapePackages(packageUrls):
-  for package in packageUrls:
-    continue
+  for url in packageUrls:
+    packageInfo = scrapePackage(url)
+    uploadPackageDataToS3(packageInfo)
+  ##TODO: FIX LLM CALL TO ATLEAST ALWAYS PROVIDE NULL ON THE REQUIRED PROPERTIES
   ##TODO: CALL THE SCRAPER.PY ON ALL THE PACKAGES 
   ##TODO: SET UP BOTO3 (AWS PYTHON SDK) TO SEND OUTPUT JSON FILES TO S3 STORAGE
   ##TODO: FINISH scrapeLinksFromHomePage() function
@@ -79,7 +83,7 @@ hajjPackageAndCatalogue = filterPackages(hajjList)
 
 print(hajjPackageAndCatalogue)
 
-if len(hajjPackageAndCatalogue['packag']) < 10:
+if len(hajjPackageAndCatalogue['package']) < 10:
   scrapeLinksHomePage(hajjPackageAndCatalogue['catalogue'])
 
 if hajjPackageAndCatalogue['package']:

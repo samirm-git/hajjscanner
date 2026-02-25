@@ -1,5 +1,6 @@
 import boto3
 import uuid
+import json
 from botocore.exceptions import ClientError
 s3 = boto3.client('s3')
 
@@ -8,9 +9,13 @@ def getID():
   return id
 
 
-def uploadPackageDataToS3(jsonData, company):
+def uploadPackageDataToS3(packageInfo, company=None):
+  if company == None:
+    company = packageInfo["company"]
+  
+  packageInfo = json.dumps(packageInfo, indent=4)
   try:
-    response = s3.put_object(Bucket='hajjpackagedata', Key=f'raw/{company}/{getID()}', Body=jsonData, ContentType='application/json')
+    response = s3.put_object(Bucket='hajjpackagedata', Key=f'raw/{company}/{getID()}', Body=packageInfo, ContentType='application/json')
   except ClientError as e:
     print(e)
 

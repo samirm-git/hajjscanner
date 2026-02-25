@@ -83,7 +83,7 @@ def scrapePackage(url):
     'madinahHotel': scrapeHotelInformation,
     'isVisaIncluded': scrapeIsVisaIncluded
   }
-  packageInfo = {}
+  packageInfo = {'url':url}
 
 
   resp = makeRequest(url)
@@ -105,11 +105,11 @@ def scrapePackage(url):
       packageInfo[key] = packageInfoResolvers[key](soup)
     
 
-  fname = urls[userChosenUrl][8:-1].replace("/","").replace("\\","")
-  with open(f'scraperOutputs/{fname}.txt','a') as f:
-    f.write("=====================================")
-    json.dump(packageInfo, f, indent=4)
-    f.write('\n')
+  # fname = url[8:-1].replace("/","").replace("\\","")
+  # with open(f'scraperOutputs/{fname}.txt','a') as f:
+  #   f.write("=====================================")
+  #   json.dump(packageInfo, f, indent=4)
+  #   f.write('\n')
 
   validateData(packageInfo)
   return packageInfo
@@ -187,7 +187,7 @@ if __name__ == "__main__":
   # temp2 = json.dumps(temp, indent=4)
   # uploadPackageDataToS3(temp2, 'alhaqtravel') 
   packageInfo = scrapePackage(urls[userChosenUrl]) 
-  uploadPackageDataToS3(json.dumps(packageInfo, indent=4), packageInfo["company"])
+  uploadPackageDataToS3(packageInfo, packageInfo["company"])
 
 
 

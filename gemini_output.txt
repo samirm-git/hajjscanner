@@ -479,3 +479,143 @@ null
   "numberOfBeds": 2
 }
 {"nights": 10, "name": "Hilton Suites Hotel", "stars": 5, "hasFreeWifi": true, "hasAC": true, "otherAmenities": "Wheelchair Friendly, City View, Half board buffet in Hotel", "distanceToHaram": null, "walkToHaram": 7, "numberOfBeds": null}
+{"nights":null,"name":"Elaf Kinda Hotel","stars":null,"hasFreeWifi":null,"hasAC":null,"otherAmenities":"Family-centric amenities including Kids Welcome and Kids Breakfast; group amenities like meeting rooms, business center, A/V equipment; variety of traditional and international dining options with Kinda and Al Dewaniah restaurants offering buffets and a la carte; various room types including standard, deluxe, and suites with twin sharing beds and sofa beds; personalised services; Haram view opportunities.","distanceToHaram":100,"walkToHaram":null,"numberOfBeds":2}
+{
+  "nights": null,
+  "name": "Pullman ZamZam Madina",
+  "stars": null,
+  "hasFreeWifi": null,
+  "hasAC": null,
+  "otherAmenities": "private, express check-in/check-out, concierge service, 24-hour front desk, and car hire service for airport transfers and Ziyarat visits. Dining options include The Horizon (international dishes), Acacia (casual meals), Al Mandara (traditional Arabian cuisine), and Atrium Lobby Café (light snacks and beverages).",
+  "distanceToHaram": 150,
+  "walkToHaram": 2,
+  "numberOfBeds": null
+}
+{
+"nights": null,
+"name": "Elaf Kinda Hotel",
+"stars": null,
+"hasFreeWifi": null,
+"hasAC": null,
+"otherAmenities": "panoramic vistas over the Holy Mosque, family centric arrangements, group amenities, variety of traditional dining options, personalised services, Kids Welcome, dedicated Kids Breakfast experience, group centric arrangements to organise meetings for group of pilgrims, dedicated business centre with meeting rooms and A/V equipment, finest and oriental restaurants, Kinda restaurant, Al Dewaniah Restaurant, variety of suites & room types with various exclusive amenities, haram and city views, spacious twin sharing beds, suites with sofa bed and marvel bedrooms",
+"distanceToHaram": 99,
+"walkToHaram": 1,
+"numberOfBeds": 2
+}
+{
+"nights": null,
+"name": "Pullman ZamZam Madina",
+"stars": null,
+"hasFreeWifi": null,
+"hasAC": null,
+"otherAmenities": "Variety of accommodation options (Superior, Deluxe, Family, Executive Rooms, Junior, Executive, and Royal Suites). Dining options include The Horizon (international dishes), Acacia (casual meals/coffee), Al Mandara (Arabian cuisine), and Atrium Lobby Café (light snacks/beverages). Services include private/express check-in/check-out, concierge service, 24-hour front desk, and car hire service for airport transfers and Ziyarat visits.",
+"distanceToHaram": 150,
+"walkToHaram": 2,
+"numberOfBeds": null
+}
+{
+  "nights": null,
+  "name": "Elaf Kinda Hotel",
+  "stars": null,
+  "hasFreeWifi": null,
+  "hasAC": null,
+  "otherAmenities": "family centric arrangements, group amenities, variety of traditional dining options including Kinda restaurant and Al Dewaniah Restaurant, personalised services, Kids Welcome, dedicated Kids Breakfast experience, group meeting arrangements, dedicated business centre with meeting rooms and A/V equipment, variety of suites and room types, spacious twin sharing beds, sofa bed",
+  "distanceToHaram": 100,
+  "walkToHaram": null,
+  "numberOfBeds": 2
+}
+{
+  "nights": null,
+  "name": "Pullman ZamZam Madina",
+  "stars": null,
+  "hasFreeWifi": null,
+  "hasAC": null,
+  "otherAmenities": "Various luxurious room types including Superior, Deluxe, Family, Executive, Junior Suites, Executive Suites, and Royal Suites with stunning Haram views. Multiple dining options including Horizon (international), Acacia (casual), Al Mandara (Arabian cuisine), and Atrium Lobby Café. Services include private and express check-in/check-out, concierge service, 24-hour front desk, and car hire service for airport transfers and Ziyarat visits.",
+  "distanceToHaram": 150,
+  "walkToHaram": 2,
+  "numberOfBeds": null
+}
+null
+{
+  "nights": null,
+  "name": "Pullman ZamZam Madina",
+  "stars": null,
+  "hasFreeWifi": null,
+  "hasAC": null,
+  "otherAmenities": "private, express check-in/check-out, concierge service, 24-hour front desk, car hire service for airport transfers and Ziyarat visits, various accommodation options (Superior Rooms, Deluxe Rooms, Family Rooms, Executive Rooms, Junior Suites, Executive Suites, Royal Suites), and dining options (The Horizon, Acacia, Al Mandara, Atrium Lobby Café).",
+  "distanceToHaram": 150,
+  "walkToHaram": 2,
+  "numberOfBeds": null
+}
+{
+"nights": null,
+"name": "Makkah Hotel",
+"stars": null,
+"hasFreeWifi": null,
+"hasAC": null,
+"otherAmenities": null,
+"distanceToHaram": null,
+"walkToHaram": null,
+"numberOfBeds": null
+}
+{
+"nights": null,
+"name": "Makkah Hotel",
+"stars": 5,
+"hasFreeWifi": null,
+"hasAC": true,
+"otherAmenities": "Two carpeted 10,000-seat prayer halls, rooms with city, mountain, Kaaba or Holy Haram Mosque views, desk, sofa, suite with separate living room and dining area, executive room with access to executive lounge, Al Fayhaa restaurant, Lagenda restaurant, Jasmin Caffe, Reflexology Health Centre, onsite shopping mall with 450 brand shops and a food court",
+"distanceToHaram": null,
+"walkToHaram": null,
+"numberOfBeds": null
+}
+{
+  "nights": 5,
+  "name": "TAIBA SUITES MADINAH",
+  "stars": null,
+  "hasFreeWifi": null,
+  "hasAC": null,
+  "otherAmenities": null,
+  "distanceToHaram": null,
+  "walkToHaram": null,
+  "numberOfBeds": 4
+}
+{
+"nights": 12,
+"name": "Makkah Hotel",
+"stars": null,
+"hasFreeWifi": null,
+"hasAC": null,
+"otherAmenities": null,
+"distanceToHaram": null,
+"walkToHaram": null,
+"driveToHaram": 8,
+"numberOfBeds": 4
+}
+{"nights":null,"name":"Makkah Hotel","stars":5,"hasFreeWifi":null,"hasAC":true,"otherAmenities":"Two air-conditioned and carpeted 10,000-seat prayer halls, desk, sofa, separate living room with dining area in suites, executive lounge access, Al Fayhaa restaurant, Lagenda international cuisine, Jasmin Caffe, Reflexology Health Centre, extensive onsite shopping mall with 450 brand shops and a food court.","distanceToHaram":50,"walkToHaram":1,"driveToHaram":null,"numberOfBeds":null}
+{
+  "nights": 5,
+  "name": "TAIBA SUITES MADINAH",
+  "stars": null,
+  "hasFreeWifi": null,
+  "hasAC": null,
+  "otherAmenities": "Hotel can be upgraded. Room type can be upgraded. Advance booking before December 2025 for instalment plan.",
+  "distanceToHaram": null,
+  "walkToHaram": null,
+  "driveToHaram": 13,
+  "numberOfBeds": 4
+}
+{"nights":12,"name":"Makkah Hotel","stars":null,"hasFreeWifi":null,"hasAC":null,"otherAmenities":null,"distanceToHaram":null,"walkToHaram":null,"driveToHaram":8,"numberOfBeds":4}
+{
+  "nights": null,
+  "name": "Makkah Hotel",
+  "stars": 5,
+  "hasFreeWifi": null,
+  "hasAC": true,
+  "otherAmenities": "Two air-conditioned and carpeted 10,000-seat prayer halls, city, mountain, Kaaba or Holy Haram Mosque views from rooms, desk and a sofa in rooms, suite with separate living room and dining area, executive room with access to executive lounge, Al Fayhaa restaurant, Lagenda international cuisine, Jasmin Caffe, Reflexology Health Centre for foot massages, onsite shopping mall with 450 brand shops and a food court.",
+  "distanceToHaram": 1,
+  "walkToHaram": 1,
+  "driveToHaram": null,
+  "numberOfBeds": null
+}
+{"nights":5,"name":"TAIBA SUITES MADINAH","stars":null,"hasFreeWifi":null,"hasAC":null,"otherAmenities":"upgrade options, advance booking service with instalment plan","distanceToHaram":null,"walkToHaram":null,"driveToHaram":13,"numberOfBeds":4}
