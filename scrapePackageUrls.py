@@ -55,7 +55,7 @@ def scrapePackages(packageUrls):
 
 
 if __name__ == "__main__":
-  if len(sys.argv) > 2:
+  if len(sys.argv) >= 2:
     userChosenUrl = int(sys.argv[1])
   else:
     userChosenUrl = 2
@@ -86,7 +86,7 @@ print(hajjPackageAndCatalogue)
 if len(hajjPackageAndCatalogue['package']) < 10:
   scrapeLinksHomePage(hajjPackageAndCatalogue['catalogue'])
 
-if hajjPackageAndCatalogue['package']:
-  scrapePackages(hajjPackageAndCatalogue['package'])
+# if hajjPackageAndCatalogue['package']:
+#   scrapePackages(hajjPackageAndCatalogue['package'])
   
 
