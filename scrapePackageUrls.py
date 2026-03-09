@@ -2,56 +2,74 @@ import re, sys
 from helpers import makeRequest, getSoup, removeFooterHeaderNav
 from scraper import scrapePackage
 from upload import uploadPackageDataToS3
+from tqdm import tqdm
+import time
 
+HAJJREGEX = re.compile(r"hajj[-_]?package", re.IGNORECASE) 
+UMRAHREGEX = re.compile(r"umrah?[-_]?package", re.IGNORECASE)
 
-def scrapeLinksSitemap(soup):
-  hajjPackageUrls = []
-  umrahPackageUrls = []
-  for urlTag in soup.find_all("url"):
-    url = urlTag.find("loc").get_text(strip=True)
-    #TODO: IF last-modified IS VERY OLD DON'T USE IT
-    if re.search(r"hajj[-_]?package", url, re.IGNORECASE):
-      lastModified = urlTag.find("lastmod").get_text(strip=True)
-      hajjPackageUrls.append({'url':url, 'last-modified': lastModified})
-    elif re.search(r"umrah?[-_]?package", url, re.IGNORECASE):
-      lastModified = urlTag.find("lastmod").get_text(strip=True)
-      umrahPackageUrls.append({'url': url, 'last-modified': lastModified})
+def scrapeLinksHomePage(baseUrl, regex):
+  return []
+
+def scrapeLinksCatalogue(cataloguePages: list, regex):
+  out = set()
+  for url in cataloguePages:
+    resp = makeRequest(url)
+    soup = getSoup(resp.text, parser="lxml")
+    links = {a["href"] for a in  soup.find_all("a", href=regex)}
+    out.update(links)
+
+  return list(out)
+
+def getSitemapSoup(baseUrl):
+  sitemapUrls = [baseUrl + "sitemap.xml", baseUrl + "page-sitemap.xml"]
+  out = []
+  while sitemapUrls:
+    url = sitemapUrls.pop()
+    resp = makeRequest(url)
+    if resp.status_code == 200 or resp.status_code == 304:
+      soup = getSoup(resp.text, parser='xml')
+      soup = removeFooterHeaderNav(soup)
+      out.append(soup)
   
-  return (hajjPackageUrls, umrahPackageUrls)
+  return out
+
+
+def scrapeLinksSitemap(sitemapSoups, regex):
+  out = set()
+  for soup in sitemapSoups:
+    for urlTag in soup.find_all("url"):
+      link = urlTag.find("loc", string=regex)
+      if link:
+          out.add(link.get_text(strip=True))
+      #TODO: IF last-modified IS VERY OLD DON'T USE IT
+      lastmodTag = urlTag.find("lastmod")
+      lastModified = lastmodTag.get_text(strip=True) if lastmodTag else None
     
-def scrapeLinksHomePage(soup):
-  print("hi")
+  return list(out)
 
-  return None, None
 
-def filterPackages(packageList):
-  packageAllUrls = {'package':[], 'catalogue':[]}
-  for package in packageList:
-    resp = makeRequest(package['url'])
-    soup = getSoup(resp.text, 'lxml')
-    soup = removeFooterHeaderNav(soup)
-    numberOfLinks = len(soup.find_all("a", href=True))
-    if numberOfLinks > 10:
-      packageAllUrls['catalogue'].append(package['url'])
-      print(f"CATALOGUE PAGE: {package['url']} :  {numberOfLinks}")
-    else:
-      packageAllUrls['package'].append(package['url'])
-      print(f"PACKAGE PAGE: {package['url']} :  {numberOfLinks}")
+def scrapeLinksFromHomePage(soup, regex):
+  return 
   
-  return packageAllUrls
-
 
 def scrapePackages(packageUrls):
   for url in packageUrls:
     packageInfo = scrapePackage(url)
     uploadPackageDataToS3(packageInfo)
   ##TODO: FIX LLM CALL TO ATLEAST ALWAYS PROVIDE NULL ON THE REQUIRED PROPERTIES
-  ##TODO: CALL THE SCRAPER.PY ON ALL THE PACKAGES 
-  ##TODO: SET UP BOTO3 (AWS PYTHON SDK) TO SEND OUTPUT JSON FILES TO S3 STORAGE
-  ##TODO: FINISH scrapeLinksFromHomePage() function
-  ##TODO: HANDLE WEBPAGES THAT HAVE MULTIPLE SITEMAPS E.G. sitemap/offer (see alamanah travel)
+  ##TODO: HANDLE RELATIVE ULRS RETURNED BY THE scrapeLinksFromCataloguePage()
   return 0
 
+
+def scrapePackageUrls(baseUrl, regex):
+  sitemapSoups = getSitemapSoup(baseUrl)
+  urls = scrapeLinksSitemap(sitemapSoups, regex)
+  homepageUrls = scrapeLinksHomePage(baseUrl, regex)
+  #TODO: Complete scrapeLinksHomePage()
+  urls.extend(homepageUrls)
+  return urls
+  
 
 if __name__ == "__main__":
   if len(sys.argv) >= 2:
@@ -61,31 +79,16 @@ if __name__ == "__main__":
 
 with open('providers.txt','r') as f:
   providerList = f.read().splitlines()
-
-sitemapurl = providerList[userChosenUrl] + "sitemap.xml"
-
-print(sitemapurl)
-resp = makeRequest(sitemapurl)
-
-match resp.status_code:
-  case 200 | 304:
-    soup = getSoup(resp.text, parser="xml")
-    hajjList, umrahList = scrapeLinksSitemap(soup)
-  case 301:
-    soup = getSoup(resp.text, parser="lxml")
-    hajjList, umrahList = scrapeLinksHomePage(soup)
-
+print(providerList[userChosenUrl])
 print("")
+
+hajjUrls = scrapePackageUrls(providerList[userChosenUrl], HAJJREGEX)
+print(f"hajjUrls: {hajjUrls}")
+print(f"NUM hajjUrls: {len(hajjUrls)}")
 print("")
-hajjPackageAndCatalogue = filterPackages(hajjList)
-# umrahPackageUrls, umrahCatalogueUrls = filterPackages(umrahPackageUrls)
 
-print(hajjPackageAndCatalogue)
+umrahUrls = scrapePackageUrls(providerList[userChosenUrl], UMRAHREGEX)
+print(f"umrahUrls: {umrahUrls}")
+print(f"NUM umrahUrls: {len(umrahUrls)}")
 
-if len(hajjPackageAndCatalogue['package']) < 10:
-  scrapeLinksHomePage(hajjPackageAndCatalogue['catalogue'])
-
-# if hajjPackageAndCatalogue['package']:
-#   scrapePackages(hajjPackageAndCatalogue['package'])
-  
 

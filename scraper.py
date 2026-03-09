@@ -92,6 +92,12 @@ def scrapePackage(url):
   if soup.find("main"):
     soup = soup.find("main")
 
+  nLinks = len(soup.find_all("a", href=True))
+  if nLinks > 10:
+    #IF MORE THAN 10 LINKS IT IS LIKELY TO BE A CATALOGUE PAGE NOT A PACKAGE DETAILS PAGE
+    #TODO: HANDLE CATALOGUE PAGE TO FIND PACKAGE DETAILS PAGES
+    return 
+
   packageInfo['company'] = scrapeCompanyFromUrl(url)
   for key in packageInfoResolvers.keys():
     if packageInfo.get(key, False):
