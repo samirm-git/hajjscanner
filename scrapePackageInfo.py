@@ -71,8 +71,7 @@ def scrapeIsVisaIncluded(soup):
       return None
   
 
-def scrapePackage(url):
-  print(f"url: {url}")
+def scrapePackageInfo(url):
   packageInfoResolvers = {
     'ppp': scrapePPP,
     'total_days': scrapeTotalDays,
@@ -192,7 +191,7 @@ if __name__ == "__main__":
   
   # temp2 = json.dumps(temp, indent=4)
   # uploadPackageDataToS3(temp2, 'alhaqtravel') 
-  packageInfo = scrapePackage(urls[userChosenUrl]) 
+  packageInfo = scrapePackageInfo(urls[userChosenUrl]) 
   uploadPackageDataToS3(packageInfo, packageInfo["company"])
 
 

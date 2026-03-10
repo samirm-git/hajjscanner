@@ -53,7 +53,7 @@ def remove_property(schema: dict, propName: str) -> None:
 
 def LLMPrompter(client, containerText, hotelSchema):
   response = client.models.generate_content(
-  model="gemini-2.5-flash",
+  model="gemini-2.5-flash-lite",
   contents=f"""Extract hotel information from the text below. Infer where reasonable (e.g. 'Quad'=4 beds, 'days'='nights', drive time is not walk time). Do any necessary metric conversions e.g. miles to metres. Use null if genuinely unavailable.
 
 Text:

@@ -1,12 +1,5 @@
 import re, sys
 from helpers import makeRequest, getSoup, removeFooterHeaderNav
-from scraper import scrapePackage
-from upload import uploadPackageDataToS3
-from tqdm import tqdm
-import time
-
-HAJJREGEX = re.compile(r"hajj[-_]?package", re.IGNORECASE) 
-UMRAHREGEX = re.compile(r"umrah?[-_]?package", re.IGNORECASE)
 
 def scrapeLinksHomePage(baseUrl, regex):
   return []
@@ -53,15 +46,6 @@ def scrapeLinksFromHomePage(soup, regex):
   return 
   
 
-def scrapePackages(packageUrls):
-  for url in packageUrls:
-    packageInfo = scrapePackage(url)
-    uploadPackageDataToS3(packageInfo)
-  ##TODO: FIX LLM CALL TO ATLEAST ALWAYS PROVIDE NULL ON THE REQUIRED PROPERTIES
-  ##TODO: HANDLE RELATIVE ULRS RETURNED BY THE scrapeLinksFromCataloguePage()
-  return 0
-
-
 def scrapePackageUrls(baseUrl, regex):
   sitemapSoups = getSitemapSoup(baseUrl)
   urls = scrapeLinksSitemap(sitemapSoups, regex)
@@ -72,23 +56,25 @@ def scrapePackageUrls(baseUrl, regex):
   
 
 if __name__ == "__main__":
+  HAJJREGEX = re.compile(r"hajj[-_]?package", re.IGNORECASE) 
+  UMRAHREGEX = re.compile(r"umrah?[-_]?package", re.IGNORECASE)
   if len(sys.argv) >= 2:
     userChosenUrl = int(sys.argv[1])
   else:
     userChosenUrl = 2
 
-with open('providers.txt','r') as f:
-  providerList = f.read().splitlines()
-print(providerList[userChosenUrl])
-print("")
+  with open('providers.txt','r') as f:
+    providerList = f.read().splitlines()
+  print(providerList[userChosenUrl])
+  print("")
 
-hajjUrls = scrapePackageUrls(providerList[userChosenUrl], HAJJREGEX)
-print(f"hajjUrls: {hajjUrls}")
-print(f"NUM hajjUrls: {len(hajjUrls)}")
-print("")
+  hajjUrls = scrapePackageUrls(providerList[userChosenUrl], HAJJREGEX)
+  print(f"hajjUrls: {hajjUrls}")
+  print(f"NUM hajjUrls: {len(hajjUrls)}")
+  print("")
 
-umrahUrls = scrapePackageUrls(providerList[userChosenUrl], UMRAHREGEX)
-print(f"umrahUrls: {umrahUrls}")
-print(f"NUM umrahUrls: {len(umrahUrls)}")
+  umrahUrls = scrapePackageUrls(providerList[userChosenUrl], UMRAHREGEX)
+  print(f"umrahUrls: {umrahUrls}")
+  print(f"NUM umrahUrls: {len(umrahUrls)}")
 
 
