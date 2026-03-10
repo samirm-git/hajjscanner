@@ -71,8 +71,7 @@ def scrapeIsVisaIncluded(soup):
       return None
   
 
-def scrapePackage(url):
-  print(f"url: {url}")
+def scrapePackageInfo(url):
   packageInfoResolvers = {
     'ppp': scrapePPP,
     'total_days': scrapeTotalDays,
@@ -91,6 +90,12 @@ def scrapePackage(url):
   soup = removeFooterHeaderNav(soup)
   if soup.find("main"):
     soup = soup.find("main")
+
+  nLinks = len(soup.find_all("a", href=True))
+  if nLinks > 10:
+    #IF MORE THAN 10 LINKS IT IS LIKELY TO BE A CATALOGUE PAGE NOT A PACKAGE DETAILS PAGE
+    #TODO: HANDLE CATALOGUE PAGE TO FIND PACKAGE DETAILS PAGES
+    return 
 
   packageInfo['company'] = scrapeCompanyFromUrl(url)
   for key in packageInfoResolvers.keys():
@@ -186,7 +191,7 @@ if __name__ == "__main__":
   
   # temp2 = json.dumps(temp, indent=4)
   # uploadPackageDataToS3(temp2, 'alhaqtravel') 
-  packageInfo = scrapePackage(urls[userChosenUrl]) 
+  packageInfo = scrapePackageInfo(urls[userChosenUrl]) 
   uploadPackageDataToS3(packageInfo, packageInfo["company"])
 
 

@@ -619,3 +619,365 @@ null
   "numberOfBeds": null
 }
 {"nights":5,"name":"TAIBA SUITES MADINAH","stars":null,"hasFreeWifi":null,"hasAC":null,"otherAmenities":"upgrade options, advance booking service with instalment plan","distanceToHaram":null,"walkToHaram":null,"driveToHaram":13,"numberOfBeds":4}
+{
+"nights": null,
+"name": "Anjum Makkah Hotel",
+"stars": null,
+"hasFreeWifi": null,
+"hasAC": true,
+"otherAmenities": "Exclusive access to Grand Mosque, stunning views over the Holy Haram, personalized service, Heera Lounge on level 26 with unlimited beverages and snacks, diverse dining options (local, continental, oriental), 24/7 complimentary butler service, largest parking lot with valet services, and a unique piazza with fresh smoothies.",
+"distanceToHaram": 38.1,
+"walkToHaram": 1,
+"driveToHaram": null,
+"numberOfBeds": null
+}
+{
+  "nights": null,
+  "name": "Crowne Plaza Madinah",
+  "stars": 5,
+  "hasFreeWifi": true,
+  "hasAC": true,
+  "otherAmenities": "Flat-screen TVs, premium bedding, lavish en-suite bathrooms, coffee and tea-making facilities, outsourced GYM, prayer hall for men and women, 82 parking spaces, business centre with well-appointed six meeting rooms, high-speed WiFi and the latest audio-visual facilities in meeting rooms.",
+  "distanceToHaram": 300,
+  "walkToHaram": null,
+  "driveToHaram": null,
+  "numberOfBeds": null
+}
+{
+"nights": null,
+"name": "Le Meridien Towers Makkah",
+"stars": null,
+"hasFreeWifi": null,
+"hasAC": null,
+"otherAmenities": "various dining and food options, personalised services, shuttle services towards Haram, Asian, Moroccan and Gulf restaurants, Middle East Restaurant",
+"distanceToHaram": null,
+"walkToHaram": null,
+"driveToHaram": 5,
+"numberOfBeds": 2
+}
+{
+  "nights": null,
+  "name": "Al Aqeeq Madinah Hotel",
+  "stars": null,
+  "hasFreeWifi": null,
+  "hasAC": true,
+  "otherAmenities": "Minibar, private bathrooms with shower, hair dryer, complimentary toiletries, 24-hour room service, closet, electric kettle, 24-hour front desk, mini-market, two restaurants, coffee shop (serving Starbucks), various on-site shops.",
+  "distanceToHaram": null,
+  "walkToHaram": 8.5,
+  "driveToHaram": null,
+  "numberOfBeds": null
+}
+{
+  "nights": null,
+  "name": "Elaf Al Mashaer Hotel Makkah",
+  "stars": null,
+  "hasFreeWifi": true,
+  "hasAC": true,
+  "otherAmenities": "24/7 concierge, smoking-free rooms, room service, family-friendly facilities like wheelchairs and amenities for kids, on-site dining (Al Multazim Restaurant with buffet-style international and Arabic dishes, Al Maqam Café for light meals, snacks, and beverages), 24-hour in-room dining.",
+  "distanceToHaram": 400,
+  "walkToHaram": 5,
+  "driveToHaram": null,
+  "numberOfBeds": null
+}
+{
+  "nights": 1,
+  "name": "Al Madinah Harmony Hotel",
+  "stars": 5,
+  "hasFreeWifi": true,
+  "hasAC": true,
+  "otherAmenities": "On-site dining options, Al Harmony Restaurant (local and international cuisines), Coffee Shop (light snacks and beverages), 24/7 Front desk, room service, valet parking, housekeeping.",
+  "distanceToHaram": 833,
+  "walkToHaram": 10,
+  "driveToHaram": null,
+  "numberOfBeds": 1
+}
+{
+  "nights": null,
+  "name": "Mövenpick Hotel & Residence Hajar Tower Makkah",
+  "stars": 5,
+  "hasFreeWifi": null,
+  "hasAC": null,
+  "otherAmenities": "Direct connection to the Holy Haram with two direct access points, close proximity to the King Abdul Aziz Gate providing direct and convenient access to the Grand Mosque, five versatile dining options with a variety of on-site restaurants offering both international and local cuisines, Al Naim Restaurant, Al Diwan Restaurant, Al Firdaous, Hajar Restaurant, Al Nasma Café, 60 minutes of complimentary chocolate indulgence every afternoon during signature Chocolate Hour, direct access to the shopping mall within the Abraj Al Bait complex.",
+  "distanceToHaram": null,
+  "walkToHaram": 60,
+  "driveToHaram": null,
+  "numberOfBeds": null
+}
+{
+  "nights": null,
+  "name": "Anwar Al Madinah Mövenpick Hotel",
+  "stars": null,
+  "hasFreeWifi": true,
+  "hasAC": null,
+  "otherAmenities": "flat screen TV, mini fridges, 3 restaurants, serving Persian, Arabic or international cuisine, a cafe, chocolate indulgence",
+  "distanceToHaram": null,
+  "walkToHaram": 6,
+  "driveToHaram": null,
+  "numberOfBeds": null
+}
+{
+  "nights": null,
+  "name": "Raffles Makkah Palace",
+  "stars": 5,
+  "hasFreeWifi": true,
+  "hasAC": null,
+  "otherAmenities": "24/7 room service, parking area",
+  "distanceToHaram": 290,
+  "walkToHaram": 4,
+  "driveToHaram": null,
+  "numberOfBeds": 1
+}
+{
+  "nights": null,
+  "name": "Intercontinental Dar Al Iman",
+  "stars": 5,
+  "hasFreeWifi": true,
+  "hasAC": null,
+  "otherAmenities": "24-hour room service, business centre, fully equipped fitness centre",
+  "distanceToHaram": 50,
+  "walkToHaram": 2,
+  "driveToHaram": 20,
+  "numberOfBeds": null
+}
+{
+  "nights": null,
+  "name": "Retaj Al Bayt Suites",
+  "stars": null,
+  "hasFreeWifi": null,
+  "hasAC": null,
+  "otherAmenities": "safe deposit box, work desk, seating area, wardrobe, connecting rooms, telephone, hair dryer, sofa, electric kettle, dining area, kitchenette, refrigerator, stove, flat-screen TV, wake-up service",
+  "distanceToHaram": 500,
+  "walkToHaram": 10,
+  "driveToHaram": null,
+  "numberOfBeds": 3
+}
+{
+  "nights": null,
+  "name": "Province Al Sham Hotel",
+  "stars": null,
+  "hasFreeWifi": true,
+  "hasAC": null,
+  "otherAmenities": "laundry service, room service, dry cleaning, luggage storage, safety deposit boxes, designated smoking area, daily housekeeping",
+  "distanceToHaram": null,
+  "walkToHaram": 2.0,
+  "driveToHaram": null,
+  "numberOfBeds": null
+}
+{
+  "nights": null,
+  "name": "Hilton Convention Hotel Makkah",
+  "stars": null,
+  "hasFreeWifi": true,
+  "hasAC": null,
+  "otherAmenities": "Shuttle service to Haram, Event spaces, Ballroom, Boardrooms, Dining options (Al Mustafa, Azure, Sahtein), Executive lounge access, Complimentary breakfast and refreshments, Catering, A/V services",
+  "distanceToHaram": 600,
+  "walkToHaram": 10,
+  "driveToHaram": null,
+  "numberOfBeds": null
+}
+{
+  "nights": null,
+  "name": "Al Rawda Royal Inn",
+  "stars": 5,
+  "hasFreeWifi": null,
+  "hasAC": null,
+  "otherAmenities": "24/7 reception, room service, business centre, laundry, dry cleaning, and ironing service, dining facilities, Al Rawda Restaurant, Café Royal",
+  "distanceToHaram": 30,
+  "walkToHaram": null,
+  "driveToHaram": null,
+  "numberOfBeds": null
+}
+{
+  "nights": null,
+  "name": "Elaf Kinda Hotel",
+  "stars": null,
+  "hasFreeWifi": null,
+  "hasAC": null,
+  "otherAmenities": "Family centric arrangements, group amenities, variety of traditional dining options, personalised services, Haram view opportunities, family exclusive amenities, Children below the age of 12 enjoy Kids Welcome during national or school holidays and a dedicated Kids Breakfast experience, group centric arrangements to organise meetings for group of pilgrims, 10-15 rooms can be reserved together for keeping attendees together, dedicated business centre with meeting rooms and A/V equipment, oriental restaurants, light bites, coffee, and other beverages throughout the day, Kinda restaurant on the R1 floor with views over the Holy Mosque, it specialises in international cuisine, offering a buffet breakfast and à la carte lunch and dinner, Al Dewaniah Restaurant provide buffet on the R2 floor with views over the Holy Mosque, it specialises in selected international and Far Eastern cuisine, offering a buffet breakfast and a Far Eastern buffet lunch, variety of suites & rooms types with various exclusive amenities, haram and city views and various perks, The standard and deluxe rooms offer city view, partial view or direct Ka’bah view, the suites with city, Ka’bah or full birds eye view of Grand mosque from high floor offer spacious stay with sofa bed and marvel bedrooms.",
+  "distanceToHaram": 100,
+  "walkToHaram": null,
+  "driveToHaram": null,
+  "numberOfBeds": 2
+}
+{
+  "nights": null,
+  "name": "Pullman ZamZam Madina",
+  "stars": null,
+  "hasFreeWifi": null,
+  "hasAC": null,
+  "otherAmenities": "Concierge service, 24-hour front desk, car hire service for airport transfers and Ziyarat visits, private, express check-in/check-out",
+  "distanceToHaram": 150.0,
+  "walkToHaram": 2.0,
+  "driveToHaram": null,
+  "numberOfBeds": null
+}
+{
+  "nights": null,
+  "name": "Pullman ZamZam",
+  "stars": null,
+  "hasFreeWifi": null,
+  "hasAC": null,
+  "otherAmenities": "direct access to Haram, prime location adjacent to Haram, elegrant rooms and suites as well as finest hospitality, luxurious studios and suites with various exclusive amenities, views at Haram and perks, Haram view options and well decorated interior, deluxe rooms as well as presidential and junior suites, spacious interior and luxurious décor, windows that overlook the Haram and sound system that is linked to Holy mosque, allowing worshippers to follow prayers or listen to Salah from comfort of their rooms, diverse dining options and food serving options allow guests to enjoy international and oriental specialities from comfort of their private or experience Hijazi hospitality at the hotel restaurant, directly connected to Clock tower complex with extensive shopping collection including 450 stores",
+  "distanceToHaram": 100,
+  "walkToHaram": null,
+  "driveToHaram": null,
+  "numberOfBeds": null
+}
+{
+  "nights": null,
+  "name": "Al Eiman Royal Madinah",
+  "stars": 5,
+  "hasFreeWifi": null,
+  "hasAC": null,
+  "otherAmenities": "24-hour room service, airport transfer, luggage storage, concierge service, wardrobe, minibar, private bathroom",
+  "distanceToHaram": 100,
+  "walkToHaram": null,
+  "driveToHaram": null,
+  "numberOfBeds": null
+}
+{
+  "nights": null,
+  "name": "Mövenpick Hotel & Residence Hajar Tower Makkah",
+  "stars": 5,
+  "hasFreeWifi": null,
+  "hasAC": null,
+  "otherAmenities": "Five versatile dining options, on-site restaurants offering international and local cuisines, Al Naim Restaurant, Al Diwan Restaurant, Al Firdaous, Hajar Restaurant, Al Nasma Café, complimentary chocolate indulgence every afternoon, direct access to shopping mall.",
+  "distanceToHaram": null,
+  "walkToHaram": 60,
+  "driveToHaram": null,
+  "numberOfBeds": null
+}
+{
+  "nights": null,
+  "name": "Anwar Al Madinah Mövenpick Hotel",
+  "stars": null,
+  "hasFreeWifi": true,
+  "hasAC": null,
+  "otherAmenities": "flat screen TV, mini fridges, 3 restaurants, serving Persian, Arabic or international cuisine, cafe",
+  "distanceToHaram": null,
+  "walkToHaram": 6,
+  "driveToHaram": null,
+  "numberOfBeds": null
+}
+{
+  "nights": null,
+  "name": "Royal Majestic Hotel Makkah",
+  "stars": null,
+  "hasFreeWifi": null,
+  "hasAC": null,
+  "otherAmenities": "shops (on site), ironing service, mini fridge bar, coffee/tea making equipment, flat-screen TV with satellite channels, shops",
+  "distanceToHaram": 600,
+  "walkToHaram": null,
+  "driveToHaram": null,
+  "numberOfBeds": null
+}
+{
+  "nights": null,
+  "name": "Ramada Madinah Al Hamra Hotel",
+  "stars": null,
+  "hasFreeWifi": null,
+  "hasAC": null,
+  "otherAmenities": "24 hour front desk, a concierge, room service, free parking, private bathrooms with a bathtub",
+  "distanceToHaram": 700,
+  "walkToHaram": null,
+  "driveToHaram": null,
+  "numberOfBeds": null
+}
+{"nights": null, "name": "Anjum Makkah Hotel", "stars": null, "hasFreeWifi": null, "hasAC": true, "otherAmenities": "private and air-conditioned access to holy Haram through dedicated pathway, variety of suites & rooms types with various exclusive amenities, breath-taking views and perks, classic and deluxe twin or single rooms assure a view at Haram from window, king-sized lighted bed, deluxe suites offer guests a serene and private retreat, Royal suite with a 25 floor view that gazes over the Holy Haram, presidential suite with views across the Holy Haram, Grand presidential suite with an unforgettable view of Masjid al Haram, Grand royal suites with hand-picked artworks and the magnificent views overlooking the Holy Haram, exclusive access to the Heera Lounge on level 26 where guests can indulge in a signature luxury experience, enjoying unlimited beverages and snacks while taking in breathtaking views of the Holy Haram, Oriental food options, Restaurants inspired from Hijazi hospitality with various local and continental menu options, 24/7 complimentary butler service, largest parking lot in Makkah city with valet services and magnificent and unique piazza in entire Makkah city with access to fresh smoothies and oriental specialties", "distanceToHaram": 30.0, "walkToHaram": 1.0, "driveToHaram": null, "numberOfBeds": 2}
+{
+  "nights": null,
+  "name": "Crowne Plaza Madinah",
+  "stars": 5,
+  "hasFreeWifi": true,
+  "hasAC": null,
+  "otherAmenities": "GYM, prayer hall for men and women, business centre with six meeting rooms, high-speed WiFi and the latest audio-visual facilities",
+  "distanceToHaram": 300,
+  "walkToHaram": null,
+  "driveToHaram": null,
+  "numberOfBeds": null
+}
+{
+  "nights": null,
+  "name": "Massa Grand Hotel",
+  "stars": 4,
+  "hasFreeWifi": null,
+  "hasAC": null,
+  "otherAmenities": "safe deposit box, 24-hour reception, 24-hour security, Locker room, Room service, business center, Private parking",
+  "distanceToHaram": 900,
+  "walkToHaram": 12,
+  "driveToHaram": null,
+  "numberOfBeds": 4
+}
+{"nights": null, "name": "Zowar International Hotel", "stars": null, "hasFreeWifi": true, "hasAC": null, "otherAmenities": "restaurant, 24-hour front desk", "distanceToHaram": 180.0, "walkToHaram": null, "driveToHaram": null, "numberOfBeds": null}
+{
+  "nights": null,
+  "name": "Mövenpick Hotel & Residence Hajar Tower Makkah",
+  "stars": 5,
+  "hasFreeWifi": null,
+  "hasAC": null,
+  "otherAmenities": "Five versatile dining options including Al Naim Restaurant, Al Diwan Restaurant, Al Firdaous, Hajar Restaurant, and Al Nasma Café. Complimentary chocolate indulgence every afternoon during signature Chocolate Hour. Direct access to the shopping mall within the Abraj Al Bait complex.",
+  "distanceToHaram": null,
+  "walkToHaram": 60,
+  "driveToHaram": null,
+  "numberOfBeds": null
+}
+{
+  "nights": null,
+  "name": "Anwar Al Madinah Mövenpick Hotel",
+  "stars": null,
+  "hasFreeWifi": true,
+  "hasAC": null,
+  "otherAmenities": "flat screen TV, mini fridges, 3 restaurants, serving Persian, Arabic or international cuisine, as well as a cafe.",
+  "distanceToHaram": null,
+  "walkToHaram": 6,
+  "driveToHaram": null,
+  "numberOfBeds": null
+}
+{
+  "nights": null,
+  "name": "Massa Grand Hotel",
+  "stars": 4,
+  "hasFreeWifi": null,
+  "hasAC": null,
+  "otherAmenities": "Safe deposit box, 24-hour reception, 24-hour security, Locker room, Room service, business center. Private parking is available on site.",
+  "distanceToHaram": 900,
+  "walkToHaram": 12,
+  "driveToHaram": null,
+  "numberOfBeds": 2
+}
+{
+  "nights": null,
+  "name": "Elaf Meshal Al Salam Hotel",
+  "stars": null,
+  "hasFreeWifi": null,
+  "hasAC": null,
+  "otherAmenities": "Culinary delights, coffee shop, restaurant serving Saudi Arabian cuisine and international favourites.",
+  "distanceToHaram": 700,
+  "walkToHaram": null,
+  "driveToHaram": null,
+  "numberOfBeds": null
+}
+{
+  "nights": null,
+  "name": "Massa Grand Hotel",
+  "stars": 4,
+  "hasFreeWifi": null,
+  "hasAC": null,
+  "otherAmenities": "safe deposit box, 24-hour reception, 24-hour security, Locker room, Room service, business center, Private parking",
+  "distanceToHaram": 900,
+  "walkToHaram": 12,
+  "driveToHaram": null,
+  "numberOfBeds": null
+}
+{
+  "nights": null,
+  "name": "Elaf Meshal Al Salam Hotel",
+  "stars": null,
+  "hasFreeWifi": null,
+  "hasAC": null,
+  "otherAmenities": "easy yet exclusive access to holy Prophet’s Mosque, set of accommodation choices, range of culinary delights, and exceptional service experience, coffee shop, restaurant",
+  "distanceToHaram": 700,
+  "walkToHaram": null,
+  "driveToHaram": null,
+  "numberOfBeds": 2
+}

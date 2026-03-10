@@ -11,7 +11,7 @@ def getID():
 
 def uploadPackageDataToS3(packageInfo, company=None):
   if company == None:
-    company = packageInfo["company"]
+    company = packageInfo.get("company", "BADDATA")
   
   packageInfo = json.dumps(packageInfo, indent=4)
   try:
