@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 import os
 from google import genai
 from google.genai.types import GenerateContentConfig
-from helpers import loadHotelSchema
+from helpers import loadHotelSchema, isKeywordIncludedRegex
 
 load_dotenv()
 
@@ -76,9 +76,9 @@ Text:
 
     
 
-def scrapeHotelImages(container_soup):
+def scrapeHotelImages(soup):
   hotelImgs = set()
-  imgs = container_soup.find_all("img") #I think you can add a regex expression as a another parameter to make sure the image src does not include 'placeholder'
+  imgs = soup.find_all("img") #I think you can add a regex expression as a another parameter to make sure the image src does not include 'placeholder'
   if not len(imgs) > 3:
     return []
   for img in imgs:
@@ -91,6 +91,15 @@ def scrapeHotelImages(container_soup):
        hotelImgs.add(src)
   
   return hotelImgs
+
+def scrapeHasWifi(soup):
+  wifiRegex = isKeywordIncludedRegex("wifi")
+  return soup.find(string=wifiRegex) is not None 
+
+def scrapeHasAC(soup):
+  acRegex = isKeywordIncludedRegex("ac")
+  return soup.find(string=acRegex) is not None
+
 
 
 def checkCityinText(text, city):
@@ -110,7 +119,7 @@ def getChildContainerIDs(container):
 
   #TODO: ADD MANUAL SCRAPPING FOR ALL OTHER FIELDS. ONLY CALL LLM IF FIELDS ARE MISSING OR TO COMPARE ANSWERS
   # print(hotelSchema)
-def scrapeHotelInformation(soup, city):
+def scrapeHotelInfo(soup, city):
   city = city.lower()
   otherCity = 'madinah' if city == 'makkah' else 'makkah'
   hotelSchema = jsonUperCaseTypes(loadHotelSchema())

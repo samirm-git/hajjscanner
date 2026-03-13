@@ -1,7 +1,7 @@
 import re, json, sys
 from dotenv import load_dotenv
-from helpers import makeRequest, getSoup, removeFooterHeaderNav, loadHajjPackageSchema
-from hotelScraper import scrapeHotelInformation, HEADING_TAGS 
+from helpers import makeRequest, getSoup, removeFooterHeaderNav, isKeywordIncludedRegex
+from hotelScraper import scrapeHotelInfo, HEADING_TAGS 
 from validator import validateData
 from upload import uploadPackageDataToS3
 
@@ -57,7 +57,7 @@ def scrapeIsShifting(soup):
     return True
 
 def scrapeIsVisaIncluded(soup):
-  isVisaIncludedRegex = re.compile(r'\b(?:visa|visas?)\s+(?:is\s+)?(?:included|covered|provided|arranged|taken\s+care\s+of)\b|\b(?:includes?|with|including)\s+(?:visa|visas?)\b', re.IGNORECASE)
+  isVisaIncludedRegex = isKeywordIncludedRegex("visa")
   isVisaIncluded = bool(isVisaIncludedRegex.search(soup.get_text(strip=True)))
   if isVisaIncluded:
     return True
@@ -78,8 +78,8 @@ def scrapePackageInfo(url):
     # 'tier': scrapeTier,
     'stars': scrapeStars,
     'isShifting': scrapeIsShifting,
-    'makkahHotel': scrapeHotelInformation,
-    'madinahHotel': scrapeHotelInformation,
+    'makkahHotel': scrapeHotelInfo,
+    'madinahHotel': scrapeHotelInfo,
     'isVisaIncluded': scrapeIsVisaIncluded
   }
   packageInfo = {'url':url}
