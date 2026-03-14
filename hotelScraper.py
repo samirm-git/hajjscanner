@@ -1,55 +1,18 @@
-import re, json 
+import json 
 from dotenv import load_dotenv
 import os
 from google import genai
 from google.genai.types import GenerateContentConfig
 from helpers import loadHotelSchema, isKeywordIncludedRegex
+from gemini_helpers import *
+from consts import BAD_IMAGE_RE, CITY_PATTERNS, DISTANCE_RE, TO_METRES
 
 load_dotenv()
 
 GEMINI_KEY = os.getenv("GEMINI_API_KEY")
 CONTAINER_TAGS = ["div", "section", "article", "td", "tr"]
 HEADING_TAGS = ["h1", "h2", "h3", "h4", "h5", "h6", "small", "strong"]
-CITY_PATTERNS = {
-    "makkah": re.compile(r"\b(makkah|mecca|meccah|makah)\b", re.IGNORECASE),
-    "madinah": re.compile(r"\b(madinah|medina|medinah|madina)\b", re.IGNORECASE),
-}
-BAD_IMAGE = re.compile(r"(icon|place[-_]?holder)", re.IGNORECASE)
-  
 
-def jsonUperCaseTypes(obj):
-  unsupported = ["$schema", "$id", "title", "uniqueItems", "minLength", "maxLength"]
-  if isinstance(obj, dict):
-    result = {}
-    for key, value in obj.items():
-      if key in unsupported:
-        continue
-      elif key == "type":
-        if isinstance(value, str):
-          result[key] = value.upper()
-        elif isinstance(value, list):
-          assert len(value) == 2, "must only be max 2 types. The second type should be null"
-          assert value[1] == "null", "must only be max 2 types. The second type should be null"
-          result[key] = value[0].upper()
-          result['nullable'] = True
-        
-      elif key in ["$schema", "$id", "title"]:
-        # Skip JSON Schema metadata
-        continue
-      else:
-        result[key] = jsonUperCaseTypes(value)
-    return result
-    
-  elif isinstance(obj, list):
-    return [jsonUperCaseTypes(item) for item in obj]
-  else:
-    return obj
-
-def remove_property(schema: dict, propName: str) -> None:
-  schema.get("properties", {}).pop(propName, None)
-  if "required" in schema:
-      while propName in schema["required"]:
-          schema["required"].remove(propName)
 
 def LLMPrompter(client, containerText, hotelSchema):
   response = client.models.generate_content(
@@ -85,7 +48,7 @@ def scrapeHotelImages(soup):
     src = (img.get("data-src") or img.get("data-original") or img.get("data-lazy") or img.get("src"))
     if not src:
       continue
-    elif bool(BAD_IMAGE.search(src)):
+    elif bool(BAD_IMAGE_RE.search(src)):
         continue
     else:
        hotelImgs.add(src)
@@ -100,7 +63,19 @@ def scrapeHasAC(soup):
   acRegex = isKeywordIncludedRegex("ac")
   return soup.find(string=acRegex) is not None
 
+def scrapeDistanceToHaram(soup):
+  match = DISTANCE_RE.find(soup.get_text(strip=True))
+  if match:
+    distance = float(match.group("distance"))
+    unit = match.group("unit").lower()
+    if TO_METRES.get(unit, False) == False:
+      print(f"ERROR: unknown unit {unit}. Acceptable units: {TO_METRES.keys()}")
+    
+    return distance * TO_METRES[unit]
+  
 
+def scrapeWalkToHaram(soup):
+  pass
 
 def checkCityinText(text, city):
   if CITY_PATTERNS[city].search(text):
