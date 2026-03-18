@@ -1,5 +1,7 @@
 import re
 
+CONTAINER_TAGS = ["div", "section", "article", "td", "tr"]
+HEADING_TAGS = ["h1", "h2", "h3", "h4", "h5", "h6", "small", "strong"]
 CITY_PATTERNS = {
     "makkah": re.compile(r"\b(makkah|mecca|meccah|makah)\b", re.IGNORECASE),
     "madinah": re.compile(r"\b(madinah|medina|medinah|madina)\b", re.IGNORECASE),

@@ -3,16 +3,14 @@ from dotenv import load_dotenv
 import os
 from google import genai
 from google.genai.types import GenerateContentConfig
-from helpers import loadHotelSchema, isKeywordIncludedRegex
+from helpers import loadHotelSchema
 from gemini_helpers import *
-from consts import BAD_IMAGE_RE, CITY_PATTERNS, DISTANCE_RE, TO_METRES
+from consts import CITY_PATTERNS, CONTAINER_TAGS, HEADING_TAGS
+from scrapers import runScrapers, updateScrapedInfo
 
 load_dotenv()
 
 GEMINI_KEY = os.getenv("GEMINI_API_KEY")
-CONTAINER_TAGS = ["div", "section", "article", "td", "tr"]
-HEADING_TAGS = ["h1", "h2", "h3", "h4", "h5", "h6", "small", "strong"]
-
 
 def LLMPrompter(client, containerText, hotelSchema):
   response = client.models.generate_content(
@@ -37,46 +35,6 @@ Text:
     print(e)
     return None
 
-    
-
-def scrapeHotelImages(soup):
-  hotelImgs = set()
-  imgs = soup.find_all("img") #I think you can add a regex expression as a another parameter to make sure the image src does not include 'placeholder'
-  if not len(imgs) > 3:
-    return []
-  for img in imgs:
-    src = (img.get("data-src") or img.get("data-original") or img.get("data-lazy") or img.get("src"))
-    if not src:
-      continue
-    elif bool(BAD_IMAGE_RE.search(src)):
-        continue
-    else:
-       hotelImgs.add(src)
-  
-  return hotelImgs
-
-def scrapeHasWifi(soup):
-  wifiRegex = isKeywordIncludedRegex("wifi")
-  return soup.find(string=wifiRegex) is not None 
-
-def scrapeHasAC(soup):
-  acRegex = isKeywordIncludedRegex("ac")
-  return soup.find(string=acRegex) is not None
-
-def scrapeDistanceToHaram(soup):
-  match = DISTANCE_RE.find(soup.get_text(strip=True))
-  if match:
-    distance = float(match.group("distance"))
-    unit = match.group("unit").lower()
-    if TO_METRES.get(unit, False) == False:
-      print(f"ERROR: unknown unit {unit}. Acceptable units: {TO_METRES.keys()}")
-    
-    return distance * TO_METRES[unit]
-  
-
-def scrapeWalkToHaram(soup):
-  pass
-
 def checkCityinText(text, city):
   if CITY_PATTERNS[city].search(text):
     return True
@@ -92,8 +50,9 @@ def getChildContainerIDs(container):
   return out
 
 
-  #TODO: ADD MANUAL SCRAPPING FOR ALL OTHER FIELDS. ONLY CALL LLM IF FIELDS ARE MISSING OR TO COMPARE ANSWERS
-  # print(hotelSchema)
+
+#TODO: ADD MANUAL SCRAPPING FOR ALL OTHER FIELDS. ONLY CALL LLM IF FIELDS ARE MISSING OR TO COMPARE ANSWERS
+# print(hotelSchema)
 def scrapeHotelInfo(soup, city):
   city = city.lower()
   otherCity = 'madinah' if city == 'makkah' else 'makkah'
@@ -127,17 +86,13 @@ def scrapeHotelInfo(soup, city):
 
         fullText = container.get_text("\n", strip=True) # Use fullText as a fall back e.g. call AI model with fullText
         
-        llmOutput = LLMPrompter(client, fullText, hotelSchema)
-        hotelImages = scrapeHotelImages(container)
-        if llmOutput:
-          hotelInfo.update(llmOutput)
+        # llmOutput = LLMPrompter(client, fullText, hotelSchema)
+        newScrapedInfo = runScrapers(container, 'hotel info')
+        hotelInfo = updateScrapedInfo(oldScrapedInfo=hotelInfo, newScrapedInfo=newScrapedInfo)
 
-        if hotelImages:   
-          if hotelInfo.get('images', False):
-            hotelInfo['images'].update(hotelImages)
-          else:
-            hotelInfo["images"] = hotelImages
-    
+        # if llmOutput:
+          # hotelInfo.update(llmOutput)
+
 
   if hotelInfo == {}:
     return None
