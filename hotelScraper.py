@@ -96,7 +96,7 @@ def scrapeHotelInfo(soup, city):
 
   if hotelInfo == {}:
     return None
-  if hotelInfo.get("images", False):
+  if "images" in hotelInfo:
       hotelInfo["images"] = list(hotelInfo["images"])
   else:
       hotelInfo["images"] = None

@@ -47,12 +47,14 @@ def isKeywordIncludedRegex(keyword):
   pattern = rf"""
 \b
 (
-    {word}?\s+                # key or keys
-    (?:is\s+)?               # optional "is"
+    {word}s?\b              # key or keys
+    (?:[^.!?\n]*?)  
+    (?:is\s+|are\s+)?              # optional "is"
     (?:included|covered|provided|arranged|taken\s+care\s+of)
   |
     (?:includes?|including|has)\s+
-    {word}?
+    (?:[^.!?\n]*?)  
+    {word}s?\b
 )
 \b
 """

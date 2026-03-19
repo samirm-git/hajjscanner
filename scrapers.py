@@ -1,5 +1,5 @@
 import re
-from consts import HEADING_TAGS, BAD_IMAGE_RE, DISTANCE_RE, TO_METRES
+from consts import HEADING_TAGS, BAD_IMAGE_RE, DISTANCE_RE, TO_METRES, WALK_TIME_RE, WORD_TO_NUM
 from helpers import isKeywordIncludedRegex
 
 
@@ -17,7 +17,7 @@ def runScrapers(soup, scraperName):
 def updateScrapedInfo(oldScrapedInfo, newScrapedInfo):
   try:
     for key in newScrapedInfo.keys(): 
-      if oldScrapedInfo.get(key, False) == False:
+      if key not in oldScrapedInfo:
           oldScrapedInfo[key] = newScrapedInfo[key]
       else:
           if isinstance(oldScrapedInfo[key], list):
@@ -47,7 +47,7 @@ def updateScrapedInfo(oldScrapedInfo, newScrapedInfo):
 #==============================================
 def scrapeTotalDays(soup):
   for tag in soup.find_all(HEADING_TAGS):
-    text = tag.get_text(strip = True)
+    text = tag.text
     match = re.search(r"(\d+)[-\s]?(?:night|day)s?", text, re.IGNORECASE)
     if match:
       return int(match.group(1))
@@ -64,7 +64,7 @@ def scrapePPP(soup):
   #moreover, with soup.find(...) we can filter the containers we are searching through e.g heading [h1, h2, ..., h6] containers.
   priceContainer = soup.find(string=priceRegex)
   if priceContainer:
-    match = priceRegex.match(priceContainer.get_text(strip=True))
+    match = priceRegex.match(priceContainer.text)
     currency = match.group(1)
     #TODO: CONVERT CURRENCY TO STANDARD CURRENCY PRICE TO STANDARD CURRENCY E.G £
     price = match.group(2)
@@ -77,7 +77,7 @@ def scrapeTier(soup):
   tierRegex = re.compile(r"luxury|premium|economy", re.IGNORECASE)
   tierContainer = soup.find(string=tierRegex)
   if tierContainer:
-    return tierRegex.search(tierContainer.get_text(strip=True)).group(1)
+    return tierRegex.search(tierContainer.text).group(1)
   else: 
     return None
 
@@ -85,11 +85,11 @@ def scrapeStars(soup):
   starsRegex = re.compile(r'\b([1-5])\s*(?:-?\s*star|stars?)\b', re.IGNORECASE)
   starContainer = soup.find(string=starsRegex)
   if starContainer:
-    return int(starsRegex.search(starContainer.get_text(strip=True)).group(1))
+    return int(starsRegex.search(starContainer.text).group(1))
   return None
 
 def scrapeIsShifting(soup):
-  nonshifting = bool(re.search(r"\bnon[-\s]?shifting\b", soup.get_text(strip=True), re.IGNORECASE))  
+  nonshifting = bool(re.search(r"\bnon[-\s]?shifting\b", soup.text, re.IGNORECASE))  
   if nonshifting:
     return False
   else:
@@ -97,17 +97,8 @@ def scrapeIsShifting(soup):
 
 def scrapeIsVisaIncluded(soup):
   isVisaIncludedRegex = isKeywordIncludedRegex("visa")
-  isVisaIncluded = bool(isVisaIncludedRegex.search(soup.get_text(strip=True)))
-  if isVisaIncluded:
-    return True
-  else:
-    visaRegex = re.compile('visa', re.IGNORECASE)
-    visaContainer = soup.find(string=visaRegex)
-    if not visaContainer:
-      return False
-    else:
-      #REQUIRES FURTHER ANALYSIS. MAYBE PASS THE PARENT DIV TO LLM
-      return None
+  return  bool(isVisaIncludedRegex.search(soup.text))
+
 
 PACKAGEINFO_SCRAPERS = {
     'ppp': scrapePPP,
@@ -144,18 +135,20 @@ def scrapeHotelImages(soup):
 
 def scrapeHasWifi(soup):
   wifiRegex = isKeywordIncludedRegex("wifi")
-  return soup.find(string=wifiRegex) is not None 
+  return bool(wifiRegex.search(soup.text))
+  # return soup.find(string=wifiRegex) is not None 
 
 def scrapeHasAC(soup):
   acRegex = isKeywordIncludedRegex("ac")
-  return soup.find(string=acRegex) is not None
+  return bool(acRegex.search(soup.text))
+  # return soup.find(string=acRegex) is not None
 
 def scrapeDistanceToHaram(soup):
-  match = DISTANCE_RE.find(soup.get_text(strip=True))
+  match = DISTANCE_RE.search(soup.text)
   if match:
     distance = float(match.group("distance"))
     unit = match.group("unit").lower()
-    if TO_METRES.get(unit, False) == False:
+    if unit not in TO_METRES:
       print(f"ERROR: unknown unit {unit}. Acceptable units: {TO_METRES.keys()}")
     
     return distance * TO_METRES[unit]
@@ -164,12 +157,34 @@ def scrapeDistanceToHaram(soup):
   
 
 def scrapeWalkToHaram(soup):
-  pass 
+
+  def parse_time(value):
+    value = value.lower()
+    if value.isdigit():
+      return int(value)
+    else:
+      return WORD_TO_NUM.get(value)
+  
+  match = WALK_TIME_RE.search(soup.text)
+  if match:
+    t1 = parse_time(match.group("time1"))
+    t2 = parse_time(match.group("time2")) if match.group("time2") else None
+    if t2 is not None:
+      return t2
+    elif t1 is not None:
+      return t1
+
+  return None
+
 
 HOTEL_SCRAPERS = {
-  'name': scrapeHotelName,
+  # 'name': scrapeHotelName,
   'total_days': scrapeTotalDays,
-  'images': scrapeHotelImages
+  'images': scrapeHotelImages,
+  'hasWifi': scrapeHasWifi,
+  'hasAC': scrapeHasAC,
+  'distanceToHaram': scrapeDistanceToHaram,
+  'walkToHaram': scrapeWalkToHaram
 }
 
   
