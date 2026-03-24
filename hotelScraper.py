@@ -1,4 +1,5 @@
 import json 
+import re
 from dotenv import load_dotenv
 import os
 from google import genai
@@ -6,7 +7,7 @@ from google.genai.types import GenerateContentConfig
 from helpers import loadHotelSchema
 from gemini_helpers import *
 from consts import CITY_PATTERNS, CONTAINER_TAGS, HEADING_TAGS
-from scrapers import runScrapers, updateScrapedInfo
+from scrapers import runScrapers, updateScrapedInfo, scrapeHotelName
 
 load_dotenv()
 
@@ -36,7 +37,7 @@ Text:
     return None
 
 def checkCityinText(text, city):
-  if CITY_PATTERNS[city].search(text):
+  if re.search(CITY_PATTERNS[city], text, re.IGNORECASE):
     return True
   else:
     return False
@@ -48,7 +49,6 @@ def getChildContainerIDs(container):
     out.add(id(descendant))
   
   return out
-
 
 
 #TODO: ADD MANUAL SCRAPPING FOR ALL OTHER FIELDS. ONLY CALL LLM IF FIELDS ARE MISSING OR TO COMPARE ANSWERS
@@ -87,17 +87,15 @@ def scrapeHotelInfo(soup, city):
         fullText = container.get_text("\n", strip=True) # Use fullText as a fall back e.g. call AI model with fullText
         
         # llmOutput = LLMPrompter(client, fullText, hotelSchema)
+        hotelInfo['name'] = scrapeHotelName(container, city)
         newScrapedInfo = runScrapers(container, 'hotel info')
         hotelInfo = updateScrapedInfo(oldScrapedInfo=hotelInfo, newScrapedInfo=newScrapedInfo)
 
         # if llmOutput:
           # hotelInfo.update(llmOutput)
 
+  for key in hotelInfo.keys():
+    if isinstance(hotelInfo[key], set):
+      hotelInfo[key] = list(hotelInfo[key])
 
-  if hotelInfo == {}:
-    return None
-  if "images" in hotelInfo:
-      hotelInfo["images"] = list(hotelInfo["images"])
-  else:
-      hotelInfo["images"] = None
   return hotelInfo

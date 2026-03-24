@@ -3,11 +3,14 @@ import re
 CONTAINER_TAGS = ["div", "section", "article", "td", "tr"]
 HEADING_TAGS = ["h1", "h2", "h3", "h4", "h5", "h6", "small", "strong"]
 CITY_PATTERNS = {
-    "makkah": re.compile(r"\b(makkah|mecca|meccah|makah)\b", re.IGNORECASE),
-    "madinah": re.compile(r"\b(madinah|medina|medinah|madina)\b", re.IGNORECASE),
+    "makkah": r"\b(makkah|mecca|meccah|makah)\b",
+    "madinah": r"\b(madinah|medina|medinah|madina)\b",
 }
 
 BAD_IMAGE_RE = re.compile(r"(icon|place[-_]?holder)", re.IGNORECASE)
+HOTEL_KEYWORDS = [
+    "Al", "Amjad", "Dar", "DoubleTree", "Emaar", "Golden", "Grand" "Jawharat", "Karam", "Nusk", "Rua", "Sidra", "Wardat", "Wardah", "Suites", "Residence", "Hilton", "Hyatt", "Movenpick", "Pullman", "Swissotel"
+    ]
 
 DISTANCE_RE = re.compile(
   r"""
@@ -59,12 +62,14 @@ WORD_TO_NUM = {
 }
 
 WALK_TIME_RE = re.compile(
-  rf"""
-  \b
-  (?P<time1>{NUMBER_PATTERN})
-  (?:\s*(?:-|–|to)\s*(?P<time2>{NUMBER_PATTERN}))?   # optional range
-
-  \s*(?:mins?|minutes?)\b
-  """,
-  re.IGNORECASE | re.VERBOSE
+    rf"""
+    \b(?:walk(?:ing)?)\b[^.!?\n]{{0,50}}?
+    (?P<time1>{NUMBER_PATTERN})(?:\s*(?:-|–|to)\s*(?P<time2>{NUMBER_PATTERN}))?
+    \s*(?:mins?|minutes?)[\s'.,]*
+    |
+    \b(?P<time1b>{NUMBER_PATTERN})(?:\s*(?:-|–|to)\s*(?P<time2b>{NUMBER_PATTERN}))?
+    \s*(?:mins?|minutes?)[\s'.,]*[^.!?\n]{{0,50}}?
+    \b(?:walk(?:ing)?)\b
+    """,
+    re.IGNORECASE | re.VERBOSE
 )

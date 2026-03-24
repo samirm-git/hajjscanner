@@ -20,7 +20,10 @@ def scrapePackageInfo(url):
     soup = soup.find("main")
 
   nLinks = len(soup.find_all("a", href=True))
+  print(nLinks)
+  0/0
   if nLinks > 10:
+    print(f"{nLinks} links. This is a ossible catalogue page!")
     #IF MORE THAN 10 LINKS IT IS LIKELY TO BE A CATALOGUE PAGE NOT A PACKAGE DETAILS PAGE
     #TODO: HANDLE CATALOGUE PAGE TO FIND PACKAGE DETAILS PAGES
     return 
@@ -61,8 +64,10 @@ if __name__ == "__main__":
   # temp2 = json.dumps(temp, indent=4)
   # uploadPackageDataToS3(temp2, 'alhaqtravel') 
   packageInfo = scrapePackageInfo(urls[userChosenUrl]) 
-  uploadPackageDataToS3(packageInfo, packageInfo["company"])
-
+  if packageInfo["company"]:
+    uploadPackageDataToS3(packageInfo, packageInfo["company"])
+  else:
+    print("company name not found. Likely a package page")
 
 
 

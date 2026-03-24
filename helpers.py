@@ -11,7 +11,7 @@ def makeRequest(url):
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
       "AppleWebKit/537.36 (KHTML, like Gecko) "
       "Chrome/144.0.0.0 Safari/537.36"
-    ),
+    )
     # "Accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
     # "accept-encoding": "gzip, deflate, br, zstd",
     # "accept-language": "en-US,en;q=0.9",
@@ -25,10 +25,27 @@ def getSoup(respText, parser="html.parser"):
   return soup
 
 def removeFooterHeaderNav(soup):
-  for tag in soup.select("header, footer, nav"):
-    tag.decompose()
+    # Remove semantic tags
+    for tag in soup.select("header, footer, nav"):
+        tag.decompose()
 
-  return soup
+    # Remove elements whose class or id contains 'footer' or 'background'
+    keywords = ["footer", "background"]
+    for tag in list(soup.find_all(True)):  # materialise into a list first
+        if tag.attrs is None:
+            continue
+
+        tag_classes = tag.get("class", [])
+        tag_id = tag.get("id", "")
+
+        if any(
+            keyword in value
+            for keyword in keywords
+            for value in tag_classes + [tag_id]
+        ):
+            tag.decompose()
+
+    return soup
 
 def loadHotelSchema():
   hotelSchemaPath = Path(__file__).parent / "schema" / "hotel.json"

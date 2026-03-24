@@ -1,6 +1,7 @@
 import re
-from consts import HEADING_TAGS, BAD_IMAGE_RE, DISTANCE_RE, TO_METRES, WALK_TIME_RE, WORD_TO_NUM
+from consts import HEADING_TAGS, BAD_IMAGE_RE, HOTEL_KEYWORDS, DISTANCE_RE, TO_METRES, WALK_TIME_RE, WORD_TO_NUM
 from helpers import isKeywordIncludedRegex
+from hotelNamesScraper import HOTEL_NAMES_RE
 
 
 #MAIN FUNCTION
@@ -20,22 +21,26 @@ def updateScrapedInfo(oldScrapedInfo, newScrapedInfo):
       if key not in oldScrapedInfo:
           oldScrapedInfo[key] = newScrapedInfo[key]
       else:
-          if isinstance(oldScrapedInfo[key], list):
-            if isinstance(newScrapedInfo[key], list):
-              oldScrapedInfo[key].extend(newScrapedInfo[key])
-            else:
-              oldScrapedInfo[key].append(newScrapedInfo[key])
-              pass
+          if isinstance(oldScrapedInfo[key], set):
+            oldScrapedInfo[key] = list(oldScrapedInfo[key])
+          
+          if isinstance(newScrapedInfo[key], set):
+            newScrapedInfo[key] = list(newScrapedInfo[key])
 
-          elif isinstance(oldScrapedInfo[key], set):
-            if isinstance(newScrapedInfo[key], set):
-              oldScrapedInfo[key].update(newScrapedInfo[key])
-            else:
-              oldScrapedInfo[key].add(newScrapedInfo[key])
+          if isinstance(oldScrapedInfo[key], list) and isinstance(newScrapedInfo[key], list):
+              oldScrapedInfo[key].extend(newScrapedInfo[key])
 
           else:
             #NON LIST/SET TYPES. NEED TO HANDLE THIS COLISION. MAYBE USE LLM?
-            oldScrapedInfo[key] = [["COLLISION", oldScrapedInfo[key], newScrapedInfo[key]]]
+            if oldScrapedInfo[key] == newScrapedInfo[key]:
+              pass
+            elif newScrapedInfo[key] is None:
+              pass
+            elif oldScrapedInfo[key] is None:
+              oldScrapedInfo[key] = newScrapedInfo[key]
+            
+            elif oldScrapedInfo[key] != newScrapedInfo[key]:
+              oldScrapedInfo[key] = [["COLLISION", oldScrapedInfo[key], newScrapedInfo[key]]]
   except ValueError:
     print("error")
   
@@ -114,8 +119,12 @@ PACKAGEINFO_SCRAPERS = {
 #HOTEL SCRAPERS
 #==============================================
 
-def scrapeHotelName(soup):
-  pass
+def scrapeHotelName(soup, city):
+  for text in soup.stripped_strings:
+    match = HOTEL_NAMES_RE[city].search(text)
+    if match:
+      return match.group(0)
+  return None
 
 def scrapeHotelImages(soup):
   hotelImgs = set()
@@ -164,21 +173,24 @@ def scrapeWalkToHaram(soup):
       return int(value)
     else:
       return WORD_TO_NUM.get(value)
-  
+
   match = WALK_TIME_RE.search(soup.text)
   if match:
-    t1 = parse_time(match.group("time1"))
-    t2 = parse_time(match.group("time2")) if match.group("time2") else None
+    t1 = match.group("time1") or match.group("time1b")
+    t2 = match.group("time2") or match.group("time2b")
+    
+    t1 = parse_time(t1) if t1 else None
+    t2 = parse_time(t2) if t2 else None
+
     if t2 is not None:
-      return t2
+        return t2
     elif t1 is not None:
-      return t1
+        return t1 
 
   return None
 
 
 HOTEL_SCRAPERS = {
-  # 'name': scrapeHotelName,
   'total_days': scrapeTotalDays,
   'images': scrapeHotelImages,
   'hasWifi': scrapeHasWifi,
