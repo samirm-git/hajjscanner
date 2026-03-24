@@ -15,6 +15,8 @@ UMRAHREGEX = re.compile(r"umrah?[-_]?package", re.IGNORECASE)
 
 ##TODO: FIX LLM CALL TO ATLEAST ALWAYS PROVIDE NULL ON THE REQUIRED PROPERTIES
 ##TODO: HANDLE RELATIVE ULRS RETURNED BY THE scrapeLinksFromCataloguePage()
+##TODO: REVIEW ALHAQ SCRAPED DATA
+##TODO: ADD MIN AND MAX TO ONLY ALLOW SENSIBLE VALUES e.g. 85KM DISTANCE IS LIKELY TO BE TO THE AIRPORT AND NOT THE HARAM
 def main():
   start = time.time()
   path = getProjectRoot() / 'providers.txt'
@@ -25,7 +27,8 @@ def main():
   urls = tqdm(scrapePackageUrls(alhaqtravel, HAJJREGEX))
   for url in tqdm(urls):
     packageInfo = scrapePackageInfo(url)
-    uploadPackageDataToS3(packageInfo)
+    if packageInfo:
+      uploadPackageDataToS3(packageInfo, packageInfo["url"])
   
   print(f"time taken: {time.time() - start}")
 

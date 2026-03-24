@@ -31,12 +31,18 @@ def removeFooterHeaderNav(soup):
 
     # Remove elements whose class or id contains 'footer' or 'background'
     keywords = ["footer", "background"]
-    for tag in list(soup.find_all(True)):  # materialise into a list first
+    for tag in list(soup.find_all(True)):
         if tag.attrs is None:
             continue
 
         tag_classes = tag.get("class", [])
         tag_id = tag.get("id", "")
+
+        # Normalise both to lists of strings
+        if isinstance(tag_classes, str):
+            tag_classes = [tag_classes]
+        if isinstance(tag_id, list):
+            tag_id = " ".join(tag_id)
 
         if any(
             keyword in value

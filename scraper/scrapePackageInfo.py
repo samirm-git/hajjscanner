@@ -66,8 +66,8 @@ if __name__ == "__main__":
 
   print(urls[userChosenUrl]) 
   packageInfo = scrapePackageInfo(urls[userChosenUrl]) 
-  if packageInfo["company"]:
-    uploadPackageDataToS3(packageInfo, packageInfo["company"])
+  if packageInfo:
+    uploadPackageDataToS3(packageInfo, packageInfo["url"])
   else:
     print("company name not found. Likely a package page")
 
