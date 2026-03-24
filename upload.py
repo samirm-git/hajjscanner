@@ -13,7 +13,6 @@ def getID():
 
 
 def uploadPackageDataToS3(packageInfo, company=None):
-  print(f"inside main upload function: {str(s3._get_credentials().access_key)}")
   if company == None:
     company = packageInfo.get("company", "BADDATA")
   
