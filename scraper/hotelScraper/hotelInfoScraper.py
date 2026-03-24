@@ -1,15 +1,14 @@
 import json 
 import re
-from dotenv import load_dotenv
 import os
 from google import genai
 from google.genai.types import GenerateContentConfig
-from helpers import loadHotelSchema
-from gemini_helpers import *
-from consts import CITY_PATTERNS, CONTAINER_TAGS, HEADING_TAGS
-from scrapers import runScrapers, updateScrapedInfo, scrapeHotelName
+from scraper.helpers import loadHotelSchema, getProjectRoot
+from scraper.gemini_helpers import *
+from scraper.consts import CITY_PATTERNS, CONTAINER_TAGS, HEADING_TAGS
+from scraper.scrapers import runScrapers, updateScrapedInfo, scrapeHotelName
 
-load_dotenv()
+
 
 GEMINI_KEY = os.getenv("GEMINI_API_KEY")
 
@@ -24,7 +23,8 @@ Text:
   config=GenerateContentConfig(response_mime_type="application/json", response_schema=hotelSchema)
     )
 
-  with open('gemini_output.txt','a') as f:
+  path = getProjectRoot() / 'gemini_output.txt'
+  with open(path,'a') as f:
     f.write('\n')
     f.writelines(response.text)
 

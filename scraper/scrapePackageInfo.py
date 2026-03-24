@@ -1,15 +1,25 @@
-import sys, json
+import sys, json, os
 from dotenv import load_dotenv
-from helpers import makeRequest, getSoup, removeFooterHeaderNav
-from hotelScraper import scrapeHotelInfo 
+from scraper.helpers import makeRequest, getSoup, removeFooterHeaderNav, getProjectRoot
 from validator import validateData
 from upload import uploadPackageDataToS3
-from scrapers import scrapeCompanyFromUrl, runScrapers, updateScrapedInfo
+from scraper.scrapers import scrapeCompanyFromUrl, runScrapers, updateScrapedInfo
+from scraper.hotelScraper.hotelInfoScraper import scrapeHotelInfo 
 
-load_dotenv()  
+root = getProjectRoot()
+load_dotenv(dotenv_path= root/'.env.')
+
+def tempSave(packageInfo):
+  fname = url[8:-1].replace("/","").replace("\\","")
+  path = getProjectRoot() / 'scraperOutputs' / f"{fname}.txt"
+  with open(path,'a') as f:
+    f.write("=====================================")
+    json.dump(packageInfo, f, indent=4)
+    f.write('\n')
+
+
 
 def scrapePackageInfo(url):
-
   packageInfo = {'url':url}
 
 
@@ -20,8 +30,6 @@ def scrapePackageInfo(url):
     soup = soup.find("main")
 
   nLinks = len(soup.find_all("a", href=True))
-  print(nLinks)
-  0/0
   if nLinks > 10:
     print(f"{nLinks} links. This is a ossible catalogue page!")
     #IF MORE THAN 10 LINKS IT IS LIKELY TO BE A CATALOGUE PAGE NOT A PACKAGE DETAILS PAGE
@@ -37,17 +45,13 @@ def scrapePackageInfo(url):
 
   packageInfo['makkahHotel'] = scrapeHotelInfo(soup, 'makkah')
   packageInfo['madinahHotel'] = scrapeHotelInfo(soup, 'madinah')    
-
-  fname = url[8:-1].replace("/","").replace("\\","")
-  with open(f'scraperOutputs/{fname}.txt','a') as f:
-    f.write("=====================================")
-    json.dump(packageInfo, f, indent=4)
-    f.write('\n')
-
-  # validateData(packageInfo)
+  # tempSave(packageInfo)
+  validateData(packageInfo)
   return packageInfo
 
 if __name__ == "__main__":
+
+  
   url = "https://alamanahtravel.co.uk/14-days-5-star-non-shifting-hajj-package/"
   url2 = "https://www.safamarwahtravel.co.uk/deals/5-star-17-days-non-shifting-hajj-package/"
   url3 = "https://www.alhaqtravel.co.uk/book/24-days-shifting-hajj-packages/"
@@ -61,8 +65,6 @@ if __name__ == "__main__":
 
 
   print(urls[userChosenUrl]) 
-  # temp2 = json.dumps(temp, indent=4)
-  # uploadPackageDataToS3(temp2, 'alhaqtravel') 
   packageInfo = scrapePackageInfo(urls[userChosenUrl]) 
   if packageInfo["company"]:
     uploadPackageDataToS3(packageInfo, packageInfo["company"])

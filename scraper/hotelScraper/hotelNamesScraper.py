@@ -2,7 +2,8 @@ import requests
 import sys
 import re
 import unicodedata
-from consts import CITY_PATTERNS
+from pathlib import Path
+from scraper.consts import CITY_PATTERNS
 
 #TODO: REMOVE COMMON_WORDS_RE AND USE CITY_PATTERNS INSTEAD, AND REMOVE 'hotel' SEPARATELY
 def build_hotelName_regex(hotel_list):
@@ -12,10 +13,11 @@ def build_hotelName_regex(hotel_list):
     return re.compile(pattern, re.IGNORECASE)
 
 
-with open('makkah_hotels.txt', 'r') as f:
+path = Path(__file__).parent / "data"
+with open(path / 'makkah_hotels.txt', 'r') as f:
   makkahHotels = f.read().splitlines()
 
-with open('madinah_hotels.txt', 'r') as f:
+with open(path / 'madinah_hotels.txt', 'r') as f:
   madinahHotels = f.read().splitlines()
 
 HOTEL_NAMES_RE = {
@@ -103,7 +105,7 @@ def main(city, save=False):
     print(len(hotels))
       
     if save:
-      with open(f"{city}_hotels.txt", "w", encoding="utf-8") as f:
+      with open(path / f"{city}_hotels.txt", "w", encoding="utf-8") as f:
         for h in sorted(hotels):
             f.write(h + "\n")
 
@@ -116,7 +118,7 @@ def temp(city):
   for hotel in hotels:
     hotelsCleaned.add(clean_text(hotel))
   
-  with open(f"{city}_hotels.txt", "w", encoding="utf-8") as f:
+  with open(path / f"{city}_hotels.txt", "w", encoding="utf-8") as f:
     for h in sorted(hotelsCleaned):
       f.write(h + "\n")
 

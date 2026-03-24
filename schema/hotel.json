@@ -59,6 +59,6 @@
         "minimum": 1
       }
       },
-      "required": ["total_days", "name", "images", "stars", "hasFreeWifi", "hasAC", "distanceToHaram", "walkToHaram", "numberOfBeds"]
+      "required": ["total_days", "name", "images", "stars", "hasWifi", "hasAC", "distanceToHaram", "walkToHaram", "numberOfBeds"]
     }
       

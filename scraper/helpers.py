@@ -48,13 +48,13 @@ def removeFooterHeaderNav(soup):
     return soup
 
 def loadHotelSchema():
-  hotelSchemaPath = Path(__file__).parent / "schema" / "hotel.json"
+  hotelSchemaPath = getProjectRoot() / "schema" / "hotel.json"
   with open(hotelSchemaPath, 'r') as f:
     hotelSchema = json.load(f)
   return hotelSchema
 
 def loadHajjPackageSchema():
-  path = Path(__file__).parent / "schema" / "hajjPackage.json"
+  path = getProjectRoot() / "schema" / "hajjPackage.json"
   with open(path, 'r') as f:
     hajjPackageSchema = json.load(f)
   return hajjPackageSchema
@@ -76,3 +76,10 @@ def isKeywordIncludedRegex(keyword):
 \b
 """
   return re.compile(pattern, re.IGNORECASE | re.VERBOSE)
+
+def getProjectRoot(marker: str = ".gitignore") -> Path:
+    current = Path(__file__).resolve()
+    for parent in current.parents:
+        if (parent / marker).exists():
+            return parent
+    raise RuntimeError(f"{marker} not found")

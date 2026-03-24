@@ -1,5 +1,5 @@
 import re, sys
-from helpers import makeRequest, getSoup, removeFooterHeaderNav
+from scraper.helpers import makeRequest, getSoup, removeFooterHeaderNav
 
 def scrapeLinksHomePage(baseUrl, regex):
   return []

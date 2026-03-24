@@ -1,10 +1,14 @@
-from scrapePackageInfo import scrapePackageInfo
-from scrapePackageUrls import scrapePackageUrls
+from scraper.scrapePackageInfo import scrapePackageInfo
+from scraper.scrapePackageUrls import scrapePackageUrls
 from upload import uploadPackageDataToS3
+from scraper.helpers import getProjectRoot
 import re
 from tqdm import tqdm
 import time
+from dotenv import load_dotenv
 
+root = getProjectRoot()
+load_dotenv(dotenv_path= root/'.env.')
 
 HAJJREGEX = re.compile(r"hajj[-_]?package", re.IGNORECASE) 
 UMRAHREGEX = re.compile(r"umrah?[-_]?package", re.IGNORECASE)
@@ -13,7 +17,8 @@ UMRAHREGEX = re.compile(r"umrah?[-_]?package", re.IGNORECASE)
 ##TODO: HANDLE RELATIVE ULRS RETURNED BY THE scrapeLinksFromCataloguePage()
 def main():
   start = time.time()
-  with open('providers.txt','r') as f:
+  path = getProjectRoot() / 'providers.txt'
+  with open(path,'r') as f:
     providerList = f.read().splitlines()
 
   alhaqtravel = providerList[2]

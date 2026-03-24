@@ -1,7 +1,7 @@
 import re
-from consts import HEADING_TAGS, BAD_IMAGE_RE, HOTEL_KEYWORDS, DISTANCE_RE, TO_METRES, WALK_TIME_RE, WORD_TO_NUM
-from helpers import isKeywordIncludedRegex
-from hotelNamesScraper import HOTEL_NAMES_RE
+from scraper.consts import HEADING_TAGS, BAD_IMAGE_RE, HOTEL_KEYWORDS, DISTANCE_RE, TO_METRES, WALK_TIME_RE, WORD_TO_NUM
+from scraper.helpers import isKeywordIncludedRegex
+from scraper.hotelScraper.hotelNamesScraper import HOTEL_NAMES_RE
 
 
 #MAIN FUNCTION
@@ -130,7 +130,7 @@ def scrapeHotelImages(soup):
   hotelImgs = set()
   imgs = soup.find_all("img") #I think you can add a regex expression as a another parameter to make sure the image src does not include 'placeholder'
   if not len(imgs) > 3:
-    return []
+    return None
   for img in imgs:
     src = (img.get("data-src") or img.get("data-original") or img.get("data-lazy") or img.get("src"))
     if not src:
@@ -139,8 +139,11 @@ def scrapeHotelImages(soup):
         continue
     else:
        hotelImgs.add(src)
-  
-  return hotelImgs
+
+  if len(hotelImgs) > 0: 
+    return hotelImgs
+  else:
+    return None
 
 def scrapeHasWifi(soup):
   wifiRegex = isKeywordIncludedRegex("wifi")
@@ -189,14 +192,20 @@ def scrapeWalkToHaram(soup):
 
   return None
 
+def scrapeNumberOfBeds(soup):
+  #complete later
+  return None
 
 HOTEL_SCRAPERS = {
+  #name is scrapped separately in hotelInfoScraper.py
   'total_days': scrapeTotalDays,
   'images': scrapeHotelImages,
+  'stars': scrapeStars,
   'hasWifi': scrapeHasWifi,
   'hasAC': scrapeHasAC,
   'distanceToHaram': scrapeDistanceToHaram,
-  'walkToHaram': scrapeWalkToHaram
+  'walkToHaram': scrapeWalkToHaram,
+  'numberOfBeds': scrapeNumberOfBeds
 }
 
   
