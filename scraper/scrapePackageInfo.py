@@ -31,7 +31,7 @@ def scrapePackageInfo(url):
 
   nLinks = len(soup.find_all("a", href=True))
   if nLinks > 10:
-    print(f"{nLinks} links. This is a ossible catalogue page!")
+    print(f"{nLinks} links. {url} is a possible catalogue page")
     #IF MORE THAN 10 LINKS IT IS LIKELY TO BE A CATALOGUE PAGE NOT A PACKAGE DETAILS PAGE
     #TODO: HANDLE CATALOGUE PAGE TO FIND PACKAGE DETAILS PAGES
     return 
@@ -56,8 +56,9 @@ if __name__ == "__main__":
   url2 = "https://www.safamarwahtravel.co.uk/deals/5-star-17-days-non-shifting-hajj-package/"
   url3 = "https://www.alhaqtravel.co.uk/book/24-days-shifting-hajj-packages/"
   url4 = "https://duatravels.co.uk/package/shifting-luxury-hajj-package/"
+  alhaqnew = "https://www.alhaqtravel.co.uk/book/19-days-economy-hajj-packages/"
 
-  urls = [url, url2, url3, url4]
+  urls = [url, url2, url3, url4, alhaqnew]
   if len(sys.argv) >= 2:
     userChosenUrl = int(sys.argv[1])
   else:
@@ -67,7 +68,8 @@ if __name__ == "__main__":
   print(urls[userChosenUrl]) 
   packageInfo = scrapePackageInfo(urls[userChosenUrl]) 
   if packageInfo:
-    uploadPackageDataToS3(packageInfo, packageInfo["url"])
+    # uploadPackageDataToS3(packageInfo, packageInfo["url"])
+    pass
   else:
     print("company name not found. Likely a package page")
 
