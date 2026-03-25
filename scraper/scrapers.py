@@ -1,7 +1,7 @@
 import re
 from scraper.consts import HEADING_TAGS, BAD_IMAGE_RE, HOTEL_KEYWORDS, DISTANCE_RE, TO_METRES, WALK_TIME_RE, WORD_TO_NUM
-from scraper.helpers import isKeywordIncludedRegex
 from scraper.hotelScraper.hotelNamesScraper import HOTEL_NAMES_RE
+from scraper.regexHelpers import hasKeywordPattern
 
 
 #MAIN FUNCTION
@@ -101,8 +101,8 @@ def scrapeIsShifting(soup):
     return True
 
 def scrapeIsVisaIncluded(soup):
-  isVisaIncludedRegex = isKeywordIncludedRegex("visa")
-  return  bool(isVisaIncludedRegex.search(soup.text))
+  visaPattern = r"\bvisas?\b"
+  return hasKeywordPattern(visaPattern, soup.text)
 
 
 PACKAGEINFO_SCRAPERS = {
@@ -146,13 +146,17 @@ def scrapeHotelImages(soup):
     return None
 
 def scrapeHasWifi(soup):
-  wifiRegex = isKeywordIncludedRegex("wifi")
-  return bool(wifiRegex.search(soup.text))
+  wifiPattern =  r"\bwi[- ]?fi\b"
+  return hasKeywordPattern(wifiPattern, soup.text)
   # return soup.find(string=wifiRegex) is not None 
 
 def scrapeHasAC(soup):
-  acRegex = isKeywordIncludedRegex("ac")
-  return bool(acRegex.search(soup.text))
+  acPattern = r"\bac\b"
+  airconditionPattern = r"\bair condition\w*\b"
+  if hasKeywordPattern(acPattern, soup.text) or hasKeywordPattern(airconditionPattern, soup.text):
+    return True
+  else:
+    return False
   # return soup.find(string=acRegex) is not None
 
 def scrapeDistanceToHaram(soup):
@@ -196,6 +200,7 @@ def scrapeNumberOfBeds(soup):
   #complete later
   return None
 
+
 HOTEL_SCRAPERS = {
   #name is scrapped separately in hotelInfoScraper.py
   'total_days': scrapeTotalDays,
@@ -207,5 +212,3 @@ HOTEL_SCRAPERS = {
   'walkToHaram': scrapeWalkToHaram,
   'numberOfBeds': scrapeNumberOfBeds
 }
-
-  

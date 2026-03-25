@@ -65,23 +65,25 @@ def loadHajjPackageSchema():
     hajjPackageSchema = json.load(f)
   return hajjPackageSchema
 
-def isKeywordIncludedRegex(keyword):
-  word = re.escape(keyword)
-  pattern = rf"""
-\b
-(
-    {word}s?\b              # key or keys
-    (?:[^.!?\n]*?)  
-    (?:is\s+|are\s+)?              # optional "is"
-    (?:included|covered|provided|arranged|taken\s+care\s+of)
-  |
-    (?:includes?|including|has)\s+
-    (?:[^.!?\n]*?)  
-    {word}s?\b
-)
-\b
-"""
-  return re.compile(pattern, re.IGNORECASE | re.VERBOSE)
+# def isKeywordIncludedRegex(keyword):
+#   word = re.escape(keyword)
+#   pattern = rf"""
+# \b
+# (
+#     {word}s?\b              # key or keys
+#     (?:[^.!?\n]*?)  
+#     (?:is\s+|are\s+)?              # optional "is"
+#     (?:included|covered|provided|arranged|taken\s+care\s+of)
+#   |
+#     (?:includes?|including|has)\s+
+#     (?:[^.!?\n]*?)  
+#     {word}s?\b
+# )
+# \b
+# """
+#   return re.compile(pattern, re.IGNORECASE | re.VERBOSE)
+
+
 
 def getProjectRoot(marker: str = ".gitignore") -> Path:
     current = Path(__file__).resolve()
