@@ -27,20 +27,21 @@ def updateScrapedInfo(oldScrapedInfo, newScrapedInfo):
           if isinstance(newScrapedInfo[key], set):
             newScrapedInfo[key] = list(newScrapedInfo[key])
 
-          if isinstance(oldScrapedInfo[key], list) and isinstance(newScrapedInfo[key], list):
-              oldScrapedInfo[key].extend(newScrapedInfo[key])
+          if newScrapedInfo[key] == oldScrapedInfo[key] or newScrapedInfo[key] is None:
+            pass
 
+          elif oldScrapedInfo[key] is None:
+            oldScrapedInfo[key] = newScrapedInfo[key]
+          
+          elif oldScrapedInfo[key] == True or newScrapedInfo[key] == True:
+            oldScrapedInfo[key] = True 
+
+          elif isinstance(oldScrapedInfo[key], list):
+            oldScrapedInfo[key].append(newScrapedInfo[key])
+          
           else:
-            #NON LIST/SET TYPES. NEED TO HANDLE THIS COLISION. MAYBE USE LLM?
-            if oldScrapedInfo[key] == newScrapedInfo[key]:
-              pass
-            elif newScrapedInfo[key] is None:
-              pass
-            elif oldScrapedInfo[key] is None:
-              oldScrapedInfo[key] = newScrapedInfo[key]
-            
-            elif oldScrapedInfo[key] != newScrapedInfo[key]:
-              oldScrapedInfo[key] = [["COLLISION", oldScrapedInfo[key], newScrapedInfo[key]]]
+            oldScrapedInfo[key] = ["COLLISION", oldScrapedInfo[key], newScrapedInfo[key]]
+
   except ValueError:
     print("error")
   
@@ -51,12 +52,18 @@ def updateScrapedInfo(oldScrapedInfo, newScrapedInfo):
 #PACKAGE INFO SCRAPERS
 #==============================================
 def scrapeTotalDays(soup):
+  totalDays = -1
   for tag in soup.find_all(HEADING_TAGS):
     text = tag.text
     match = re.search(r"(\d+)[-\s]?(?:night|day)s?", text, re.IGNORECASE)
     if match:
-      return int(match.group(1))
-  return None
+      totalDays = int(match.group(1))
+      break
+  
+  if totalDays >= 10 and totalDays <= 30:
+    return totalDays
+  else:
+    return None
 
 def scrapeCompanyFromUrl(url):
   match = re.search(r'(?:www\.)?([^.]+)\.', url.split('//')[-1])
@@ -67,14 +74,17 @@ def scrapePPP(soup):
   #can do re.search(r"...", soup.get_text(strip=True)) for faster searching (not sure how much faster)
   #but then we would not know which container the matching text comes from which may be useful e.g. finding the parent container for more context (although not doing this currently).
   #moreover, with soup.find(...) we can filter the containers we are searching through e.g heading [h1, h2, ..., h6] containers.
+  price = -1 
   priceContainer = soup.find(string=priceRegex)
   if priceContainer:
     match = priceRegex.match(priceContainer.text)
     currency = match.group(1)
     #TODO: CONVERT CURRENCY TO STANDARD CURRENCY PRICE TO STANDARD CURRENCY E.G £
     price = match.group(2)
-    price = price.replace(",", '').strip()
-    return int(price)
+    price = int(price.replace(",", '').strip())
+  
+  if price >= 2000 and price <= 25000:
+    return price
   else:
     return None
 
@@ -89,9 +99,14 @@ def scrapeTier(soup):
 def scrapeStars(soup):
   starsRegex = re.compile(r'\b([1-5])\s*(?:-?\s*star|stars?)\b', re.IGNORECASE)
   starContainer = soup.find(string=starsRegex)
+  stars = -1
   if starContainer:
-    return int(starsRegex.search(starContainer.text).group(1))
-  return None
+    stars = int(starsRegex.search(starContainer.text).group(1))
+  
+  if stars >= 1 and stars <= 5:
+    return stars
+  else:
+    return None
 
 def scrapeIsShifting(soup):
   nonshifting = bool(re.search(r"\bnon[-\s]?shifting\b", soup.text, re.IGNORECASE))  
@@ -118,6 +133,19 @@ PACKAGEINFO_SCRAPERS = {
 #==============================================
 #HOTEL SCRAPERS
 #==============================================
+
+def scrapeTotalDaysHotel(soup):
+  totalDays = -1
+  for text in soup.stripped_strings:
+    match = re.search(r"(\d+)[-\s]?(?:night|day)s?", text, re.IGNORECASE)
+    if match:
+      totalDays = int(match.group(1))
+      break
+  
+  if totalDays >= 1 and totalDays <= 20:
+    return totalDays
+  else:
+   return None
 
 def scrapeHotelName(soup, city):
   for text in soup.stripped_strings:
@@ -146,13 +174,13 @@ def scrapeHotelImages(soup):
     return None
 
 def scrapeHasWifi(soup):
-  wifiPattern =  r"\bwi[- ]?fi\b"
+  wifiPattern =  r"\bwi[-\s]*fi\b"
   return hasKeywordPattern(wifiPattern, soup.text)
   # return soup.find(string=wifiRegex) is not None 
 
 def scrapeHasAC(soup):
   acPattern = r"\bac\b"
-  airconditionPattern = r"\bair condition\w*\b"
+  airconditionPattern = r"\bair[-\s]*condition\w*\b"
   if hasKeywordPattern(acPattern, soup.text) or hasKeywordPattern(airconditionPattern, soup.text):
     return True
   else:
@@ -161,13 +189,17 @@ def scrapeHasAC(soup):
 
 def scrapeDistanceToHaram(soup):
   match = DISTANCE_RE.search(soup.text)
+  distanceMetres = -1
   if match:
     distance = float(match.group("distance"))
     unit = match.group("unit").lower()
     if unit not in TO_METRES:
       print(f"ERROR: unknown unit {unit}. Acceptable units: {TO_METRES.keys()}")
     
-    return distance * TO_METRES[unit]
+    distanceMetres = distance * TO_METRES[unit]
+
+  if distanceMetres >= 500 and distanceMetres <= 4000:
+    return distanceMetres
   else:
     return None
   
@@ -181,6 +213,7 @@ def scrapeWalkToHaram(soup):
     else:
       return WORD_TO_NUM.get(value)
 
+  minutes = -1 
   match = WALK_TIME_RE.search(soup.text)
   if match:
     t1 = match.group("time1") or match.group("time1b")
@@ -190,11 +223,14 @@ def scrapeWalkToHaram(soup):
     t2 = parse_time(t2) if t2 else None
 
     if t2 is not None:
-        return t2
+        minutes = t2
     elif t1 is not None:
-        return t1 
+        minutes = t1
 
-  return None
+  if minutes >=2 and minutes <= 40:
+    return minutes
+  else: 
+    return None
 
 def scrapeNumberOfBeds(soup):
   #complete later
@@ -203,7 +239,7 @@ def scrapeNumberOfBeds(soup):
 
 HOTEL_SCRAPERS = {
   #name is scrapped separately in hotelInfoScraper.py
-  'total_days': scrapeTotalDays,
+  'total_days': scrapeTotalDaysHotel,
   'images': scrapeHotelImages,
   'stars': scrapeStars,
   'hasWifi': scrapeHasWifi,

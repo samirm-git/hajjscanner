@@ -63,13 +63,19 @@ WORD_TO_NUM = {
 
 WALK_TIME_RE = re.compile(
     rf"""
-    \b(?:walk(?:ing)?)\b[^.!?\n]{{0,50}}?
-    (?P<time1>{NUMBER_PATTERN})(?:\s*(?:-|–|to)\s*(?P<time2>{NUMBER_PATTERN}))?
-    \s*(?:mins?|minutes?)[\s'.,]*
+    \b
+    (?P<time1>{NUMBER_PATTERN})
+    (?:\s*(?:-|–|to)\s*(?P<time2>{NUMBER_PATTERN}))?
+    [\s\-](?:mins?|minutes?)\b
+    [^.!?\n]{{0,60}}?
+    \bwalk\w*\b
     |
-    \b(?P<time1b>{NUMBER_PATTERN})(?:\s*(?:-|–|to)\s*(?P<time2b>{NUMBER_PATTERN}))?
-    \s*(?:mins?|minutes?)[\s'.,]*[^.!?\n]{{0,50}}?
-    \b(?:walk(?:ing)?)\b
+    \bwalk\w*\b
+    [^.!?\n]{{0,60}}?
+    \b
+    (?P<time1b>{NUMBER_PATTERN})
+    (?:\s*(?:-|–|to)\s*(?P<time2b>{NUMBER_PATTERN}))?
+    [\s\-](?:mins?|minutes?)\b
     """,
     re.IGNORECASE | re.VERBOSE
 )

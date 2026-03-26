@@ -56,27 +56,27 @@ def getChildContainerIDs(container):
 def scrapeHotelInfo(soup, city):
   city = city.lower()
   otherCity = 'madinah' if city == 'makkah' else 'makkah'
-  hotelSchema = jsonUperCaseTypes(loadHotelSchema())
-  remove_property(hotelSchema, 'images')
+  #NOTE FOR GEMINI SCHEMA WE CANNOT ALLOW MORE THAN 1 TYPE + NULL. 
+  #IF USING GEMINI AGAIN, MUST REMOVE array FROM TYPE FIELD
+  # hotelSchema = jsonUperCaseTypes(loadHotelSchema())
+  # remove_property(hotelSchema, 'images')
 
 
   hotelInfo = {}
   seen = set()
 
   with genai.Client(api_key=GEMINI_KEY) as client:
-    for container in soup.find_all(CONTAINER_TAGS):
+    for container in soup.find_all(True):
       if id(container) in seen:
         continue
 
-      headingText = " ".join(h.get_text(strip=True) for h in container.find_all(HEADING_TAGS))            
-      if not headingText:
-        seen.update(getChildContainerIDs(container))
+      fullText = container.get_text(separator=" ", strip=True)
 
-      elif not checkCityinText(headingText, city):
+      if not checkCityinText(fullText, city):
         # print(f"Did not find desired city: {city}")
         seen.update(getChildContainerIDs(container))
       
-      elif checkCityinText(headingText, otherCity):
+      elif checkCityinText(fullText, otherCity):
         pass
         # print(f"Found other city: {otherCity}")
         
@@ -84,9 +84,9 @@ def scrapeHotelInfo(soup, city):
         # print(f"found container with desired city: {city}, and no other city: {otherCity} in heading text")
         seen.update(getChildContainerIDs(container)) 
 
-        fullText = container.get_text("\n", strip=True) # Use fullText as a fall back e.g. call AI model with fullText
+        # fullTextLLM = container.get_text("\n", strip=True) # Use fullText as a fall back e.g. call AI model with fullText
         
-        # llmOutput = LLMPrompter(client, fullText, hotelSchema)
+        # llmOutput = LLMPrompter(client, fullTextLLM, hotelSchema)
         hotelInfo['name'] = scrapeHotelName(container, city)
         newScrapedInfo = runScrapers(container, 'hotel info')
         hotelInfo = updateScrapedInfo(oldScrapedInfo=hotelInfo, newScrapedInfo=newScrapedInfo)

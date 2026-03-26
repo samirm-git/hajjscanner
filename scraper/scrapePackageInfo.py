@@ -10,7 +10,9 @@ root = getProjectRoot()
 load_dotenv(dotenv_path= root/'.env.')
 
 def tempSave(packageInfo):
+  url = packageInfo['url']
   fname = url[8:-1].replace("/","").replace("\\","")
+  print(f"Temp save: {fname}")
   path = getProjectRoot() / 'scraperOutputs' / f"{fname}.txt"
   with open(path,'a') as f:
     f.write("=====================================")
@@ -21,7 +23,6 @@ def tempSave(packageInfo):
 
 def scrapePackageInfo(url):
   packageInfo = {'url':url}
-
 
   resp = makeRequest(url)
   soup = getSoup(resp.text, parser="lxml")
@@ -45,8 +46,8 @@ def scrapePackageInfo(url):
 
   packageInfo['makkahHotel'] = scrapeHotelInfo(soup, 'makkah')
   packageInfo['madinahHotel'] = scrapeHotelInfo(soup, 'madinah')    
-  # tempSave(packageInfo)
-  validateData(packageInfo)
+  tempSave(packageInfo)
+  # validateData(packageInfo)
   return packageInfo
 
 if __name__ == "__main__":
