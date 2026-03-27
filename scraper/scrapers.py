@@ -1,8 +1,8 @@
 import re
-from scraper.consts import HEADING_TAGS, BAD_IMAGE_RE, HOTEL_KEYWORDS, DISTANCE_RE, TO_METRES, WALK_TIME_RE, WORD_TO_NUM
+from scraper.consts import HEADING_TAGS 
 from scraper.hotelScraper.hotelNamesScraper import HOTEL_NAMES_RE
-from scraper.regexHelpers import hasKeywordPattern
-
+from scraper.regexHelpers import hasKeywordPattern, regexSearch
+from scraper.regexConsts import DISTANCE_RE, TO_METRES, WALK_TIME_RE, WORD_TO_NUM, BAD_IMAGE_RE 
 
 #MAIN FUNCTION
 def runScrapers(soup, scraperName):
@@ -47,15 +47,14 @@ def updateScrapedInfo(oldScrapedInfo, newScrapedInfo):
   
   return oldScrapedInfo
 
-
 #==============================================
 #PACKAGE INFO SCRAPERS
 #==============================================
 def scrapeTotalDays(soup):
   totalDays = -1
   for tag in soup.find_all(HEADING_TAGS):
-    text = tag.text
-    match = re.search(r"(\d+)[-\s]?(?:night|day)s?", text, re.IGNORECASE)
+    daysRegex = re.compile(r"\b(\d{1,2})[-\s]?(?:night|day)s?\b",re.IGNORECASE)
+    match = regexSearch(daysRegex, tag)
     if match:
       totalDays = int(match.group(1))
       break
@@ -70,14 +69,13 @@ def scrapeCompanyFromUrl(url):
   return match.group(1) if match else ''
 
 def scrapePPP(soup): 
-  priceRegex = re.compile(r"([£$€])\s?(\d+(?:,\d{3})*(?:\.\d{2})?)", re.IGNORECASE)
   #can do re.search(r"...", soup.get_text(strip=True)) for faster searching (not sure how much faster)
   #but then we would not know which container the matching text comes from which may be useful e.g. finding the parent container for more context (although not doing this currently).
   #moreover, with soup.find(...) we can filter the containers we are searching through e.g heading [h1, h2, ..., h6] containers.
+  priceRegex = re.compile(r"([£$€])\s*(\d[\d,]*(?:\.\d{2})?)", re.IGNORECASE)
   price = -1 
-  priceContainer = soup.find(string=priceRegex)
-  if priceContainer:
-    match = priceRegex.match(priceContainer.text)
+  match = regexSearch(priceRegex, soup)
+  if match:
     currency = match.group(1)
     #TODO: CONVERT CURRENCY TO STANDARD CURRENCY PRICE TO STANDARD CURRENCY E.G £
     price = match.group(2)
@@ -89,19 +87,19 @@ def scrapePPP(soup):
     return None
 
 def scrapeTier(soup):
-  tierRegex = re.compile(r"luxury|premium|economy", re.IGNORECASE)
-  tierContainer = soup.find(string=tierRegex)
-  if tierContainer:
-    return tierRegex.search(tierContainer.text).group(1)
+  tierRegex = re.compile(r"\b(luxury|premium|economy)\b", re.IGNORECASE)
+  match = regexSearch(tierRegex, soup)
+  if match:
+    return match.group(1)
   else: 
     return None
 
 def scrapeStars(soup):
   starsRegex = re.compile(r'\b([1-5])\s*(?:-?\s*star|stars?)\b', re.IGNORECASE)
-  starContainer = soup.find(string=starsRegex)
   stars = -1
-  if starContainer:
-    stars = int(starsRegex.search(starContainer.text).group(1))
+  match = regexSearch(starsRegex, soup)
+  if match:
+    stars = int(match.group(1))
   
   if stars >= 1 and stars <= 5:
     return stars
@@ -109,15 +107,16 @@ def scrapeStars(soup):
     return None
 
 def scrapeIsShifting(soup):
-  nonshifting = bool(re.search(r"\bnon[-\s]?shifting\b", soup.text, re.IGNORECASE))  
-  if nonshifting:
+  nonshiftingRegex = re.compile(r"\bnon[-\s]?shifting\b", re.IGNORECASE)
+  match = regexSearch(nonshiftingRegex, soup)  
+  if match:
     return False
   else:
     return True
 
 def scrapeIsVisaIncluded(soup):
   visaPattern = r"\bvisas?\b"
-  return hasKeywordPattern(visaPattern, soup.text)
+  return hasKeywordPattern(visaPattern, soup)
 
 
 PACKAGEINFO_SCRAPERS = {
@@ -136,11 +135,10 @@ PACKAGEINFO_SCRAPERS = {
 
 def scrapeTotalDaysHotel(soup):
   totalDays = -1
-  for text in soup.stripped_strings:
-    match = re.search(r"(\d+)[-\s]?(?:night|day)s?", text, re.IGNORECASE)
-    if match:
-      totalDays = int(match.group(1))
-      break
+  daysRegex = re.compile(r"(\d+)[-\s]?(?:night|day)s?", re.IGNORECASE)
+  match = regexSearch(daysRegex, soup)
+  if match:
+    totalDays = int(match.group(1))
   
   if totalDays >= 1 and totalDays <= 20:
     return totalDays
@@ -148,10 +146,10 @@ def scrapeTotalDaysHotel(soup):
    return None
 
 def scrapeHotelName(soup, city):
-  for text in soup.stripped_strings:
-    match = HOTEL_NAMES_RE[city].search(text)
-    if match:
-      return match.group(0)
+  match = regexSearch(HOTEL_NAMES_RE[city], soup)
+  if match:
+    return match.group(0)
+  
   return None
 
 def scrapeHotelImages(soup):
@@ -175,20 +173,20 @@ def scrapeHotelImages(soup):
 
 def scrapeHasWifi(soup):
   wifiPattern =  r"\bwi[-\s]*fi\b"
-  return hasKeywordPattern(wifiPattern, soup.text)
+  return hasKeywordPattern(wifiPattern, soup)
   # return soup.find(string=wifiRegex) is not None 
 
 def scrapeHasAC(soup):
   acPattern = r"\bac\b"
   airconditionPattern = r"\bair[-\s]*condition\w*\b"
-  if hasKeywordPattern(acPattern, soup.text) or hasKeywordPattern(airconditionPattern, soup.text):
+  if hasKeywordPattern(acPattern, soup) or hasKeywordPattern(airconditionPattern, soup):
     return True
   else:
     return False
   # return soup.find(string=acRegex) is not None
 
 def scrapeDistanceToHaram(soup):
-  match = DISTANCE_RE.search(soup.text)
+  match = regexSearch(DISTANCE_RE, soup)
   distanceMetres = -1
   if match:
     distance = float(match.group("distance"))
@@ -214,7 +212,7 @@ def scrapeWalkToHaram(soup):
       return WORD_TO_NUM.get(value)
 
   minutes = -1 
-  match = WALK_TIME_RE.search(soup.text)
+  match = regexSearch(WALK_TIME_RE, soup)
   if match:
     t1 = match.group("time1") or match.group("time1b")
     t2 = match.group("time2") or match.group("time2b")

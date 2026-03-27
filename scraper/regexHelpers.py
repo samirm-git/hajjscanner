@@ -20,10 +20,23 @@ def isKeywordExcludedRegex(keywordPattern):
     return re.compile(pattern, re.IGNORECASE | re.VERBOSE)
 
 
-def hasKeywordPattern(keywordPattern, text):
-  if isKeywordExcludedRegex(keywordPattern).search(text):
+def hasKeywordPattern(keywordPattern, soup):
+  excludedRegex = isKeywordExcludedRegex(keywordPattern)
+  includedRegex = re.compile(keywordPattern, re.IGNORECASE)
+  match = regexSearch(excludedRegex, soup)
+  if match:
     return False
-  elif re.search(keywordPattern, text, re.IGNORECASE):
+  
+  match = regexSearch(includedRegex, soup)
+  if match:
     return True
   else:
     return False 
+
+def regexSearch(regex, soup):
+  for text in soup.stripped_strings:
+    match = regex.search(text)
+    if match:
+      return match
+
+  return None
