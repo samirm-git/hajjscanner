@@ -5,6 +5,7 @@ from validator import validateData
 from upload import uploadPackageDataToS3
 from scraper.scrapers import scrapeCompanyFromUrl, runScrapers, updateScrapedInfo
 from scraper.hotelScraper.hotelInfoScraper import scrapeHotelInfo 
+from tqdm import tqdm
 
 root = getProjectRoot()
 load_dotenv(dotenv_path= root/'.env.')
@@ -19,9 +20,15 @@ def tempSave(packageInfo):
     json.dump(packageInfo, f, indent=4)
     f.write('\n')
 
+def logInvalidJson(error):
+  path = getProjectRoot() / 'invalidJsonLog.txt'
+  with open(path, 'a') as f:
+    f.write("\n")    
+    f.write(error)
 
 
-def scrapePackageInfo(url):
+
+def scrapePackageInfo(url, tempSave = False):
   packageInfo = {'url':url}
 
   resp = makeRequest(url)
@@ -32,7 +39,7 @@ def scrapePackageInfo(url):
 
   nLinks = len(soup.find_all("a", href=True))
   if nLinks > 10:
-    print(f"{nLinks} links. {url} is a possible catalogue page")
+    tqdm.write(f"{nLinks} links. {url} is a possible catalogue page")
     #IF MORE THAN 10 LINKS IT IS LIKELY TO BE A CATALOGUE PAGE NOT A PACKAGE DETAILS PAGE
     #TODO: HANDLE CATALOGUE PAGE TO FIND PACKAGE DETAILS PAGES
     return 
@@ -46,8 +53,14 @@ def scrapePackageInfo(url):
 
   packageInfo['makkahHotel'] = scrapeHotelInfo(soup, 'makkah')
   packageInfo['madinahHotel'] = scrapeHotelInfo(soup, 'madinah')    
-  tempSave(packageInfo)
-  # validateData(packageInfo)
+  if tempSave:
+    tempSave(packageInfo)
+
+  error = validateData(packageInfo)
+  if error:
+    logInvalidJson(error)
+    return None
+     
   return packageInfo
 
 if __name__ == "__main__":
@@ -67,7 +80,7 @@ if __name__ == "__main__":
 
 
   print(urls[userChosenUrl]) 
-  packageInfo = scrapePackageInfo(urls[userChosenUrl]) 
+  packageInfo = scrapePackageInfo(urls[userChosenUrl], tempSave=True) 
   if packageInfo:
     # uploadPackageDataToS3(packageInfo, packageInfo["url"])
     pass

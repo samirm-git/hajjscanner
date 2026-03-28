@@ -40,7 +40,7 @@ def updateScrapedInfo(oldScrapedInfo, newScrapedInfo):
             oldScrapedInfo[key].append(newScrapedInfo[key])
           
           else:
-            oldScrapedInfo[key] = ["COLLISION", oldScrapedInfo[key], newScrapedInfo[key]]
+            oldScrapedInfo[key] = [oldScrapedInfo[key], newScrapedInfo[key]]
 
   except ValueError:
     print("error")

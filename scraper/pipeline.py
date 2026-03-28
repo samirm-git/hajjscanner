@@ -13,22 +13,34 @@ load_dotenv(dotenv_path= root/'.env.')
 HAJJREGEX = re.compile(r"hajj[-_]?package", re.IGNORECASE) 
 UMRAHREGEX = re.compile(r"umrah?[-_]?package", re.IGNORECASE)
 
+def createPackageUrlsMasterDict(providerList, regex):
+  providersPackageUrls = {}
+  for provider in tqdm(providerList):
+    tqdm.write(f"{provider}")
+    providersPackageUrls[provider] = scrapePackageUrls(provider, regex)
+  return providersPackageUrls
+
+
 ##TODO: FIX LLM CALL TO ATLEAST ALWAYS PROVIDE NULL ON THE REQUIRED PROPERTIES
 ##TODO: HANDLE RELATIVE ULRS RETURNED BY THE scrapeLinksFromCataloguePage()
-##TODO: REVIEW ALHAQ SCRAPED DATA
-##TODO: ADD MIN AND MAX TO ONLY ALLOW SENSIBLE VALUES e.g. 85KM DISTANCE IS LIKELY TO BE TO THE AIRPORT AND NOT THE HARAM
 def main():
   start = time.time()
   path = getProjectRoot() / 'providers.txt'
   with open(path,'r') as f:
     providerList = f.read().splitlines()
 
-  alhaqtravel = providerList[2]
-  urls = tqdm(scrapePackageUrls(alhaqtravel, HAJJREGEX))
-  for url in tqdm(urls):
-    packageInfo = scrapePackageInfo(url)
-    if packageInfo:
-      uploadPackageDataToS3(packageInfo, packageInfo["url"])
+  tqdm.write("Scrapping package urls for all providers...")
+  providerPackageUrls = createPackageUrlsMasterDict(providerList, HAJJREGEX)
+
+  tqdm.write("=================================")
+  tqdm.write("Scrapping package info for all providers...")
+  for provider, urls in providerPackageUrls.items():
+    tqdm.write(provider)
+    for url in tqdm(urls):
+      packageInfo = scrapePackageInfo(url)
+      if packageInfo:
+        uploadPackageDataToS3(packageInfo, packageInfo["url"])
+
   
   print(f"time taken: {time.time() - start}")
 
