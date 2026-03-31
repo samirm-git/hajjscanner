@@ -1,5 +1,6 @@
 import re, sys
 from scraper.helpers import makeRequest, getSoup, removeFooterHeaderNav
+from tqdm import tqdm
 
 def scrapeLinksHomePage(baseUrl, regex):
   return []
@@ -15,12 +16,18 @@ def scrapeLinksCatalogue(cataloguePages: list, regex):
   return list(out)
 
 def getSitemapSoup(baseUrl):
-  sitemapUrls = [baseUrl + "sitemap.xml", baseUrl + "page-sitemap.xml"]
+  sitemapUrls = [baseUrl + "sitemap.xml", baseUrl + "page-sitemap.xml", baseUrl + "package-sitemap.xml"]
   out = []
   while sitemapUrls:
     url = sitemapUrls.pop()
-    resp = makeRequest(url)
-    if resp.status_code == 200 or resp.status_code == 304:
+    resp, err = makeRequest(url)
+    if err:
+      tqdm.write(f"Skipping {url}: {err}")
+      continue
+    if resp is None:  # 404
+      continue
+
+    elif resp.status_code == 200 or resp.status_code == 304:
       soup = getSoup(resp.text, parser='xml')
       soup = removeFooterHeaderNav(soup)
       out.append(soup)

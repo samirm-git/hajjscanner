@@ -1,5 +1,8 @@
 import re
 
+HAJJREGEX = re.compile(r"hajj[-_]*package", re.IGNORECASE) 
+UMRAHREGEX = re.compile(r"umrah?[-_]*package", re.IGNORECASE)
+
 BAD_IMAGE_RE = re.compile(r"(icon|place[-_]?holder)", re.IGNORECASE)
 
 DISTANCE_RE = re.compile(

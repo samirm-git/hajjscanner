@@ -51,8 +51,6 @@ def getChildContainerIDs(container):
   return out
 
 
-#TODO: ADD MANUAL SCRAPPING FOR ALL OTHER FIELDS. ONLY CALL LLM IF FIELDS ARE MISSING OR TO COMPARE ANSWERS
-# print(hotelSchema)
 def scrapeHotelInfo(soup, city):
   city = city.lower()
   otherCity = 'madinah' if city == 'makkah' else 'makkah'
@@ -94,8 +92,11 @@ def scrapeHotelInfo(soup, city):
         # if llmOutput:
           # hotelInfo.update(llmOutput)
 
+  if hotelInfo == {}:
+    return None
+  
   for key in hotelInfo.keys():
     if isinstance(hotelInfo[key], set):
       hotelInfo[key] = list(hotelInfo[key])
-
+  
   return hotelInfo

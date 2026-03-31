@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 from scraper.helpers import makeRequest, getSoup, removeFooterHeaderNav, getProjectRoot
 from validator import validateData
 from upload import uploadPackageDataToS3
+from scraper.regexConsts import HAJJREGEX, UMRAHREGEX
 from scraper.scrapers import scrapeCompanyFromUrl, runScrapers, updateScrapedInfo
 from scraper.hotelScraper.hotelInfoScraper import scrapeHotelInfo 
 from tqdm import tqdm
@@ -20,26 +21,35 @@ def tempSave(packageInfo):
     json.dump(packageInfo, f, indent=4)
     f.write('\n')
 
-def logInvalidJson(error):
+def logInvalidJson(error, url):
   path = getProjectRoot() / 'invalidJsonLog.txt'
   with open(path, 'a') as f:
     f.write("\n")    
+    f.write(url)
+    f.write(" : ")
     f.write(error)
 
 
 
-def scrapePackageInfo(url, tempSave = False):
+def scrapePackageInfo(url, tempSaveFlag = False):
   packageInfo = {'url':url}
 
-  resp = makeRequest(url)
+  resp, err = makeRequest(url)
+  if err:
+    tqdm.write(f"{url}: {err}")
+    return 
+  if resp is None:  # 404
+    tqdm.write(f"{url} is not valid")
+    return
+
   soup = getSoup(resp.text, parser="lxml")
   soup = removeFooterHeaderNav(soup)
   if soup.find("main"):
     soup = soup.find("main")
 
-  nLinks = len(soup.find_all("a", href=True))
-  if nLinks > 10:
-    tqdm.write(f"{nLinks} links. {url} is a possible catalogue page")
+  packageLinks = [link.get("href") for link in soup.find_all("a", href=True) if HAJJREGEX.search(link.get("href")) or UMRAHREGEX.search(link.get("href"))]
+  if len(packageLinks) > 5:
+    tqdm.write(f"{len(packageLinks)} links. {url} is a possible catalogue page")
     #IF MORE THAN 10 LINKS IT IS LIKELY TO BE A CATALOGUE PAGE NOT A PACKAGE DETAILS PAGE
     #TODO: HANDLE CATALOGUE PAGE TO FIND PACKAGE DETAILS PAGES
     return 
@@ -53,12 +63,12 @@ def scrapePackageInfo(url, tempSave = False):
 
   packageInfo['makkahHotel'] = scrapeHotelInfo(soup, 'makkah')
   packageInfo['madinahHotel'] = scrapeHotelInfo(soup, 'madinah')    
-  if tempSave:
+  if tempSaveFlag:
     tempSave(packageInfo)
 
   error = validateData(packageInfo)
   if error:
-    logInvalidJson(error)
+    logInvalidJson(error, url)
     return None
      
   return packageInfo
@@ -70,9 +80,12 @@ if __name__ == "__main__":
   url2 = "https://www.safamarwahtravel.co.uk/deals/5-star-17-days-non-shifting-hajj-package/"
   url3 = "https://www.alhaqtravel.co.uk/book/24-days-shifting-hajj-packages/"
   url4 = "https://duatravels.co.uk/package/shifting-luxury-hajj-package/"
+  url5 = "https://traveltoharam.co.uk/hajj-packages/5-star-shifting-packages/"
   alhaqnew = "https://www.alhaqtravel.co.uk/book/19-days-economy-hajj-packages/"
+  eliteumrah = "https://eliteumrah.co.uk/21-days-economy-hajj-package/"
+  
 
-  urls = [url, url2, url3, url4, alhaqnew]
+  urls = [url, url2, url3, url4, url5, alhaqnew, eliteumrah]
   if len(sys.argv) >= 2:
     userChosenUrl = int(sys.argv[1])
   else:
@@ -80,12 +93,12 @@ if __name__ == "__main__":
 
 
   print(urls[userChosenUrl]) 
-  packageInfo = scrapePackageInfo(urls[userChosenUrl], tempSave=True) 
+  packageInfo = scrapePackageInfo(urls[userChosenUrl], tempSaveFlag=True) 
   if packageInfo:
     # uploadPackageDataToS3(packageInfo, packageInfo["url"])
     pass
   else:
-    print("company name not found. Likely a package page")
+    print("no package info. Possible JSON validation error")
 
 
 

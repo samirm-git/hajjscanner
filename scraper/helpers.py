@@ -1,10 +1,12 @@
 import requests
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 from bs4 import BeautifulSoup
 from pathlib import Path
 import json
 import re
 
-def makeRequest(url):
+def makeRequest(url, timeout=10, retries=3):
   headers = {
     # "User-Agent": "Chrome/117.0.0.0",
     "User-Agent": (
@@ -17,8 +19,41 @@ def makeRequest(url):
     # "accept-language": "en-US,en;q=0.9",
     # "cache-control": "max-age=0",
   }
-  resp = requests.get(url, headers=headers)
-  return resp
+  retry_strategy = Retry(
+        total=retries,
+        backoff_factor=1,
+        status_forcelist=[429, 502, 503, 504],
+        allowed_methods=["GET"],
+    )
+
+  adapter = HTTPAdapter(max_retries=retry_strategy)
+  session = requests.Session()
+  session.mount("https://", adapter)
+  session.mount("http://", adapter)
+
+  try:
+      resp = session.get(url, headers=headers, timeout=timeout)
+      resp.raise_for_status()
+      return resp, None
+
+  except requests.exceptions.ConnectionError as e:
+      if "NameResolutionError" in str(e) or "getaddrinfo failed" in str(e):
+          return None, RuntimeError(f"DNS resolution failed for URL: {url}")
+      return None, RuntimeError(f"Connection error for URL: {url}")
+
+  except requests.exceptions.Timeout:
+      return None, RuntimeError(f"Request timed out after {timeout}s for URL: {url}")
+
+  except requests.exceptions.HTTPError as e:
+      status_code = getattr(e.response, "status_code", None)
+      if status_code == 404:
+          return None, None
+      return None, RuntimeError(f"HTTP error {status_code} for URL: {url}")
+
+  except requests.exceptions.RetryError as e:
+      return None, RuntimeError(f"Max retries exceeded for URL: {url}")
+  # resp = requests.get(url, headers=headers)
+  # return resp
 
 def getSoup(respText, parser="html.parser"):
   soup = BeautifulSoup(respText, parser)
@@ -29,29 +64,33 @@ def removeFooterHeaderNav(soup):
     for tag in soup.select("header, footer, nav"):
         tag.decompose()
 
-    # Remove elements whose class or id contains 'footer' or 'background'
-    keywords = ["footer", "background"]
+    # Much more precise keywords — only exact structural identifiers
+    keywords = ["footer", "navbar", "nav-bar", "navigation", "site-header", "page-header"]
+    
     for tag in list(soup.find_all(True)):
-        if tag.attrs is None:
+        if not tag.attrs:
             continue
 
         tag_classes = tag.get("class", [])
         tag_id = tag.get("id", "")
 
-        # Normalise both to lists of strings
         if isinstance(tag_classes, str):
             tag_classes = [tag_classes]
         if isinstance(tag_id, list):
             tag_id = " ".join(tag_id)
 
+        # Use whole-word matching instead of substring matching
+        all_values = " ".join(tag_classes) + " " + tag_id
         if any(
-            keyword in value
+            f"-{keyword}" in all_values
+            or f"{keyword}-" in all_values
+            or all_values.strip() == keyword
             for keyword in keywords
-            for value in tag_classes + [tag_id]
         ):
             tag.decompose()
 
     return soup
+
 
 def loadHotelSchema():
   hotelSchemaPath = getProjectRoot() / "schema" / "hotel.json"
@@ -64,26 +103,6 @@ def loadHajjPackageSchema():
   with open(path, 'r') as f:
     hajjPackageSchema = json.load(f)
   return hajjPackageSchema
-
-# def isKeywordIncludedRegex(keyword):
-#   word = re.escape(keyword)
-#   pattern = rf"""
-# \b
-# (
-#     {word}s?\b              # key or keys
-#     (?:[^.!?\n]*?)  
-#     (?:is\s+|are\s+)?              # optional "is"
-#     (?:included|covered|provided|arranged|taken\s+care\s+of)
-#   |
-#     (?:includes?|including|has)\s+
-#     (?:[^.!?\n]*?)  
-#     {word}s?\b
-# )
-# \b
-# """
-#   return re.compile(pattern, re.IGNORECASE | re.VERBOSE)
-
-
 
 def getProjectRoot(marker: str = ".gitignore") -> Path:
     current = Path(__file__).resolve()
