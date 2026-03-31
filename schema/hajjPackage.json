@@ -5,25 +5,41 @@
   "description": "Hajj package details",
   "type": "object",
   "properties": {
+    "company":{
+    "description": "company name",
+    "type": "string"
+    },
+    "url":{
+      "description": "url to package details",
+      "type": "string",
+      "format": "uri"
+    },
     "ppp" : {
       "description": "price per night in £", 
-      "type": ["number", "null"]
+      "type": ["number", "array", "null"],
+      "minimum": 2000,
+      "maximum": 25000,
+      "minItems": 1
       },
     "total_days":{
       "description": "total number of days in package",
-      "type": ["integer", "null"],
-      "minimum": 10
+      "type": ["integer", "array", "null"],
+      "minimum": 10,
+      "maximum": 30,
+      "minItems": 1
     },
     "tier":{
       "description": "type of hajj package: luxury, premium, or economy",
-      "type": ["string", "null"],
-      "enum": ["luxury", "premium", "economy"]
+      "type": ["string", "array", "null"],
+      "enum": ["luxury", "premium", "economy"],
+      "minItems": 1
     },
     "stars":{
       "description": "star rating (1-5)",
-      "type": ["integer", "null"],
+      "type": ["integer", "array", "null"],
       "minimum": 1,
-      "maximum": 5
+      "maximum": 5,
+      "minItems": 1
     },
     "isShifting":{
       "description": "True if shifting package, False if non shifting",
@@ -42,5 +58,5 @@
       "type": ["boolean", "null"]
     }
   },
-  "required": ["ppp", "total_days", "stars", "isShifting", "makkahHotel", "madinahHotel", "isVisaIncluded"]
+  "required": ["company","ppp", "total_days", "stars", "isShifting", "makkahHotel", "madinahHotel", "isVisaIncluded"]
 }

@@ -4,15 +4,17 @@
   "title": "Hotel",
   "type": ["object", "null"],
   "properties": {
-      "nights": {
-        "type": ["integer", "null"],
-        "minimum": 1,
-        "maximum": 10
-      },
       "name": {
-        "type": ["string", "null"],
+        "type": ["string", "array","null"],
         "minLength": 2,
-        "maxLength": 100
+        "maxLength": 100,
+        "minItems": 1
+      },
+      "total_days": {
+        "type": ["integer", "array", "null"],
+        "minimum": 1,
+        "maximum": 20,
+        "minItems": 1
       },
       "images": {
         "type": ["array", "null"],
@@ -21,14 +23,15 @@
         "uniqueItems": true
       },
       "stars": {
-        "type": ["integer", "null"],
+        "type": ["integer", "array", "null"],
         "description": "hotel star rating from 1 to 5",
         "minimum": 1,
-        "maximum": 5
+        "maximum": 5,
+        "minItems": 1
       },
-      "hasFreeWifi":{
+      "hasWifi":{
         "type":["boolean", "null"],
-        "description": "True if hotel provides free wifi. False otherwise"
+        "description": "True if hotel provides wifi. False otherwise"
       },
       "hasAC":{
         "type":["boolean", "null"],
@@ -40,20 +43,33 @@
       },
       "distanceToHaram": {
         "description": "distance to the haram in meters",
-        "type": ["number", "null"],
-        "minimum": 1
+        "type": ["number", "array", "null"],
+        "minimum": 500,
+        "maximum": 4000,
+        "minItems": 1
       },
       "walkToHaram": {
         "description": "time taken to walk to the haram in minutes",
-        "type": ["number","null"],
-        "minimum": 1
+        "type": ["number", "array", "null"],
+        "minimum": 2,
+        "maximum": 40,
+        "minItems": 1
+      },
+      "driveToHaram":{
+        "description": "time taken to drive to haram in minutes",
+        "type": ["number", "array", "null"],
+        "minimum": 1,
+        "maximum": 10,
+        "minItems":1
       },
       "numberOfBeds":{
         "description": "number of beds in hotel room",
-        "type": ["number","null"],
-        "minimum": 1
+        "type": ["number", "array", "null"],
+        "minimum": 1,
+        "maximum": 6,
+        "minItems":1
       }
       },
-      "required": ["nights", "name", "images", "stars", "hasFreeWifi", "hasAC", "distanceToHaram", "walkToHaram", "numberOfBeds"]
+      "required": ["total_days", "name", "images", "stars", "hasWifi", "hasAC", "distanceToHaram", "walkToHaram", "numberOfBeds"]
     }
       
