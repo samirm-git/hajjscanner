@@ -1,9 +1,8 @@
 import re, sys
-from scraper.helpers import makeRequest, getSoup, removeFooterHeaderNav
+from scraper.helpers import makeRequest, getSoup
 from tqdm import tqdm
-
-def scrapeLinksHomePage(baseUrl, regex):
-  return []
+from scraper.db import getAllProviders, saveUrls
+from urllib.parse import urljoin
 
 def scrapeLinksCatalogue(cataloguePages: list, regex):
   out = set()
@@ -29,7 +28,7 @@ def getSitemapSoup(baseUrl):
 
     elif resp.status_code == 200 or resp.status_code == 304:
       soup = getSoup(resp.text, parser='xml')
-      soup = removeFooterHeaderNav(soup)
+      # soup = removeFooterHeaderNav(soup)
       out.append(soup)
   
   return out
@@ -49,16 +48,25 @@ def scrapeLinksSitemap(sitemapSoups, regex):
   return list(out)
 
 
-def scrapeLinksFromHomePage(soup, regex):
-  return 
+def scrapeLinksHomePage(baseurl, regex):
+  resp, err = makeRequest(baseurl)
+  if err:
+    tqdm.write(f"requested {baseurl}: {err}")
+    return
+
+  soup = getSoup(resp.text, parser='lxml')
+  out = {a["href"] for a in  soup.find_all("a", href=regex)}
+
+  return list(out)
   
 
-def scrapePackageUrls(baseUrl, regex):
+def scrapePackageUrls(companyName, baseUrl, regex, hajjOrUmrah):
   sitemapSoups = getSitemapSoup(baseUrl)
   urls = scrapeLinksSitemap(sitemapSoups, regex)
   homepageUrls = scrapeLinksHomePage(baseUrl, regex)
-  #TODO: Complete scrapeLinksHomePage()
   urls.extend(homepageUrls)
+  urls = {urljoin(baseUrl, url) for url in urls} 
+  saveUrls(provider=companyName, urls=urls, type=hajjOrUmrah)
   return urls
   
 
@@ -70,18 +78,17 @@ if __name__ == "__main__":
   else:
     userChosenUrl = 2
 
-  with open('providers.txt','r') as f:
-    providerList = f.read().splitlines()
-  print(providerList[userChosenUrl])
-  print("")
+  providers = getAllProviders() 
+  
+  for providerName, homepage_url in providers.items():
+    hajjUrls = scrapePackageUrls(providerName, homepage_url, HAJJREGEX, 'hajj')
+    # print(f"hajjUrls: {hajjUrls}")
+    # print(f"NUM hajjUrls: {len(hajjUrls)}")
+    # print("")
 
-  hajjUrls = scrapePackageUrls(providerList[userChosenUrl], HAJJREGEX)
-  print(f"hajjUrls: {hajjUrls}")
-  print(f"NUM hajjUrls: {len(hajjUrls)}")
-  print("")
 
-  umrahUrls = scrapePackageUrls(providerList[userChosenUrl], UMRAHREGEX)
-  print(f"umrahUrls: {umrahUrls}")
-  print(f"NUM umrahUrls: {len(umrahUrls)}")
+    umrahUrls = scrapePackageUrls(providerName, homepage_url, UMRAHREGEX, 'umrah')
+    # print(f"umrahUrls: {umrahUrls}")
+    # print(f"NUM umrahUrls: {len(umrahUrls)}")
 
 

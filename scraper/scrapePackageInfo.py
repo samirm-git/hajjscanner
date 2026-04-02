@@ -1,7 +1,7 @@
 import sys, json, os
 from dotenv import load_dotenv
 from scraper.helpers import makeRequest, getSoup, removeFooterHeaderNav, getProjectRoot
-from validator import validateData
+from scraper.validator import validateData
 from upload import uploadPackageDataToS3
 from scraper.regexConsts import HAJJREGEX, UMRAHREGEX
 from scraper.scrapers import scrapeCompanyFromUrl, runScrapers, updateScrapedInfo
@@ -69,6 +69,7 @@ def scrapePackageInfo(url, tempSaveFlag = False):
   error = validateData(packageInfo)
   if error:
     logInvalidJson(error, url)
+    tqdm.write("JSON validation error. See logs.")
     return None
      
   return packageInfo
@@ -95,7 +96,6 @@ if __name__ == "__main__":
   print(urls[userChosenUrl]) 
   packageInfo = scrapePackageInfo(urls[userChosenUrl], tempSaveFlag=True) 
   if packageInfo:
-    # uploadPackageDataToS3(packageInfo, packageInfo["url"])
     pass
   else:
     print("no package info. Possible JSON validation error")

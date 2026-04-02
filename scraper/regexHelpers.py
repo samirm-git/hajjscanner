@@ -40,3 +40,6 @@ def regexSearch(regex, soup):
       return match
 
   return None
+
+def getCompanyNameFromUrl(baseUrl):
+  return re.search(r'(?:www\.)?([^.]+)\.', baseUrl.split('//')[-1]).group(1)
