@@ -39,7 +39,7 @@ def main(useCache=True):
   for companyName, urls in tqdm(providerPackageUrls.items()):
     tqdm.write(f"Now scrapping {companyName}...")
     for url in tqdm(urls):
-      packageInfo = scrapePackageInfo(url)
+      packageInfo = scrapePackageInfo(url, companyName)
       if packageInfo:
         uploadPackageDataToS3(packageInfo, companyName)
 

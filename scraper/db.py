@@ -42,6 +42,14 @@ def saveUrls(provider: str, urls: set[str], type: str):
             [(provider, url, type) for url in urls]
         )
 
+def removeUrl(url: str) -> bool:
+  with sqlite3.connect(DB_PATH) as conn:
+      cursor = conn.execute(
+          "DELETE FROM package_urls WHERE url = ?", (url,)
+      )
+  return cursor.rowcount > 0
+
+
 def getAllUrls(type: str) -> dict[str, list[str]]:
   with sqlite3.connect(DB_PATH) as conn:
       rows = conn.execute(

@@ -4,15 +4,6 @@ from tqdm import tqdm
 from scraper.db import getAllProviders, saveUrls
 from urllib.parse import urljoin
 
-def scrapeLinksCatalogue(cataloguePages: list, regex):
-  out = set()
-  for url in cataloguePages:
-    resp = makeRequest(url)
-    soup = getSoup(resp.text, parser="lxml")
-    links = {a["href"] for a in  soup.find_all("a", href=regex)}
-    out.update(links)
-
-  return list(out)
 
 def getSitemapSoup(baseUrl):
   sitemapUrls = [baseUrl + "sitemap.xml", baseUrl + "page-sitemap.xml", baseUrl + "package-sitemap.xml"]
