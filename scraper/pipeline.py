@@ -1,5 +1,6 @@
 from scraper.scrapePackageInfo import scrapePackageInfo
 from scraper.scrapePackageUrls import scrapePackageUrls
+from scraper.db import getAllUrls, getAllProviders
 from upload import uploadPackageDataToS3
 from scraper.helpers import getProjectRoot
 from scraper.regexConsts import HAJJREGEX, UMRAHREGEX
@@ -11,34 +12,36 @@ root = getProjectRoot()
 load_dotenv(dotenv_path= root/'.env.')
 
 
+def refreshProviderUrls(regex):
 
-def createPackageUrlsMasterDict(providerList, regex):
+  providers = getAllProviders()
   providersPackageUrls = {}
-  for provider in tqdm(providerList):
-    tqdm.write(f"{provider}")
-    providersPackageUrls[provider] = scrapePackageUrls(provider, regex)
+  for companyName, homepage_url in tqdm(providers.items()):
+    tqdm.write(f"Now scraping {companyName} URLS...")
+    providersPackageUrls[companyName] = scrapePackageUrls(companyName, homepage_url, regex, hajjOrUmrah='hajj')
   return providersPackageUrls
 
 
 ##TODO: FIX LLM CALL TO ATLEAST ALWAYS PROVIDE NULL ON THE REQUIRED PROPERTIES
-##TODO: HANDLE RELATIVE ULRS RETURNED BY THE scrapeLinksFromCataloguePage()
-def main():
+def main(useCache=True):
   start = time.time()
-  path = getProjectRoot() / 'providers.txt'
-  with open(path,'r') as f:
-    providerList = f.read().splitlines()
+  
+  if useCache == False:
+    tqdm.write("Scrapping package urls for all providers...")
+    providerPackageUrls = refreshProviderUrls(HAJJREGEX)
+    tqdm.write("=================================")
 
-  tqdm.write("Scrapping package urls for all providers...")
-  providerPackageUrls = createPackageUrlsMasterDict(providerList, HAJJREGEX)
+  else:
+    providerPackageUrls = getAllUrls('hajj')
 
-  tqdm.write("=================================")
+
   tqdm.write("Scrapping package info for all providers...")
-  for provider, urls in providerPackageUrls.items():
-    tqdm.write(provider)
+  for companyName, urls in tqdm(providerPackageUrls.items()):
+    tqdm.write(f"Now scrapping {companyName}...")
     for url in tqdm(urls):
-      packageInfo = scrapePackageInfo(url)
+      packageInfo = scrapePackageInfo(url, companyName)
       if packageInfo:
-        uploadPackageDataToS3(packageInfo, packageInfo["url"])
+        uploadPackageDataToS3(packageInfo, companyName)
 
   
   print(f"time taken: {time.time() - start}")

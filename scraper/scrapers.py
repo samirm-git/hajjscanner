@@ -33,11 +33,15 @@ def updateScrapedInfo(oldScrapedInfo, newScrapedInfo):
           elif oldScrapedInfo[key] is None:
             oldScrapedInfo[key] = newScrapedInfo[key]
           
-          elif oldScrapedInfo[key] == True or newScrapedInfo[key] == True:
+          elif oldScrapedInfo[key] is True or newScrapedInfo[key] is True:
             oldScrapedInfo[key] = True 
 
           elif isinstance(oldScrapedInfo[key], list):
-            oldScrapedInfo[key].append(newScrapedInfo[key])
+            #Allowing duplicated for now as it may be useful in the future e.g. the most repeated value may be more likely to be the correct one
+              if isinstance(newScrapedInfo[key], list):
+                oldScrapedInfo[key].extend(newScrapedInfo[key])  # flatten
+              else:
+                oldScrapedInfo[key].append(newScrapedInfo[key])
           
           else:
             oldScrapedInfo[key] = [oldScrapedInfo[key], newScrapedInfo[key]]
@@ -64,9 +68,9 @@ def scrapeTotalDays(soup):
   else:
     return None
 
-def scrapeCompanyFromUrl(url):
-  match = re.search(r'(?:www\.)?([^.]+)\.', url.split('//')[-1])
-  return match.group(1) if match else ''
+# def scrapeCompanyFromUrl(url):
+#   match = re.search(r'(?:www\.)?([^.]+)\.', url.split('//')[-1])
+#   return match.group(1) if match else ''
 
 def scrapePPP(soup): 
   #can do re.search(r"...", soup.get_text(strip=True)) for faster searching (not sure how much faster)
@@ -96,13 +100,9 @@ def scrapeTier(soup):
 
 def scrapeStars(soup):
   starsRegex = re.compile(r'\b([1-5])\s*(?:-?\s*star|stars?)\b', re.IGNORECASE)
-  stars = -1
   match = regexSearch(starsRegex, soup)
   if match:
-    stars = int(match.group(1))
-  
-  if stars >= 1 and stars <= 5:
-    return stars
+    return int(match.group(1))
   else:
     return None
 
@@ -135,15 +135,13 @@ PACKAGEINFO_SCRAPERS = {
 
 def scrapeTotalDaysHotel(soup):
   totalDays = -1
-  daysRegex = re.compile(r"(\d+)[-\s]?(?:night|day)s?", re.IGNORECASE)
+  # daysRegex = re.compile(r"(\d+)[-\s]?(?:night|day)s?", re.IGNORECASE)
+  daysRegex = re.compile(r"\b([1-9]|1[0-9]|20)[-\s]?(?:day|night)s?\b", re.IGNORECASE)
   match = regexSearch(daysRegex, soup)
   if match:
-    totalDays = int(match.group(1))
-  
-  if totalDays >= 1 and totalDays <= 20:
-    return totalDays
+    return int(match.group(1))
   else:
-   return None
+    return None
 
 def scrapeHotelName(soup, city):
   match = regexSearch(HOTEL_NAMES_RE[city], soup)
@@ -162,9 +160,11 @@ def scrapeHotelImages(soup):
     if not src:
       continue
     elif bool(BAD_IMAGE_RE.search(src)):
-        continue
+      continue
     else:
-       hotelImgs.add(src)
+      if not isinstance(src, str):
+        print(src)
+      hotelImgs.add(src)
 
   if len(hotelImgs) > 0: 
     return hotelImgs
@@ -193,8 +193,8 @@ def scrapeDistanceToHaram(soup):
     unit = match.group("unit").lower()
     if unit not in TO_METRES:
       print(f"ERROR: unknown unit {unit}. Acceptable units: {TO_METRES.keys()}")
-    
-    distanceMetres = distance * TO_METRES[unit]
+    else: 
+      distanceMetres = distance * TO_METRES[unit]
 
   if distanceMetres >= 500 and distanceMetres <= 4000:
     return distanceMetres

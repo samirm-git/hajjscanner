@@ -52,6 +52,9 @@ def makeRequest(url, timeout=10, retries=3):
 
   except requests.exceptions.RetryError as e:
       return None, RuntimeError(f"Max retries exceeded for URL: {url}")
+  
+  except requests.exceptions.MissingSchema as e:
+     return None, RuntimeError(f"url not valid? {url}")
   # resp = requests.get(url, headers=headers)
   # return resp
 

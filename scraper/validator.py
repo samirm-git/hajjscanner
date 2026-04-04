@@ -3,12 +3,13 @@ from pathlib import Path
 from jsonschema import validate, ValidationError
 from referencing import Registry, Resource
 from referencing.jsonschema import DRAFT7
+from scraper.helpers import getProjectRoot
 
 
 def validateData(dict):
   try:
     # Load schemas
-    path = Path(__file__).parent / "schema" 
+    path = getProjectRoot() / "schema" 
     with open(path / "hajjPackage.json") as f:
         hajjPackageSchema = json.load(f)
 

@@ -8,7 +8,7 @@ from urllib.parse import urlparse
 load_dotenv()
 s3 = boto3.client('s3')
 
-def urlToKey(url: str) -> str:
+def urlToKey(companyName: str, url: str) -> str:
     """
     Converts a URL into a readable S3 key using the domain as the prefix.
     e.g. "https://example.com/hajj/gold-package?year=2025"
@@ -16,8 +16,6 @@ def urlToKey(url: str) -> str:
     """
     parsed = urlparse(url)
 
-    companyName = re.search(r'(?:www\.)?([^.]+)\.', url.split('//')[-1]).group(1)
-    
     # prefix = parsed.netloc  # e.g. "example.com"
 
     # Build slug from path + query only
@@ -35,11 +33,11 @@ def urlToKey(url: str) -> str:
     return f"{companyName}/{slug}.json"
 
 
-def uploadPackageDataToS3(packageInfo, url):
-  
+def uploadPackageDataToS3(packageInfo, companyName):
+  url = packageInfo["url"]
   packageInfo = json.dumps(packageInfo, indent=4)
   try:
-    response = s3.put_object(Bucket='hajjpackagedata', Key=f'raw/{urlToKey(url)}', Body=packageInfo, ContentType='application/json')
+    response = s3.put_object(Bucket='hajjpackagedata', Key=f'raw/{urlToKey(companyName, url)}', Body=packageInfo, ContentType='application/json')
   except ClientError as e:
     print(e)
 

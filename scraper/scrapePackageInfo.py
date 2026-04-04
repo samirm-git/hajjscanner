@@ -1,12 +1,14 @@
 import sys, json, os
 from dotenv import load_dotenv
 from scraper.helpers import makeRequest, getSoup, removeFooterHeaderNav, getProjectRoot
-from validator import validateData
-from upload import uploadPackageDataToS3
+from scraper.validator import validateData
 from scraper.regexConsts import HAJJREGEX, UMRAHREGEX
-from scraper.scrapers import scrapeCompanyFromUrl, runScrapers, updateScrapedInfo
+from scraper.scrapers import runScrapers, updateScrapedInfo
 from scraper.hotelScraper.hotelInfoScraper import scrapeHotelInfo 
+from scraper.db import saveUrls, removeUrl
 from tqdm import tqdm
+from upload import uploadPackageDataToS3
+from urllib.parse import urljoin
 
 root = getProjectRoot()
 load_dotenv(dotenv_path= root/'.env.')
@@ -29,32 +31,52 @@ def logInvalidJson(error, url):
     f.write(" : ")
     f.write(error)
 
+def isCataloguePage(url, soup, companyName, saveifCatalogue=True):
+  hajjPackageLinks, umrahPackageLinks = set(), set()
+
+  for link in soup.find_all("a", href=True):
+    href = link.get("href")
+    if HAJJREGEX.search(href):
+      hajjPackageLinks.add(urljoin(url, href))
+
+    elif UMRAHREGEX.search(href):
+      umrahPackageLinks.add(urljoin(url,href))
+
+  if len(hajjPackageLinks) + len(umrahPackageLinks) <= 5:
+    return False
+  
+  else:
+    if removeUrl(url) == False:
+      tqdm.write(f"Removing catalogue page - Unsuccesful: {url}")
+    else:
+      tqdm.write(f"Succesfully removed catalogue page: {url}")
+
+    if saveifCatalogue:
+      saveUrls(provider=companyName, urls=hajjPackageLinks, type='hajj')
+      saveUrls(provider=companyName, urls=umrahPackageLinks, type='umrah')
+    
+    return True
 
 
-def scrapePackageInfo(url, tempSaveFlag = False):
-  packageInfo = {'url':url}
+def scrapePackageInfo(url, companyName, tempSaveFlag = False):
+  packageInfo = {'url':url, 'company': companyName}
 
   resp, err = makeRequest(url)
   if err:
     tqdm.write(f"{url}: {err}")
-    return 
+    return None 
   if resp is None:  # 404
     tqdm.write(f"{url} is not valid")
-    return
+    return None
 
   soup = getSoup(resp.text, parser="lxml")
   soup = removeFooterHeaderNav(soup)
   if soup.find("main"):
     soup = soup.find("main")
 
-  packageLinks = [link.get("href") for link in soup.find_all("a", href=True) if HAJJREGEX.search(link.get("href")) or UMRAHREGEX.search(link.get("href"))]
-  if len(packageLinks) > 5:
-    tqdm.write(f"{len(packageLinks)} links. {url} is a possible catalogue page")
-    #IF MORE THAN 10 LINKS IT IS LIKELY TO BE A CATALOGUE PAGE NOT A PACKAGE DETAILS PAGE
-    #TODO: HANDLE CATALOGUE PAGE TO FIND PACKAGE DETAILS PAGES
-    return 
+  if isCataloguePage(url, soup, companyName, saveifCatalogue=True):
+    return None
 
-  packageInfo['company'] = scrapeCompanyFromUrl(url)
   newScrapedInfo = runScrapers(soup, 'package info')
   # print(f"NEW scraped PackageInfo: {newScrapedInfo} ")
   packageInfo = updateScrapedInfo(oldScrapedInfo=packageInfo, newScrapedInfo=newScrapedInfo)
@@ -69,6 +91,7 @@ def scrapePackageInfo(url, tempSaveFlag = False):
   error = validateData(packageInfo)
   if error:
     logInvalidJson(error, url)
+    tqdm.write("JSON validation error. See logs.")
     return None
      
   return packageInfo
@@ -81,11 +104,12 @@ if __name__ == "__main__":
   url3 = "https://www.alhaqtravel.co.uk/book/24-days-shifting-hajj-packages/"
   url4 = "https://duatravels.co.uk/package/shifting-luxury-hajj-package/"
   url5 = "https://traveltoharam.co.uk/hajj-packages/5-star-shifting-packages/"
+  url6 = "https://www.alkhairtravel.co.uk/offer/21-days-shifting-hajj-package/"
   alhaqnew = "https://www.alhaqtravel.co.uk/book/19-days-economy-hajj-packages/"
   eliteumrah = "https://eliteumrah.co.uk/21-days-economy-hajj-package/"
   
 
-  urls = [url, url2, url3, url4, url5, alhaqnew, eliteumrah]
+  urls = [url, url2, url3, url4, url5, url6, alhaqnew, eliteumrah]
   if len(sys.argv) >= 2:
     userChosenUrl = int(sys.argv[1])
   else:
@@ -93,9 +117,8 @@ if __name__ == "__main__":
 
 
   print(urls[userChosenUrl]) 
-  packageInfo = scrapePackageInfo(urls[userChosenUrl], tempSaveFlag=True) 
+  packageInfo = scrapePackageInfo(urls[userChosenUrl], 'safamarwahtravel', tempSaveFlag=True) 
   if packageInfo:
-    # uploadPackageDataToS3(packageInfo, packageInfo["url"])
     pass
   else:
     print("no package info. Possible JSON validation error")
