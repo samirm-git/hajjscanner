@@ -6,7 +6,7 @@ from google.genai.types import GenerateContentConfig
 from scraper.helpers import loadHotelSchema, getProjectRoot
 from scraper.gemini_helpers import *
 from scraper.consts import CITY_PATTERNS, CONTAINER_TAGS, HEADING_TAGS
-from scraper.scrapers import runScrapers, updateScrapedInfo, scrapeHotelName
+from scraper.scrapers import runScrapers, updateScrapedInfo, scrapeHotelName, scrapeHotelImages
 
 
 
@@ -51,7 +51,7 @@ def getChildContainerIDs(container):
   return out
 
 
-def scrapeHotelInfo(soup, city):
+def scrapeHotelInfo(soup, city, url):
   city = city.lower()
   otherCity = 'madinah' if city == 'makkah' else 'makkah'
   #NOTE FOR GEMINI SCHEMA WE CANNOT ALLOW MORE THAN 1 TYPE + NULL. 
@@ -85,7 +85,15 @@ def scrapeHotelInfo(soup, city):
         # fullTextLLM = container.get_text("\n", strip=True) # Use fullText as a fall back e.g. call AI model with fullText
         
         # llmOutput = LLMPrompter(client, fullTextLLM, hotelSchema)
-        hotelInfo['name'] = scrapeHotelName(container, city)
+        if hotelInfo.get('name') is None: 
+          hotelInfo['name'] = scrapeHotelName(container, city)
+        if hotelInfo.get('images') is None:
+          hotelInfo['images'] = scrapeHotelImages(container, url)
+        else:
+          newImages = scrapeHotelImages(container, url)
+          if newImages:
+            hotelInfo['images'].update(scrapeHotelImages(container, url))
+
         newScrapedInfo = runScrapers(container, 'hotel info')
         hotelInfo = updateScrapedInfo(oldScrapedInfo=hotelInfo, newScrapedInfo=newScrapedInfo)
 

@@ -3,6 +3,7 @@ from scraper.consts import HEADING_TAGS
 from scraper.hotelScraper.hotelNamesScraper import HOTEL_NAMES_RE
 from scraper.regexHelpers import hasKeywordPattern, regexSearch
 from scraper.regexConsts import DISTANCE_RE, TO_METRES, WALK_TIME_RE, WORD_TO_NUM, BAD_IMAGE_RE 
+from urllib.parse import urljoin, urlparse
 
 #MAIN FUNCTION
 def runScrapers(soup, scraperName):
@@ -18,34 +19,42 @@ def runScrapers(soup, scraperName):
 def updateScrapedInfo(oldScrapedInfo, newScrapedInfo):
   try:
     for key in newScrapedInfo.keys(): 
+      if key == 'images':
+        print("images key found in updateScrapedInfo.")
       if key not in oldScrapedInfo:
           oldScrapedInfo[key] = newScrapedInfo[key]
       else:
-          if isinstance(oldScrapedInfo[key], set):
-            oldScrapedInfo[key] = list(oldScrapedInfo[key])
+        if isinstance(oldScrapedInfo[key], set):
+          oldScrapedInfo[key] = list(oldScrapedInfo[key])
+        
+        if isinstance(newScrapedInfo[key], set):
+          newScrapedInfo[key] = list(newScrapedInfo[key])
+
+        if newScrapedInfo[key] == oldScrapedInfo[key] or newScrapedInfo[key] is None:
+          pass
+
+        elif oldScrapedInfo[key] is None:
+          oldScrapedInfo[key] = newScrapedInfo[key]
+
+        elif type(oldScrapedInfo[key]) is not type(oldScrapedInfo[key]):
+          print(f"type mismatch: old value: {oldScrapedInfo[key]} is type: {type(oldScrapedInfo[key])}, while new value: {newScrapedInfo[key]} is type: {type(newScrapedInfo[key])}")
+
+        
+        elif oldScrapedInfo[key] is True or newScrapedInfo[key] is True:
+          oldScrapedInfo[key] = True 
+        
+        elif isinstance(oldScrapedInfo[key], str):
+          oldScrapedInfo[key] = newScrapedInfo[key]
+        
+        elif isinstance(oldScrapedInfo[key], list):
+          oldScrapedInfo[key].extend(newScrapedInfo[key])  
+
+        elif key == "ppp":
+          oldScrapedInfo[key] = max(oldScrapedInfo[key], newScrapedInfo[key])
+        else:
+          oldScrapedInfo[key] = min(oldScrapedInfo[key], newScrapedInfo[key])
+
           
-          if isinstance(newScrapedInfo[key], set):
-            newScrapedInfo[key] = list(newScrapedInfo[key])
-
-          if newScrapedInfo[key] == oldScrapedInfo[key] or newScrapedInfo[key] is None:
-            pass
-
-          elif oldScrapedInfo[key] is None:
-            oldScrapedInfo[key] = newScrapedInfo[key]
-          
-          elif oldScrapedInfo[key] is True or newScrapedInfo[key] is True:
-            oldScrapedInfo[key] = True 
-
-          elif isinstance(oldScrapedInfo[key], list):
-            #Allowing duplicated for now as it may be useful in the future e.g. the most repeated value may be more likely to be the correct one
-              if isinstance(newScrapedInfo[key], list):
-                oldScrapedInfo[key].extend(newScrapedInfo[key])  # flatten
-              else:
-                oldScrapedInfo[key].append(newScrapedInfo[key])
-          
-          else:
-            oldScrapedInfo[key] = [oldScrapedInfo[key], newScrapedInfo[key]]
-
   except ValueError:
     print("error")
   
@@ -150,21 +159,28 @@ def scrapeHotelName(soup, city):
   
   return None
 
-def scrapeHotelImages(soup):
+def scrapeHotelImages(soup, url):
+  def is_valid_image_url(fullUrl):  
+    VALID_IMAGE_EXTENSIONS = ('.jpg', '.jpeg', '.png', '.webp')
+
+    path = urlparse(fullUrl).path
+    return path.lower().endswith(VALID_IMAGE_EXTENSIONS)
+  
+
   hotelImgs = set()
   imgs = soup.find_all("img") #I think you can add a regex expression as a another parameter to make sure the image src does not include 'placeholder'
   if not len(imgs) > 3:
     return None
   for img in imgs:
     src = (img.get("data-src") or img.get("data-original") or img.get("data-lazy") or img.get("src"))
-    if not src:
+    if not src or not isinstance(src, str):
       continue
-    elif bool(BAD_IMAGE_RE.search(src)):
+    elif BAD_IMAGE_RE.search(src):
       continue
     else:
-      if not isinstance(src, str):
-        print(src)
-      hotelImgs.add(src)
+      fullUrl = urljoin(url, src)
+      if is_valid_image_url(fullUrl):
+        hotelImgs.add(fullUrl)
 
   if len(hotelImgs) > 0: 
     return hotelImgs
@@ -238,7 +254,7 @@ def scrapeNumberOfBeds(soup):
 HOTEL_SCRAPERS = {
   #name is scrapped separately in hotelInfoScraper.py
   'total_days': scrapeTotalDaysHotel,
-  'images': scrapeHotelImages,
+  # 'images': scrapeHotelImages,
   'stars': scrapeStars,
   'hasWifi': scrapeHasWifi,
   'hasAC': scrapeHasAC,

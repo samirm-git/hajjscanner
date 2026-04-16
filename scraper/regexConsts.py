@@ -1,7 +1,17 @@
 import re
 
-HAJJREGEX = re.compile(r"hajj[-_]*package", re.IGNORECASE) 
-UMRAHREGEX = re.compile(r"umrah?[-_]*package", re.IGNORECASE)
+# HAJJREGEX = re.compile(r"hajj[-_]*package", re.IGNORECASE) 
+# UMRAHREGEX = re.compile(r"umrah?[-_]*package", re.IGNORECASE)
+HAJJREGEX = re.compile(
+    r"(?:hajj[-_]*(?:[\w]*[-_])*package|package[-_]*(?:[\w]*[-_])*hajj)",
+    re.IGNORECASE
+)
+
+# Matches: umrah-package, package-umrah, umrah-2025-package, umra_vip_package, etc.
+UMRAHREGEX = re.compile(
+    r"(?:umrah?[-_]*(?:[\w]*[-_])*package|package[-_]*(?:[\w]*[-_])*umrah?)",
+    re.IGNORECASE
+)
 
 BAD_IMAGE_RE = re.compile(r"(icon|place[-_]?holder)", re.IGNORECASE)
 

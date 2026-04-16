@@ -31,7 +31,7 @@ def logInvalidJson(error, url):
     f.write(" : ")
     f.write(error)
 
-def isCataloguePage(url, soup, companyName, saveifCatalogue=True):
+def isCataloguePage(url, soup, companyName, save=True):
   hajjPackageLinks, umrahPackageLinks = set(), set()
 
   for link in soup.find_all("a", href=True):
@@ -41,20 +41,19 @@ def isCataloguePage(url, soup, companyName, saveifCatalogue=True):
 
     elif UMRAHREGEX.search(href):
       umrahPackageLinks.add(urljoin(url,href))
+  
+  if save:
+    saveUrls(provider=companyName, urls=hajjPackageLinks, type='hajj')
+    saveUrls(provider=companyName, urls=umrahPackageLinks, type='umrah')
 
   if len(hajjPackageLinks) + len(umrahPackageLinks) <= 5:
     return False
-  
   else:
     if removeUrl(url) == False:
       tqdm.write(f"Removing catalogue page - Unsuccesful: {url}")
     else:
       tqdm.write(f"Succesfully removed catalogue page: {url}")
 
-    if saveifCatalogue:
-      saveUrls(provider=companyName, urls=hajjPackageLinks, type='hajj')
-      saveUrls(provider=companyName, urls=umrahPackageLinks, type='umrah')
-    
     return True
 
 
@@ -74,7 +73,7 @@ def scrapePackageInfo(url, companyName, tempSaveFlag = False):
   if soup.find("main"):
     soup = soup.find("main")
 
-  if isCataloguePage(url, soup, companyName, saveifCatalogue=True):
+  if isCataloguePage(url, soup, companyName, save=True):
     return None
 
   newScrapedInfo = runScrapers(soup, 'package info')
@@ -83,8 +82,8 @@ def scrapePackageInfo(url, companyName, tempSaveFlag = False):
   # print("")
   # print(f"updated package info: {packageInfo}")
 
-  packageInfo['makkahHotel'] = scrapeHotelInfo(soup, 'makkah')
-  packageInfo['madinahHotel'] = scrapeHotelInfo(soup, 'madinah')    
+  packageInfo['makkahHotel'] = scrapeHotelInfo(soup, 'makkah', url)
+  packageInfo['madinahHotel'] = scrapeHotelInfo(soup, 'madinah', url)    
   if tempSaveFlag:
     tempSave(packageInfo)
 
@@ -93,8 +92,8 @@ def scrapePackageInfo(url, companyName, tempSaveFlag = False):
     logInvalidJson(error, url)
     tqdm.write("JSON validation error. See logs.")
     return None
-     
-  return packageInfo
+  else:   
+    return packageInfo
 
 if __name__ == "__main__":
 
@@ -107,9 +106,10 @@ if __name__ == "__main__":
   url6 = "https://www.alkhairtravel.co.uk/offer/21-days-shifting-hajj-package/"
   alhaqnew = "https://www.alhaqtravel.co.uk/book/19-days-economy-hajj-packages/"
   eliteumrah = "https://eliteumrah.co.uk/21-days-economy-hajj-package/"
+  hajjUmrahHub = "https://www.hajjumrahhub.co.uk/hajj/2-3-weeks-hajj-package-non-shifting.html"
   
 
-  urls = [url, url2, url3, url4, url5, url6, alhaqnew, eliteumrah]
+  urls = [url, url2, url3, url4, url5, url6, alhaqnew, eliteumrah, hajjUmrahHub]
   if len(sys.argv) >= 2:
     userChosenUrl = int(sys.argv[1])
   else:
