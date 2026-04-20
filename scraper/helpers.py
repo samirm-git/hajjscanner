@@ -5,6 +5,9 @@ from bs4 import BeautifulSoup
 from pathlib import Path
 import json
 import re
+import unicodedata
+from scraper.regexConsts import COMMON_HOTEL_WORDS_RE
+
 
 def makeRequest(url, timeout=10, retries=3):
   headers = {
@@ -54,7 +57,10 @@ def makeRequest(url, timeout=10, retries=3):
       return None, RuntimeError(f"Max retries exceeded for URL: {url}")
   
   except requests.exceptions.MissingSchema as e:
-     return None, RuntimeError(f"url not valid? {url}")
+     return None, RuntimeError(f"missing schema excpetion for:  {url}")
+  
+  except requests.exceptions.InvalidSchema as e:
+     return None, RuntimeError(f"invalid schema exception for: {url}")
   # resp = requests.get(url, headers=headers)
   # return resp
 
@@ -68,7 +74,7 @@ def removeFooterHeaderNav(soup):
         tag.decompose()
 
     # Much more precise keywords — only exact structural identifiers
-    keywords = ["footer", "navbar", "nav-bar", "navigation", "site-header", "page-header"]
+    keywords = ["footer", "navbar", "nav-bar", "site-header", "page-header"]
     
     for tag in list(soup.find_all(True)):
         if not tag.attrs:
@@ -113,3 +119,27 @@ def getProjectRoot(marker: str = ".gitignore") -> Path:
         if (parent / marker).exists():
             return parent
     raise RuntimeError(f"{marker} not found")
+
+def cleanText(text):
+    def remove_arabic(text):
+      return re.sub(r'[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF]+', '', text)
+
+    def normalize_text(text):
+      text = text.lower()
+      text = unicodedata.normalize('NFKC', text)
+
+      text = text.encode('ascii', 'ignore').decode('ascii')
+
+      text = COMMON_HOTEL_WORDS_RE.sub("", text)
+      text = re.sub(r"\d+", "", text)         
+      text = re.sub(r"[^\w\s]", "", text)
+      text = re.sub(r"\s+", " ", text).strip()
+
+      return text 
+
+    if not text:
+      return ""
+
+    text = remove_arabic(text)
+    text = normalize_text(text)
+    return text

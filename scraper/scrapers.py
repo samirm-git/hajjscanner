@@ -1,9 +1,11 @@
 import re
 from scraper.consts import HEADING_TAGS 
-from scraper.hotelScraper.hotelNamesScraper import HOTEL_NAMES_RE
+from scraper.hotelScraper.hotelNamesScraper import HOTELS
 from scraper.regexHelpers import hasKeywordPattern, regexSearch
-from scraper.regexConsts import DISTANCE_RE, TO_METRES, WALK_TIME_RE, WORD_TO_NUM, BAD_IMAGE_RE 
+from scraper.helpers import cleanText
+from scraper.regexConsts import HOTEL_KEYWORDS, DISTANCE_RE, TO_METRES, WALK_TIME_RE, WORD_TO_NUM, BAD_IMAGE_RE 
 from urllib.parse import urljoin, urlparse
+from rapidfuzz import process, fuzz, utils
 
 #MAIN FUNCTION
 def runScrapers(soup, scraperName):
@@ -153,11 +155,62 @@ def scrapeTotalDaysHotel(soup):
     return None
 
 def scrapeHotelName(soup, city):
-  match = regexSearch(HOTEL_NAMES_RE[city], soup)
-  if match:
-    return match.group(0)
-  
-  return None
+  def extract_hotel_candidates(soup) -> set[str]:
+    candidates = set()
+
+    for text in soup.stripped_strings:
+      words = text.split()
+      match_idx = next((i for i, w in enumerate(words) if HOTEL_KEYWORDS.search(w)), None)
+      if match_idx is not None:
+        if len(words) <= 5:
+            candidate = " ".join(words)
+        else:
+            start = max(0, match_idx - 2)
+            end = start + 5
+            if end > len(words):
+                end = len(words)
+                start = end - 5
+            candidate = " ".join(words[start:end])
+        
+        candidates.add(candidate) 
+
+    return candidates
+
+
+  def match_hotel(candidates: list[str], hotels: list[str]):
+      threshold = 75
+      best_match = None
+      best_score = 0
+
+      for candidate in candidates:
+          cleanedText = cleanText(candidate)
+          cleanedText = candidate if cleanedText == "" else cleanedText
+          # print(f"cleanedText: {cleanedText}")
+          result = process.extractOne(
+              cleanedText,
+              hotels,
+              scorer=fuzz.token_set_ratio,  # handles word reordering.
+                                              #162 null hotel names when using token_set_ratio
+                                              #220 null hotel names when using token_sort_ratio
+              processor=utils.default_process
+          )
+          if result and result[1] >= threshold and result[1] > best_score:
+              best_score = result[1]
+              best_match = {"matched_name": result[0], "score": result[1], "from_cleanedtext": cleanedText}
+
+      return best_match
+
+  candidates = extract_hotel_candidates(soup)
+  # print(f"candidates: {candidates}")
+  hotelsDict = HOTELS[city]
+  shortNames = list(hotelsDict.keys())
+  best_match = match_hotel(candidates, shortNames)
+  # print(f"best_match: {best_match}")
+  # print("")
+  if best_match is not None:
+    return hotelsDict[best_match["matched_name"]]
+  else:
+   return None
 
 def scrapeHotelImages(soup, url):
   def is_valid_image_url(fullUrl):  
@@ -210,7 +263,7 @@ def scrapeDistanceToHaram(soup):
     if unit not in TO_METRES:
       print(f"ERROR: unknown unit {unit}. Acceptable units: {TO_METRES.keys()}")
     else: 
-      distanceMetres = distance * TO_METRES[unit]
+      distanceMetres = int(distance * TO_METRES[unit])
 
   if distanceMetres >= 500 and distanceMetres <= 4000:
     return distanceMetres

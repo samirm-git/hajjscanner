@@ -5,7 +5,8 @@ from google import genai
 from google.genai.types import GenerateContentConfig
 from scraper.helpers import loadHotelSchema, getProjectRoot
 from scraper.gemini_helpers import *
-from scraper.consts import CITY_PATTERNS, CONTAINER_TAGS, HEADING_TAGS
+from scraper.consts import CONTAINER_TAGS, HEADING_TAGS
+from scraper.regexConsts import CITY_PATTERNS
 from scraper.scrapers import runScrapers, updateScrapedInfo, scrapeHotelName, scrapeHotelImages
 
 

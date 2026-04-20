@@ -22,8 +22,7 @@ def refreshProviderUrls(regex):
   return providersPackageUrls
 
 
-##TODO: FIX LLM CALL TO ATLEAST ALWAYS PROVIDE NULL ON THE REQUIRED PROPERTIES
-def main(useCache=True):
+def main(useCache=True, uploadToS3=True):
   start = time.time()
   
   if useCache == False:
@@ -40,13 +39,13 @@ def main(useCache=True):
     tqdm.write(f"Now scrapping {companyName}...")
     for url in tqdm(urls):
       packageInfo = scrapePackageInfo(url, companyName)
-      if packageInfo:
+      if packageInfo and uploadToS3:
         uploadPackageDataToS3(packageInfo, companyName)
-
+     
   
   print(f"time taken: {time.time() - start}")
-
+  
   return None  
 
 if __name__ == "__main__":
-  main()
+  main(uploadToS3=True)

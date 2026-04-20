@@ -42,19 +42,27 @@ def saveUrls(provider: str, urls: set[str], type: str):
             [(provider, url, type) for url in urls]
         )
 
-def removeUrl(url: str) -> bool:
+def removeUrl(url: str):
   with sqlite3.connect(DB_PATH) as conn:
       cursor = conn.execute(
           "DELETE FROM package_urls WHERE url = ?", (url,)
       )
-  return cursor.rowcount > 0
+      if cursor.rowcount <= 0:
+        print(f"Failed to remove url from package_urls: {url}")
 
+def flagUrlIsCatalogue(url:str):
+  with sqlite3.connect(DB_PATH) as conn:
+      cursor = conn.execute(
+          "UPDATE package_urls SET isCatalogue = 1 WHERE url = ?", (url,)
+      )
+      if cursor.rowcount <= 0:
+         print(f"failed to flag url as catalogue page: {url} ")
 
 def getAllUrls(type: str) -> dict[str, list[str]]:
   with sqlite3.connect(DB_PATH) as conn:
       rows = conn.execute(
           """SELECT provider, url FROM package_urls
-              WHERE type = ?
+              WHERE type = ? AND isCatalogue = 0
               ORDER BY provider""",
           (type,)
       ).fetchall()
@@ -64,3 +72,37 @@ def getAllUrls(type: str) -> dict[str, list[str]]:
       result.setdefault(provider, []).append(url)
 
   return result
+
+#hotels TABLE
+#===================================================
+def addHotel(fullName, shortName, city):
+    with sqlite3.connect(DB_PATH) as conn:
+      cursor = conn.execute(
+        "INSERT OR IGNORE INTO hotels (fullName, shortName, city) VALUES (?, ?, ?)",
+        (fullName, shortName, city))
+    return cursor.rowcount > 0
+
+def deleteNonEnglishHotelNames():
+    with sqlite3.connect(DB_PATH) as conn:
+        cursor = conn.execute("""DELETE FROM hotels WHERE fullName GLOB '*[ء-ي]*' AND fullName NOT GLOB '*[A-Za-z]*';""")
+    return cursor.rowcount > 0
+
+def getCityHotelNames(city) -> list:
+    with sqlite3.connect(DB_PATH) as conn:
+        rows = conn.execute("SELECT shortName, fullName FROM hotels WHERE city = ?",(city,)).fetchall()
+        cityHotels = {short: full for short, full in rows}
+        
+    return cityHotels
+  
+
+def UpdateHotelShortName():
+  from scraper.helpers import cleanText
+  with sqlite3.connect(DB_PATH) as conn:
+    cursor = conn.cursor()
+    cursor.execute("SELECT id, fullName FROM hotels")
+    rows = cursor.fetchall()
+    cursor.executemany(
+    "UPDATE hotels SET shortName = ? WHERE id = ?",
+    [(cleanText(fullname), row_id) for row_id, fullname in rows]
+    ) 
+    
