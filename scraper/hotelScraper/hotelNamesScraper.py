@@ -1,63 +1,15 @@
 import requests
 import sys
-import re
-import unicodedata
-from pathlib import Path
-from scraper.consts import CITY_PATTERNS
+from scraper.helpers import cleanText 
+from scraper.db import addHotel, getCityHotelNames, deleteNonEnglishHotelNames
 
-#TODO: REMOVE COMMON_WORDS_RE AND USE CITY_PATTERNS INSTEAD, AND REMOVE 'hotel' SEPARATELY
-def build_hotelName_regex(hotel_list):
-    escaped = [re.escape(h) for h in hotel_list]
-    joined = "|".join(escaped)
-    pattern = rf"\b(?:{joined})\b"
-    return re.compile(pattern, re.IGNORECASE)
-
-
-path = Path(__file__).parent / "data"
-with open(path / 'makkah_hotels.txt', 'r') as f:
-  makkahHotels = f.read().splitlines()
-
-with open(path / 'madinah_hotels.txt', 'r') as f:
-  madinahHotels = f.read().splitlines()
-
-HOTEL_NAMES_RE = {
-  "makkah": build_hotelName_regex(makkahHotels),
-  "madinah": build_hotelName_regex(madinahHotels)
-}
+HOTELS = {"makkah": getCityHotelNames('makkah'), "madinah": getCityHotelNames("madinah")}
   
 
-def clean_text(text):
-    def remove_arabic(text):
-      return re.sub(r'[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF]+', '', text)
-
-    def normalize_text(text):
-      text = text.lower()
-      text = unicodedata.normalize('NFKC', text)
-
-      text = text.encode('ascii', 'ignore').decode('ascii')
-
-      text = re.sub(r"\d+", "", text)         
-      text = re.sub(r"[^\w\s]", "", text)
-      text = COMMON_WORDS_RE.sub("", text)
-      text = re.sub(r"\s+", " ", text).strip()
-
-      return text 
-
-    if not text:
-      return ""
-
-    makkah = CITY_PATTERNS["makkah"]
-    madinah = CITY_PATTERNS["madinah"]
-    COMMON_WORDS_RE = re.compile(
-    rf"(?:\bhotel\b|{makkah}|{madinah})",
-    re.IGNORECASE
-    )
-
-    text = remove_arabic(text)
-    text = normalize_text(text)
-    return text
 
 def main(city, save=False):
+  city = city.lower()
+  assert city in ['makkah', 'madinah']
   coords = "(21.1,39.6,21.55,40.15)" if city == "makkah" else "(24.38,39.54,24.58,39.72)"
 
   url = "https://overpass-api.de/api/interpreter"
@@ -65,16 +17,16 @@ def main(city, save=False):
   query = f"""
   [out:json];
   (
-    node["tourism"~"hotel"]{coords};
-    way["tourism"~"hotel"]{coords};
-    relation["tourism"~"hotel"]{coords};
+    node["tourism"="hotel"]{coords};
+    way["tourism"="hotel"]{coords};
+    relation["tourism"="hotel"]{coords};
     way["building"="hotel"]{coords};
     relation["building"="hotel"]{coords};
   );
   out tags;
   """
 
-  headers = {"User-Agent": "HotelNameScraper"}
+  headers = {"User-Agent": "HotelNameScraperv2.1"}
   res = requests.post(url, data={"data": query}, headers=headers, timeout=60)
 
   if res.status_code != 200:
@@ -86,41 +38,28 @@ def main(city, save=False):
 
     data = res.json()
 
-
-    hotels = set()
-
     for el in data["elements"]:
         name = el.get("tags", {}).get("name")
         name_en = el.get("tags", {}).get("name:en")
+        
         if name_en:
-          clean_name = clean_text(name_en)
-          if clean_name:
-            hotels.add(clean_name)
-        elif name:
-          clean_name = clean_text(name)
-          if clean_name:
-            hotels.add(clean_name)
-            
+          clean_name = cleanText(name_en)
+          clean_name = name_en if clean_name == "" else clean_name
+          o = addHotel(name_en, clean_name, city)
+          if o:
+            print(f"Adding hotel: {name_en}. Success")
 
-    print(len(hotels))
+        elif name:
+          clean_name = cleanText(name)
+          clean_name = name if clean_name == "" else clean_name
+          o = addHotel(name, clean_name, city)
+          if o:
+            print(f"Adding hotel: {name_en}. Success")
+
+    deleteNonEnglishHotelNames()     
       
-    if save:
-      with open(path / f"{city}_hotels.txt", "w", encoding="utf-8") as f:
-        for h in sorted(hotels):
-            f.write(h + "\n")
 
     print("Done")
-
-def temp(city):
-
-  hotels = makkahHotels if city == "makkah" else madinahHotels
-  hotelsCleaned = set()
-  for hotel in hotels:
-    hotelsCleaned.add(clean_text(hotel))
-  
-  with open(path / f"{city}_hotels.txt", "w", encoding="utf-8") as f:
-    for h in sorted(hotelsCleaned):
-      f.write(h + "\n")
 
 if __name__ == "__main__":
   if len(sys.argv) >= 2:

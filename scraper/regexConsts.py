@@ -1,7 +1,31 @@
 import re
 
-HAJJREGEX = re.compile(r"hajj[-_]*package", re.IGNORECASE) 
-UMRAHREGEX = re.compile(r"umrah?[-_]*package", re.IGNORECASE)
+# HAJJREGEX = re.compile(r"hajj[-_]*package", re.IGNORECASE) 
+# UMRAHREGEX = re.compile(r"umrah?[-_]*package", re.IGNORECASE)
+HAJJREGEX = re.compile(
+    r"(?:hajj[-_]*(?:[\w]*[-_])*package|package[-_]*(?:[\w]*[-_])*hajj)",
+    re.IGNORECASE
+)
+
+# Matches: umrah-package, package-umrah, umrah-2025-package, umra_vip_package, etc.
+UMRAHREGEX = re.compile(
+    r"(?:umrah?[-_]*(?:[\w]*[-_])*package|package[-_]*(?:[\w]*[-_])*umrah?)",
+    re.IGNORECASE
+)
+
+HOTEL_KEYWORDS = re.compile(
+    r'\b(hotel|towers?|suites?|residences?|dar|grand|royale?|plaza|inn|lodge|'
+    r'mövenpick|movenpick|hilton|marriott|pullman|hyatt|novotel|'
+    r'intercontinental|radisson|millennium)\b',
+    re.IGNORECASE
+)
+
+CITY_PATTERNS = {
+    "makkah": r"\b(makkah|mecca|meccah|makah)\b",
+    "madinah": r"\b(madinah|medina|medinah|madina)\b",
+}
+
+COMMON_HOTEL_WORDS_RE = re.compile(rf"(?:\bhotel\b|\bal[-\s]?|\bel[-\s]?|{CITY_PATTERNS['makkah']}|{CITY_PATTERNS['madinah']})", re.IGNORECASE)
 
 BAD_IMAGE_RE = re.compile(r"(icon|place[-_]?holder)", re.IGNORECASE)
 
