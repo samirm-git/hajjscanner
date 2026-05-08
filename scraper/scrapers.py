@@ -84,22 +84,33 @@ def scrapeTotalDays(soup):
 #   return match.group(1) if match else ''
 
 def scrapePPP(soup): 
-  #can do re.search(r"...", soup.get_text(strip=True)) for faster searching (not sure how much faster)
-  #but then we would not know which container the matching text comes from which may be useful e.g. finding the parent container for more context (although not doing this currently).
-  #moreover, with soup.find(...) we can filter the containers we are searching through e.g heading [h1, h2, ..., h6] containers.
-  priceRegex = re.compile(r"([£$€])\s*(\d[\d,]*(?:\.\d{2})?)", re.IGNORECASE)
-  price = -1 
-  match = regexSearch(priceRegex, soup)
-  if match:
-    currency = match.group(1)
-    #TODO: CONVERT CURRENCY TO STANDARD CURRENCY PRICE TO STANDARD CURRENCY E.G £
-    price = match.group(2)
-    price = int(price.replace(",", '').strip())
-  
-  if price >= 2000 and price <= 25000:
-    return price
-  else:
+  FX = {"GBP": 1.0, "USD": 0.75, "EUR": 0.86, "SAR": 0.20}
+  SYMBOLS = {
+      "£": "GBP", "gbp": "GBP",
+      "€": "EUR", "eur": "EUR",
+      "us$": "USD", "$": "USD", "usd": "USD",
+      "sar": "SAR",
+   }
+  _s = "|".join(re.escape(k) for k in SYMBOLS)
+  _n = r"\d[\d,]*(?:\.\d{1,2})?"
+  PRICE_REGEX = re.compile(rf"(?:({_s})\s*({_n})|({_n})\s*({_s}))", re.IGNORECASE)
+
+  match = regexSearch(PRICE_REGEX, soup)
+  if not match:
     return None
+  else:
+    symbol = (match.group(1) or match.group(4)).lower()
+    number = (match.group(2) or match.group(3)).replace(",", "")
+    cur = SYMBOLS.get(symbol)
+
+    if not cur or cur not in FX:
+      return None
+    
+    gbp = round(float(number) * FX[cur])
+    if gbp >= 2000 and gbp <= 25_000:
+      return gbp
+    else:
+      return None
 
 def scrapeTier(soup):
   tierRegex = re.compile(r"\b(luxury|premium|economy)\b", re.IGNORECASE)

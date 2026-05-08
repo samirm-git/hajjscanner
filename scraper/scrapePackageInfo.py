@@ -94,7 +94,6 @@ def scrapePackageInfo(url, companyName, tempSaveFlag = False):
     return packageInfo
 
 if __name__ == "__main__":
-  temp = "https://www.safamarwahtravel.co.uk/deals/3-star-21-days-shifting-hajj-package-from-glasgow/"
   temp2 = "https://www.safamarwahtravel.co.uk/deals/3-star-17-days-shifting-hajj-package-from-glasgow/"
   url = "https://alamanahtravel.co.uk/14-days-5-star-non-shifting-hajj-package/"
   url2 = "https://www.safamarwahtravel.co.uk/deals/5-star-17-days-non-shifting-hajj-package/"
