@@ -6,33 +6,6 @@ from dataLoader import loadData
 
 queryName = 'allData'
 
-# def extract_distance(hotel_str):
-#     """Extract distancetoharam (metres) from the hotel JSON-like string."""
-#     if pd.isna(hotel_str):
-#         return None
-#     m = re.search(r'distancetoharam=(\d+)', str(hotel_str))
-#     return int(m.group(1)) if m else None
-
-
-# def parse_data(df: pd.DataFrame) -> pd.DataFrame:
-#     """Clean and enrich the raw dataframe."""
-#     df = df.copy()
-
-#     # Normalise types
-#     df['ppp'] = pd.to_numeric(df['ppp'], errors='coerce')
-#     df['stars'] = pd.to_numeric(df['stars'], errors='coerce').astype('Int64')
-#     df['isshifting'] = df['isshifting'].map(
-#         {True: True, False: False, 'True': True, 'False': False,
-#          'true': True, 'false': False}
-#     )
-
-#     # Extract makkah / madinah distances from embedded JSON strings
-#     df['makkah_distance_m'] = df['makkahhotel'].apply(extract_distance)
-#     df['madinah_distance_m'] = df['madinahhotel'].apply(extract_distance)
-
-#     return df
-
-
 def apply_package_filters(df: pd.DataFrame) -> pd.DataFrame:
     """Render sidebar filters and return the filtered dataframe."""
     st.sidebar.header("🔍 Filters")
