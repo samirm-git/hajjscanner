@@ -43,7 +43,7 @@ def scrapeLinksHomePage(baseurl, regex):
   resp, err = makeRequest(baseurl)
   if err:
     tqdm.write(f"requested {baseurl}: {err}")
-    return
+    return []
 
   soup = getSoup(resp.text, parser='lxml')
   out = {a["href"] for a in  soup.find_all("a", href=regex)}

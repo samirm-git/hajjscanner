@@ -5,7 +5,7 @@ from scraper.validator import validateData
 from scraper.regexConsts import HAJJREGEX, UMRAHREGEX
 from scraper.scrapers import runScrapers, updateScrapedInfo
 from scraper.hotelScraper.hotelInfoScraper import scrapeHotelInfo 
-from scraper.db import saveUrls, flagUrlIsCatalogue
+from scraper.db import saveUrls, flagUrlIsCatalogue, setScrapped
 from tqdm import tqdm
 from upload import uploadPackageDataToS3
 from urllib.parse import urljoin
@@ -90,10 +90,10 @@ def scrapePackageInfo(url, companyName, tempSaveFlag = False):
     tqdm.write("JSON validation error. See logs.")
     return None
   else:   
+    setScrapped(url)
     return packageInfo
 
 if __name__ == "__main__":
-  temp = "https://www.safamarwahtravel.co.uk/deals/3-star-21-days-shifting-hajj-package-from-glasgow/"
   temp2 = "https://www.safamarwahtravel.co.uk/deals/3-star-17-days-shifting-hajj-package-from-glasgow/"
   url = "https://alamanahtravel.co.uk/14-days-5-star-non-shifting-hajj-package/"
   url2 = "https://www.safamarwahtravel.co.uk/deals/5-star-17-days-non-shifting-hajj-package/"
