@@ -17,6 +17,19 @@ def apply_package_filters(df: pd.DataFrame) -> pd.DataFrame:
         df = df[df['isShifting'] == True]
     elif shifting_choice == "Non-shifting only":
         df = df[df['isSifting'] == False]
+  
+    #--- boolean options (hasAc, hasWifi isVisaIncluded)
+    hasAc, hasWifi, isVisaIncluded = st.sidebar.columns(3)
+    hasAc = hasAc.checkbox("AC")
+    hasWifi = hasWifi.checkbox("Wifi")
+    isVisaIncluded = isVisaIncluded.checkbox("Visa")
+
+    if hasAc:
+      df = df.query("makkah_hasAC and madinah_hasAC")
+    if hasWifi:
+      df = df.query("makkah_hasWifi and madinah_hasWifi")
+    if isVisaIncluded:
+      df = df.query("isVisaIncluded") 
 
     # --- Star rating ---
     available_stars = sorted(df['stars'].dropna().unique().tolist())
@@ -146,7 +159,7 @@ def show_distance_vs_ppp_scatter(df: pd.DataFrame):
         .properties(height=450)
     )
 
-    st.altair_chart(chart, use_container_width=True)
+    st.altair_chart(chart, width='stretch')
 
     st.caption(
         f"Showing {len(makkah_df)} Makkah data-points and {len(madinah_df)} Madinah data-points."
