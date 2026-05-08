@@ -76,6 +76,20 @@ def apply_package_filters(df: pd.DataFrame) -> pd.DataFrame:
 
     return df
 
+def show_piechart(df: pd.DataFrame):
+    st.subheader("◔ Datastore demographic by company")
+
+    companyCounts = df['company'].value_counts().reset_index()
+    companyCounts['percent'] = companyCounts['count'] / companyCounts['count'].sum()
+    chart = (alt.Chart(companyCounts).mark_arc()
+             .encode(theta=alt.Theta(field="count", type="quantitative"),
+                    color=alt.Color(field="company", type="nominal", scale=alt.Scale(domain=list(companyCounts['company']), scheme='tableau20')),
+                    tooltip=[alt.Tooltip('company:N'), alt.Tooltip('count:Q'), alt.Tooltip('percent:Q', format='.1%')]))
+
+
+
+    st.altair_chart(chart, width='stretch', theme='streamlit')
+  
 
 def show_avg_ppp_bar(df: pd.DataFrame):
     st.subheader("📊 Average price per person by company")
@@ -103,7 +117,7 @@ def show_avg_ppp_bar(df: pd.DataFrame):
         )
         .properties(height=400)
     )
-    st.altair_chart(chart)
+    st.altair_chart(chart, width='stretch', theme="streamlit")
     st.caption(f"Based on {len(has_ppp)} packages with price data out of {len(df)} filtered packages.")
 
 def show_distance_vs_ppp_scatter(df: pd.DataFrame):
@@ -159,7 +173,7 @@ def show_distance_vs_ppp_scatter(df: pd.DataFrame):
         .properties(height=450)
     )
 
-    st.altair_chart(chart, width='stretch')
+    st.altair_chart(chart, width='stretch', theme='streamlit')
 
     st.caption(
         f"Showing {len(makkah_df)} Makkah data-points and {len(madinah_df)} Madinah data-points."
@@ -178,6 +192,8 @@ def main():
   # df = parse_data(df_raw)
   df_filtered = apply_package_filters(df)
 
+  show_piechart(df_filtered)
+  st.divider()
   show_avg_ppp_bar(df_filtered)
   st.divider()
   show_distance_vs_ppp_scatter(df_filtered)
