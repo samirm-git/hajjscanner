@@ -58,11 +58,20 @@ def flagUrlIsCatalogue(url:str):
       if cursor.rowcount <= 0:
          print(f"failed to flag url as catalogue page: {url} ")
 
-def getAllUrls(type: str) -> dict[str, list[str]]:
+def setScrapped(url:str):
+   with sqlite3.connect(DB_PATH) as conn:
+      cursor = conn.execute(
+         "UPDATE package_urls SET scraped = 1 WHERE url = ?", (url,)
+      )
+      if cursor.rowcount <0:
+         print(f"failed to set url to scrapped: {url}") 
+
+def getAllUrls(type: str, scrapeNewOnly=False) -> dict[str, list[str]]:
+  scrapeNewOnlyString = "AND scraped = 0" if scrapeNewOnly else ""
   with sqlite3.connect(DB_PATH) as conn:
       rows = conn.execute(
-          """SELECT provider, url FROM package_urls
-              WHERE type = ? AND isCatalogue = 0
+          f"""SELECT provider, url FROM package_urls
+              WHERE type = ? AND isCatalogue = 0 {scrapeNewOnlyString}
               ORDER BY provider""",
           (type,)
       ).fetchall()

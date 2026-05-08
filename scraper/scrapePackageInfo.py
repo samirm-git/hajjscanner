@@ -5,7 +5,7 @@ from scraper.validator import validateData
 from scraper.regexConsts import HAJJREGEX, UMRAHREGEX
 from scraper.scrapers import runScrapers, updateScrapedInfo
 from scraper.hotelScraper.hotelInfoScraper import scrapeHotelInfo 
-from scraper.db import saveUrls, flagUrlIsCatalogue
+from scraper.db import saveUrls, flagUrlIsCatalogue, setScrapped
 from tqdm import tqdm
 from upload import uploadPackageDataToS3
 from urllib.parse import urljoin
@@ -90,6 +90,7 @@ def scrapePackageInfo(url, companyName, tempSaveFlag = False):
     tqdm.write("JSON validation error. See logs.")
     return None
   else:   
+    setScrapped(url)
     return packageInfo
 
 if __name__ == "__main__":
