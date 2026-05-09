@@ -1,10 +1,13 @@
 import pandas as pd
 import streamlit as st
 import awswrangler as wr
-from dotenv import load_dotenv
-# from athenaRunner import QUERIES
 
-load_dotenv()
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
 
 @st.cache_data
 def loadData(queryName):
@@ -22,4 +25,4 @@ if __name__ == "__main__":
     # print(df.head())
     print(df.columns.values)
   else:
-     print(str(e))
+     print(str(err))
