@@ -38,7 +38,7 @@ def updateScrapedInfo(oldScrapedInfo, newScrapedInfo):
         elif oldScrapedInfo[key] is None:
           oldScrapedInfo[key] = newScrapedInfo[key]
 
-        elif type(oldScrapedInfo[key]) is not type(oldScrapedInfo[key]):
+        elif type(oldScrapedInfo[key]) is not type(newScrapedInfo[key]):
           print(f"type mismatch: old value: {oldScrapedInfo[key]} is type: {type(oldScrapedInfo[key])}, while new value: {newScrapedInfo[key]} is type: {type(newScrapedInfo[key])}")
 
         
