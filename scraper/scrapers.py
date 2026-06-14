@@ -115,6 +115,12 @@ def scrapePPP(soup):
 def scrapeYear(soup):
   return None
 
+def scrapeSeason(soup):
+  return None
+
+def scrapeMonth(soup):
+  return None
+
 def scrapeTier(soup):
   tierRegex = re.compile(r"\b(luxury|premium|economy)\b", re.IGNORECASE)
   match = regexSearch(tierRegex, soup)
@@ -139,6 +145,9 @@ def scrapeIsShifting(soup):
   else:
     return True
 
+def scrapeDepartureCity(soup):
+  return None
+
 def scrapeIsVisaIncluded(soup):
   visaPattern = r"\bvisas?\b"
   return hasKeywordPattern(visaPattern, soup)
@@ -151,9 +160,21 @@ HAJJPACKAGE_SCRAPERS = {
     # 'tier': scrapeTier,
     'stars': scrapeStars,
     'isShifting': scrapeIsShifting,
+    'departureCity': scrapeDepartureCity,
     'isVisaIncluded': scrapeIsVisaIncluded
   }
 
+UMRAHPACKAGE_SCRAPERS = {
+  'ppp': scrapePPP,
+  'year': scrapeYear,
+  'season': scrapeSeason,
+  'month': scrapeMonth,
+  'total_days': scrapeTotalDays,
+  # 'tier': scrapeTier,
+  'stars': scrapeStars,
+  'departureCity': scrapeDepartureCity,
+  'isVisaIncluded': scrapeIsVisaIncluded
+}
 
 #==============================================
 #HOTEL SCRAPERS

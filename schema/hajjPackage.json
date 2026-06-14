@@ -46,6 +46,15 @@
       "description": "True if shifting package, False if non shifting",
       "type": ["boolean", "null"]
     },
+    "depatureCity":{
+      "description": "The deparature city where the umrah is being offered from.",
+      "type": ["string", "null"]
+    },
+    "isVisaIncluded":{
+      "description": "True if visa included in package, False if visa not included",
+      "type": ["boolean", "null"]
+    },
+
     "makkahHotel": {
       "description": "Makkah hotel details",
       "$ref": "hotel.json"
@@ -53,11 +62,7 @@
     "madinahHotel":{
       "description": "Madinah hotel details",
       "$ref": "hotel.json"
-    },
-    "isVisaIncluded":{
-      "description": "True if visa included in package, False if visa not included",
-      "type": ["boolean", "null"]
     }
   },
-  "required": ["company","ppp", "year", "total_days", "stars", "isShifting", "makkahHotel", "madinahHotel", "isVisaIncluded"]
+  "required": ["company","ppp", "year", "total_days", "stars", "isShifting", "depatureCity", "isVisaIncluded", "makkahHotel", "madinahHotel"]
 }

@@ -21,6 +21,10 @@
       "maximum": 10000,
       "minItems": 1
       },
+    "year":{
+      "description": "year in which package is offered",
+      "type": ["string", "null"]
+    },
     "season":{
       "description": "season when the package is offered",
       "type": ["string", "null"],
@@ -30,10 +34,6 @@
       "description": "month in which the package is offered",
       "type": ["string", "null"],
       "enum": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-    },
-    "year":{
-      "description": "year in which package is offered",
-      "type": ["string", "null"]
     },
     "total_days":{
       "description": "total number of days in package",
@@ -53,16 +53,16 @@
       "maximum": 5,
       "minItems": 1
     },
+    "isZiyaratIncluded":{
+      "description": "Is guided tours of religious sites included in the package",
+      "type": ["boolean", "null"]
+    },
     "depatureCity":{
       "description": "The deparature city where the umrah is being offered from.",
       "type": ["string", "null"]
     },
     "isVisaIncluded":{
       "description": "True if visa included in package, False if visa not included",
-      "type": ["boolean", "null"]
-    },
-    "isZiyaratIncluded":{
-      "description": "Is guided tours of religious sites included in the package",
       "type": ["boolean", "null"]
     },
     "makkahHotel": {
@@ -74,5 +74,5 @@
       "$ref": "hotel.json"
     }
   },
-  "required": ["company","ppp", "season", "month", "year", "total_days", "stars", "isShifting", "makkahHotel", "madinahHotel", "isVisaIncluded"]
+  "required": ["company","ppp", "year", "season", "month", "total_days", "stars", "depatureCity", "isVisaIncluded","makkahHotel", "madinahHotel"]
 }
