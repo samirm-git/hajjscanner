@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema",
-  "$id": "hajjPackage.json",
+  "$id": "umrahPackage.json",
   "title": "Package",
-  "description": "Hajj package details",
+  "description": "Umrah package details",
   "type": "object",
   "properties": {
     "company":{
@@ -17,10 +17,20 @@
     "ppp" : {
       "description": "price per person in £", 
       "type": ["integer", "null"],
-      "minimum": 2000,
-      "maximum": 25000,
+      "minimum": 100,
+      "maximum": 10000,
       "minItems": 1
       },
+    "season":{
+      "description": "season when the package is offered",
+      "type": ["string", "null"],
+      "enum": ["Winter", "Spring", "Summer", "Autumn"]
+    },
+    "month":{
+      "description": "month in which the package is offered",
+      "type": ["string", "null"],
+      "enum": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    },
     "year":{
       "description": "year in which package is offered",
       "type": ["string", "null"]
@@ -28,7 +38,7 @@
     "total_days":{
       "description": "total number of days in package",
       "type": ["integer", "null"],
-      "minimum": 10,
+      "minimum": 5,
       "maximum": 30
     },
     "tier":{
@@ -40,10 +50,19 @@
       "description": "star rating (1-5)",
       "type": ["integer", "null"],
       "minimum": 1,
-      "maximum": 5
+      "maximum": 5,
+      "minItems": 1
     },
-    "isShifting":{
-      "description": "True if shifting package, False if non shifting",
+    "depatureCity":{
+      "description": "The deparature city where the umrah is being offered from.",
+      "type": ["string", "null"]
+    },
+    "isVisaIncluded":{
+      "description": "True if visa included in package, False if visa not included",
+      "type": ["boolean", "null"]
+    },
+    "isZiyaratIncluded":{
+      "description": "Is guided tours of religious sites included in the package",
       "type": ["boolean", "null"]
     },
     "makkahHotel": {
@@ -53,11 +72,7 @@
     "madinahHotel":{
       "description": "Madinah hotel details",
       "$ref": "hotel.json"
-    },
-    "isVisaIncluded":{
-      "description": "True if visa included in package, False if visa not included",
-      "type": ["boolean", "null"]
     }
   },
-  "required": ["company","ppp", "year", "total_days", "stars", "isShifting", "makkahHotel", "madinahHotel", "isVisaIncluded"]
+  "required": ["company","ppp", "season", "month", "year", "total_days", "stars", "isShifting", "makkahHotel", "madinahHotel", "isVisaIncluded"]
 }

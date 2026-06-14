@@ -112,6 +112,9 @@ def scrapePPP(soup):
     else:
       return None
 
+def scrapeYear(soup):
+  return None
+
 def scrapeTier(soup):
   tierRegex = re.compile(r"\b(luxury|premium|economy)\b", re.IGNORECASE)
   match = regexSearch(tierRegex, soup)
@@ -143,6 +146,7 @@ def scrapeIsVisaIncluded(soup):
 
 PACKAGEINFO_SCRAPERS = {
     'ppp': scrapePPP,
+    'year': scrapeYear,
     'total_days': scrapeTotalDays,
     # 'tier': scrapeTier,
     'stars': scrapeStars,
