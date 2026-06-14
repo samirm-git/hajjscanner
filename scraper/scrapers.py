@@ -12,7 +12,7 @@ def runScrapers(soup, scraperName):
   scrapedInfo = {}
   
   assert scraperName.lower() in {'package info', 'hotel info'}, f"{scraperName.lower()} should be either 'package info' or 'hotel info'."
-  scrapers = PACKAGEINFO_SCRAPERS if scraperName.lower() == 'package info' else HOTEL_SCRAPERS
+  scrapers = HAJJPACKAGE_SCRAPERS if scraperName.lower() == 'package info' else HOTEL_SCRAPERS
   for key in scrapers.keys():
       scrapedInfo[key] = scrapers[key](soup)
 
@@ -144,7 +144,7 @@ def scrapeIsVisaIncluded(soup):
   return hasKeywordPattern(visaPattern, soup)
 
 
-PACKAGEINFO_SCRAPERS = {
+HAJJPACKAGE_SCRAPERS = {
     'ppp': scrapePPP,
     'year': scrapeYear,
     'total_days': scrapeTotalDays,
