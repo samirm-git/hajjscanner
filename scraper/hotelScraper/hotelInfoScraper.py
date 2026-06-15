@@ -95,7 +95,7 @@ def scrapeHotelInfo(soup, city, url):
         if newImages:
           hotelInfo['images'].update(scrapeHotelImages(container, url))
 
-      newScrapedInfo = runScrapers(container, 'hotel info')
+      newScrapedInfo = runScrapers(container, 'hotel')
       hotelInfo = updateScrapedInfo(oldScrapedInfo=hotelInfo, newScrapedInfo=newScrapedInfo)
 
       # if llmOutput:

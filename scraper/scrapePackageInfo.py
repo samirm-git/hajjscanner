@@ -13,23 +13,27 @@ from urllib.parse import urljoin
 root = getProjectRoot()
 load_dotenv(dotenv_path= root/'.env.')
 
-def tempSave(packageInfo):
+def tempSave(hajjOrUmrah, packageInfo):
   url = packageInfo['url']
   fname = url[8:-1].replace("/","").replace("\\","")
   print(f"Temp save: {fname}")
-  path = getProjectRoot() / 'scraperOutputs' / f"{fname}.txt"
+
+  path = getProjectRoot() / 'scraperOutputs' / hajjOrUmrah / f"{fname}.txt"
+  path.parent.mkdir(parents=True, exist_ok=True)
   with open(path,'a') as f:
-    f.write("=====================================")
+    f.write("=====================================\n")
     json.dump(packageInfo, f, indent=4)
     f.write('\n')
 
 def logInvalidJson(error, url):
   path = getProjectRoot() / 'invalidJsonLog.txt'
+  path.parent.mkdir(parents=True, exist_ok=True)
+
   with open(path, 'a') as f:
     f.write("\n")    
     f.write(url)
     f.write(" : ")
-    f.write(error)
+    f.write(str(error))
 
 def isCataloguePage(url, soup, companyName, save=True):
   hajjPackageLinks, umrahPackageLinks = set(), set()
@@ -53,7 +57,7 @@ def isCataloguePage(url, soup, companyName, save=True):
     return True
 
 
-def scrapePackageInfo(url, companyName, tempSaveFlag = False):
+def scrapePackageInfo(hajjOrUmrah, url, companyName, tempSaveFlag = False):
   packageInfo = {'url':url, 'company': companyName}
 
   resp, err = makeRequest(url)
@@ -73,7 +77,7 @@ def scrapePackageInfo(url, companyName, tempSaveFlag = False):
   if isCataloguePage(url, soup, companyName, save=True):
     return None
 
-  newScrapedInfo = runScrapers(soup, 'package info')
+  newScrapedInfo = runScrapers(soup, hajjOrUmrah)
   # print(f"NEW scraped PackageInfo: {newScrapedInfo} ")
   packageInfo = updateScrapedInfo(oldScrapedInfo=packageInfo, newScrapedInfo=newScrapedInfo)
   # print("")
@@ -82,7 +86,7 @@ def scrapePackageInfo(url, companyName, tempSaveFlag = False):
   packageInfo['makkahHotel'] = scrapeHotelInfo(soup, 'makkah', url)
   packageInfo['madinahHotel'] = scrapeHotelInfo(soup, 'madinah', url)    
   if tempSaveFlag:
-    tempSave(packageInfo)
+    tempSave(hajjOrUmrah, packageInfo)
 
   error = validateData(packageInfo)
   if error:

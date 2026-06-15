@@ -9,10 +9,17 @@ from rapidfuzz import process, fuzz, utils
 
 #MAIN FUNCTION
 def runScrapers(soup, scraperName):
-  scrapedInfo = {}
+  scraperName = scraperName.lower()
+  assert scraperName in {'hajj', 'umrah', 'hotel'}, f"{scraperName} should be either 'hajj', 'umrah', or 'hotel' "
   
-  assert scraperName.lower() in {'package info', 'hotel info'}, f"{scraperName.lower()} should be either 'package info' or 'hotel info'."
-  scrapers = HAJJPACKAGE_SCRAPERS if scraperName.lower() == 'package info' else HOTEL_SCRAPERS
+  if scraperName == 'hajj':
+    scrapers = HAJJPACKAGE_SCRAPERS
+  elif scraperName == 'umrah':
+    scrapers = UMRAHPACKAGE_SCRAPERS
+  else:
+    scrapers = HOTEL_SCRAPERS
+
+  scrapedInfo = {}
   for key in scrapers.keys():
       scrapedInfo[key] = scrapers[key](soup)
 
