@@ -23,7 +23,8 @@
       },
     "year":{
       "description": "year in which package is offered",
-      "type": ["string", "null"]
+      "type": ["integer", "null"],
+      "minimum": 2020
     },
     "season":{
       "description": "season when the package is offered",

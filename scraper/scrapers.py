@@ -6,6 +6,8 @@ from scraper.helpers import cleanText
 from scraper.regexConsts import HOTEL_KEYWORDS, DISTANCE_RE, TO_METRES, WALK_TIME_RE, WORD_TO_NUM, BAD_IMAGE_RE 
 from urllib.parse import urljoin, urlparse
 from rapidfuzz import process, fuzz, utils
+from hijridate import Hijri, Gregorian
+from datetime import date
 
 #MAIN FUNCTION
 def runScrapers(soup, scraperName):
@@ -120,7 +122,26 @@ def scrapePPP(soup):
       return None
 
 def scrapeYear(soup):
-  return None
+  yearRegex = re.compile(r"\b(20\d{2}|14\d{2})\b", re.IGNORECASE)
+  match = regexSearch(yearRegex, soup)
+  if not match:
+    return None
+  
+  min_year = 2020
+  max_year = date.today().year + 1
+  year = int(match.group(1))
+
+  if year >= 1400 and year < 1500:
+    try:
+       year = Hijri(year, 1, 1).to_gregorian().year
+    except Exception:
+      return None
+  
+  if year >= min_year and year <= max_year:
+    return year
+  else:
+    return None 
+
 
 def scrapeSeason(soup):
   return None

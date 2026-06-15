@@ -23,7 +23,8 @@
       },
     "year":{
       "description": "year in which package is offered",
-      "type": ["string", "null"]
+      "type": ["integer", "null"],
+      "minimum": 2020
     },
     "total_days":{
       "description": "total number of days in package",
@@ -46,7 +47,7 @@
       "description": "True if shifting package, False if non shifting",
       "type": ["boolean", "null"]
     },
-    "depatureCity":{
+    "departureCity":{
       "description": "The deparature city where the umrah is being offered from.",
       "type": ["string", "null"]
     },
@@ -64,5 +65,5 @@
       "$ref": "hotel.json"
     }
   },
-  "required": ["company","ppp", "year", "total_days", "stars", "isShifting", "depatureCity", "isVisaIncluded", "makkahHotel", "madinahHotel"]
+  "required": ["company","ppp", "year", "total_days", "stars", "isShifting", "departureCity", "isVisaIncluded", "makkahHotel", "madinahHotel"]
 }

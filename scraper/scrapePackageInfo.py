@@ -118,7 +118,7 @@ if __name__ == "__main__":
 
 
   print(urls[userChosenUrl]) 
-  packageInfo = scrapePackageInfo(urls[userChosenUrl], 'safamarwahtravel', tempSaveFlag=True) 
+  packageInfo = scrapePackageInfo('hajj', urls[userChosenUrl], 'safamarwahtravel', tempSaveFlag=True) 
   if packageInfo:
     pass
   else:
