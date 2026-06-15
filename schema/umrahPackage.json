@@ -53,16 +53,16 @@
       "maximum": 5,
       "minItems": 1
     },
-    "isZiyaratIncluded":{
-      "description": "Is guided tours of religious sites included in the package",
-      "type": ["boolean", "null"]
-    },
     "depatureCity":{
       "description": "The deparature city where the umrah is being offered from.",
       "type": ["string", "null"]
     },
     "isVisaIncluded":{
       "description": "True if visa included in package, False if visa not included",
+      "type": ["boolean", "null"]
+    },
+    "isZiyaratIncluded":{
+      "description": "Is guided tours of religious sites included in the package",
       "type": ["boolean", "null"]
     },
     "makkahHotel": {
@@ -74,5 +74,5 @@
       "$ref": "hotel.json"
     }
   },
-  "required": ["company","ppp", "year", "season", "month", "total_days", "stars", "depatureCity", "isVisaIncluded","makkahHotel", "madinahHotel"]
+  "required": ["company","ppp", "year", "season", "month", "total_days", "stars", "depatureCity", "isVisaIncluded", "isZiyaratIncluded", "makkahHotel", "madinahHotel"]
 }

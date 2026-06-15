@@ -159,6 +159,9 @@ def scrapeIsVisaIncluded(soup):
   visaPattern = r"\bvisas?\b"
   return hasKeywordPattern(visaPattern, soup)
 
+def scrapeIsZiyaratIncluded(soup):
+  ziyaratPattern = r"\bziy?ara[th]\b"
+  return hasKeywordPattern(ziyaratPattern, soup)
 
 HAJJPACKAGE_SCRAPERS = {
     'ppp': scrapePPP,
@@ -180,7 +183,8 @@ UMRAHPACKAGE_SCRAPERS = {
   # 'tier': scrapeTier,
   'stars': scrapeStars,
   'departureCity': scrapeDepartureCity,
-  'isVisaIncluded': scrapeIsVisaIncluded
+  'isVisaIncluded': scrapeIsVisaIncluded,
+  'isZiyaratIncluded': scrapeIsZiyaratIncluded
 }
 
 #==============================================
