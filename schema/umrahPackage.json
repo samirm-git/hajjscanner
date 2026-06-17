@@ -36,6 +36,11 @@
       "type": ["string", "null"],
       "enum": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
     },
+    "islamicMonth":{
+      "description": "islamic month in which package is offered",
+      "type": ["string", "null"],
+      "enum": ["Muharram", "Safar", "Rabi al Awwal", "Rabi al Akhir", "Jumada al Ula", "Jumada al Akhirah", "Rajab", "Shaban", "Ramadan", "Shawwal", "Dhul Qadah", "Dhul Hijjah"]
+    },
     "total_days":{
       "description": "total number of days in package",
       "type": ["integer", "null"],
@@ -75,5 +80,5 @@
       "$ref": "hotel.json"
     }
   },
-  "required": ["company","ppp", "year", "season", "month", "total_days", "stars", "depatureCity", "isVisaIncluded", "isZiyaratIncluded", "makkahHotel", "madinahHotel"]
+  "required": ["company","ppp", "year", "season", "month", "islamicMonth", "total_days", "stars", "depatureCity", "isVisaIncluded", "isZiyaratIncluded", "makkahHotel", "madinahHotel"]
 }

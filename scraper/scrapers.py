@@ -158,6 +158,9 @@ def scrapeSeason(soup):
 def scrapeMonth(soup):
   return None
 
+def scrapeIslamicMonth(soup):
+  return None
+
 def scrapeTier(soup):
   tierRegex = re.compile(r"\b(luxury|premium|economy)\b", re.IGNORECASE)
   match = regexSearch(tierRegex, soup)
@@ -209,6 +212,7 @@ UMRAHPACKAGE_SCRAPERS = {
   'year': scrapeYear,
   'season': scrapeSeason,
   'month': scrapeMonth,
+  'islamicMonth': scrapeIslamicMonth,
   'total_days': scrapeTotalDays,
   # 'tier': scrapeTier,
   'stars': scrapeStars,
