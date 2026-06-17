@@ -156,7 +156,17 @@ def scrapeSeason(soup):
   return season.capitalize()
 
 def scrapeMonth(soup):
-  return None
+  monthRegex_withoutMay = re.compile(r"\b(january|february|march|april|june|july|august|september|october|november|december)\b", re.IGNORECASE)
+  match = regexSearch(monthRegex_withoutMay, soup)
+  if match:
+    return match.group(1).capitalize()
+  else:
+    match = regexSearch(re.compile(r"\bMay\b"), soup) #NOTE: separating May with captilisation required may not be enough
+                                                              #e.g. 'PRICES MAY VARY' this would match the month as May  
+    if match:
+      return "May"
+    else:
+      return None
 
 def scrapeIslamicMonth(soup):
   return None
