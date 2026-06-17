@@ -33,6 +33,25 @@ ISLAMIC_MONTH_REGEX = re.compile(
   re.IGNORECASE
 )
 
+DEPARTURE_CITY_PATTERNS = {
+  "London": r"london(?:\s+(?:heathrow|gatwick|luton|stansted|city))?",
+  "Manchester": r"manchester",
+  "Birmingham": r"birmingham",
+  "Glasgow": r"glasgow",
+  "Edinburgh": r"edinburgh",
+  "Leeds": r"leeds(?:[-\s]bradford)?",
+  "Newcastle": r"newcastle",
+  "Liverpool": r"liverpool",
+  "Bristol": r"bristol",
+  "Cardiff": r"cardiff",
+  "Belfast": r"belfast"
+}
+
+_DEPARTURE_CITY_CUE = r"\b(?:depart(?:s|ing|ure(?:s)?)?|leaving|flights?|travel(?:l)?ing)(?:\s+from\b)?\b"
+
+DEPARTURE_CITY_RE = re.compile(_DEPARTURE_CITY_CUE + "|".join( 
+      f"(?P<{city}>{pattern})" for city, pattern in DEPARTURE_CITY_PATTERNS.items()), re.IGNORECASE) 
+
 
 HOTEL_KEYWORDS = re.compile(
     r'\b(hotel|towers?|suites?|residences?|dar|grand|royale?|plaza|inn|lodge|'

@@ -4,7 +4,7 @@ from scraper.hotelScraper.hotelNamesScraper import HOTELS
 from scraper.regexHelpers import hasKeywordPattern, regexSearch
 from scraper.dateFieldScrapers import scrapeYear, scrapeSeason, scrapeMonth, scrapeIslamicMonth
 from scraper.helpers import cleanText
-from scraper.regexConsts import HOTEL_KEYWORDS, DISTANCE_RE, TO_METRES, WALK_TIME_RE, WORD_TO_NUM, BAD_IMAGE_RE 
+from scraper.regexConsts import DEPARTURE_CITY_RE, HOTEL_KEYWORDS, DISTANCE_RE, TO_METRES, WALK_TIME_RE, WORD_TO_NUM, BAD_IMAGE_RE 
 from urllib.parse import urljoin, urlparse
 from rapidfuzz import process, fuzz, utils
 
@@ -146,7 +146,12 @@ def scrapeIsShifting(soup):
     return True
 
 def scrapeDepartureCity(soup):
-  return None
+  match = regexSearch(DEPARTURE_CITY_RE, soup)
+  if not match:
+    return None
+
+  return match.lastgroup 
+
 
 def scrapeIsVisaIncluded(soup):
   visaPattern = r"\bvisas?\b"
