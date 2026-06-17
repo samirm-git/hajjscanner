@@ -56,6 +56,19 @@ def isCataloguePage(url, soup, companyName, save=True):
     flagUrlIsCatalogue(url)
     return True
 
+def smartDateFieldUpdate(year, season, month, islamicMonth):
+  if month is not None and season is None:
+    if month in ['December', 'Janurary', 'February']:
+      season = 'Winter'
+    elif month in ['March', 'April', 'May']:
+      season = 'Spring'
+    elif month in ['June', 'July', 'August']:
+      season = 'Summer'
+    else:
+      season = 'Autumn' 
+  
+
+  return [year, season, month, islamicMonth]
 
 def scrapePackageInfo(hajjOrUmrah, url, companyName, tempSaveFlag = False):
   packageInfo = {'url':url, 'company': companyName}
