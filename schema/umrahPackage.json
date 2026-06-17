@@ -39,7 +39,7 @@
     "islamicMonth":{
       "description": "islamic month in which package is offered",
       "type": ["string", "null"],
-      "enum": ["Muharram", "Safar", "Rabi al Awwal", "Rabi al Akhir", "Jumada al Ula", "Jumada al Akhirah", "Rajab", "Shaban", "Ramadan", "Shawwal", "Dhul Qadah", "Dhul Hijjah"]
+      "enum": ["Muharram", "Safar", "Rabi' al-Awwal", "Rabi' al-Thani", "Jumada al-Ula", "Jumada al-Akhirah", "Rajab", "Sha'ban", "Ramadan", "Shawwal", "Dhu al-Qa'dah", "Dhu al-Hijjah"]
     },
     "total_days":{
       "description": "total number of days in package",

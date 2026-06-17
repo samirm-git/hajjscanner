@@ -3,7 +3,7 @@ from scraper.consts import HEADING_TAGS
 from scraper.hotelScraper.hotelNamesScraper import HOTELS
 from scraper.regexHelpers import hasKeywordPattern, regexSearch
 from scraper.helpers import cleanText
-from scraper.regexConsts import HOTEL_KEYWORDS, DISTANCE_RE, TO_METRES, WALK_TIME_RE, WORD_TO_NUM, BAD_IMAGE_RE 
+from scraper.regexConsts import ISLAMIC_MONTH_PATTERNS, ISLAMIC_MONTH_REGEX, HOTEL_KEYWORDS, DISTANCE_RE, TO_METRES, WALK_TIME_RE, WORD_TO_NUM, BAD_IMAGE_RE 
 from urllib.parse import urljoin, urlparse
 from rapidfuzz import process, fuzz, utils
 from hijridate import Hijri, Gregorian
@@ -169,6 +169,15 @@ def scrapeMonth(soup):
       return None
 
 def scrapeIslamicMonth(soup):
+  match = regexSearch(ISLAMIC_MONTH_REGEX, soup)
+  if not match:
+    return None
+
+  matchedText = match.group(1)
+  for canonicalName, pattern in ISLAMIC_MONTH_PATTERNS.items():
+    if re.fullmatch(pattern, matchedText, re.IGNORECASE):
+      return canonicalName
+
   return None
 
 def scrapeTier(soup):

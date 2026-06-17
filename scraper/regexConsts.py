@@ -13,6 +13,27 @@ UMRAHREGEX = re.compile(
     re.IGNORECASE
 )
 
+ISLAMIC_MONTH_PATTERNS = {
+  "Muharram":        r"muharram",
+  "Safar":           r"safar",
+  "Rabi' al-Awwal":  r"rabi(?:'|’)?\s*(?:al[-\s]?)?(?:awwal|i|1)",
+  "Rabi' al-Thani":  r"rabi(?:'|’)?\s*(?:al[-\s]?)?(?:thani|ii|2|akhir)",
+  "Jumada al-Ula":   r"jumad[ae]?[-\s]?(?:al[-\s]?)?(?:ula|awwal|i|1)",
+  "Jumada al-Akhirah": r"jumad[ae]?[-\s]?(?:al[-\s]?)?(?:akhir(?:ah)?|thani|ii|2)",
+  "Rajab":           r"rajab",
+  "Sha'ban":         r"sha(?:'|’)?ban",
+  "Ramadan":         r"ramad(?:h|z)?an",
+  "Shawwal":         r"shawwal",
+  "Dhu al-Qa'dah":   r"dhu(?:l|\s+al)?[-\s]?qa(?:'|’)?dah?",
+  "Dhu al-Hijjah":   r"(?:dhu|zul|zil)(?:l|\s+al)?[-\s]?hijjah?",
+}
+
+ISLAMIC_MONTH_REGEX = re.compile(
+  r"\b(" + "|".join(ISLAMIC_MONTH_PATTERNS.values()) + r")\b",
+  re.IGNORECASE
+)
+
+
 HOTEL_KEYWORDS = re.compile(
     r'\b(hotel|towers?|suites?|residences?|dar|grand|royale?|plaza|inn|lodge|'
     r'mövenpick|movenpick|hilton|marriott|pullman|hyatt|novotel|'
