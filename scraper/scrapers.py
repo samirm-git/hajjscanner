@@ -144,7 +144,16 @@ def scrapeYear(soup):
 
 
 def scrapeSeason(soup):
-  return None
+  seasonRegex = re.compile(r"\b(winter|spring|summer|autumn|fall)\b", re.IGNORECASE)
+  match = regexSearch(seasonRegex, soup)
+  if not match:
+    return None
+
+  season = match.group(1).lower()
+  if season == "fall":
+    season = "autumn"
+
+  return season.capitalize()
 
 def scrapeMonth(soup):
   return None
