@@ -29,17 +29,17 @@
     "season":{
       "description": "season when the package is offered",
       "type": ["string", "null"],
-      "enum": ["Winter", "Spring", "Summer", "Autumn"]
+      "enum": ["Winter", "Spring", "Summer", "Autumn", null]
     },
     "month":{
       "description": "month in which the package is offered",
       "type": ["string", "null"],
-      "enum": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+      "enum": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December", null]
     },
     "islamicMonth":{
       "description": "islamic month in which package is offered",
       "type": ["string", "null"],
-      "enum": ["Muharram", "Safar", "Rabi' al-Awwal", "Rabi' al-Thani", "Jumada al-Ula", "Jumada al-Akhirah", "Rajab", "Sha'ban", "Ramadan", "Shawwal", "Dhu al-Qa'dah", "Dhu al-Hijjah"]
+      "enum": ["Muharram", "Safar", "Rabi' al-Awwal", "Rabi' al-Thani", "Jumada al-Ula", "Jumada al-Akhirah", "Rajab", "Sha'ban", "Ramadan", "Shawwal", "Dhu al-Qa'dah", "Dhu al-Hijjah", null]
     },
     "total_days":{
       "description": "total number of days in package",
@@ -50,7 +50,7 @@
     "tier":{
       "description": "type of hajj package: luxury, premium, or economy",
       "type": ["string", "null"],
-      "enum": ["luxury", "premium", "economy"]
+      "enum": ["luxury", "premium", "economy", null]
     },
     "stars":{
       "description": "star rating (1-5)",
@@ -59,7 +59,7 @@
       "maximum": 5,
       "minItems": 1
     },
-    "depatureCity":{
+    "departureCity":{
       "description": "The deparature city where the umrah is being offered from.",
       "type": ["string", "null"]
     },
@@ -80,5 +80,5 @@
       "$ref": "hotel.json"
     }
   },
-  "required": ["company","ppp", "year", "season", "month", "islamicMonth", "total_days", "stars", "depatureCity", "isVisaIncluded", "isZiyaratIncluded", "makkahHotel", "madinahHotel"]
+  "required": ["company","ppp", "year", "season", "month", "islamicMonth", "total_days", "stars", "departureCity", "isVisaIncluded", "isZiyaratIncluded", "makkahHotel", "madinahHotel"]
 }

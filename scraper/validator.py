@@ -6,11 +6,12 @@ from referencing.jsonschema import DRAFT7
 from scraper.helpers import getProjectRoot
 
 
-def validateData(dict):
+def validateData(dict, hajjOrUmrah):
+  assert hajjOrUmrah in {'hajj', 'umrah'}, f"{hajjOrUmrah} should be either 'hajj' or 'umrah'"
   try:
     # Load schemas
     path = getProjectRoot() / "schema" 
-    with open(path / "hajjPackage.json") as f:
+    with open(path / f"{hajjOrUmrah}Package.json") as f:
         hajjPackageSchema = json.load(f)
 
     with open(path / "hotel.json") as f:

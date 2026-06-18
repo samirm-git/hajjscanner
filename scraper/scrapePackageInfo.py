@@ -101,7 +101,7 @@ def scrapePackageInfo(hajjOrUmrah, url, companyName, tempSaveFlag = False):
   if tempSaveFlag:
     tempSave(hajjOrUmrah, packageInfo)
 
-  error = validateData(packageInfo)
+  error = validateData(packageInfo, hajjOrUmrah)
   if error:
     logInvalidJson(error, url)
     tqdm.write("JSON validation error. See logs.")

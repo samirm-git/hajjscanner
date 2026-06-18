@@ -35,7 +35,7 @@
     "tier":{
       "description": "type of hajj package: luxury, premium, or economy",
       "type": ["string", "null"],
-      "enum": ["luxury", "premium", "economy"]
+      "enum": ["luxury", "premium", "economy", null]
     },
     "stars":{
       "description": "star rating (1-5)",

@@ -33,7 +33,7 @@ def main(hajjOrUmrah, useCache=False, scrapeNewOnly=False, uploadToS3=False):
 
   if useCache == False:
     tqdm.write(f"Scrapping {hajjOrUmrah} package urls for all providers...")
-    providerPackageUrls = refreshProviderUrls()
+    providerPackageUrls = refreshProviderUrls(hajjOrUmrah)
     tqdm.write("=================================")
 
   else:
@@ -62,4 +62,4 @@ if __name__ == "__main__":
   args = parser.parse_args()
 
   
-  main(useCache= not args.overridelinkscache, scrapeNewOnly=args.scrapenewonly, uploadToS3=args.uploadtoS3)
+  main(hajjOrUmrah=args.hajjOrUmrah, useCache= not args.overridelinkscache, scrapeNewOnly=args.scrapenewonly, uploadToS3=args.uploadtoS3)
