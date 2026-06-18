@@ -4,10 +4,13 @@ from scraper.helpers import makeRequest, getSoup, removeFooterHeaderNav, getProj
 from scraper.validator import validateData
 from scraper.regexConsts import HAJJREGEX, UMRAHREGEX
 from scraper.scrapers import runScrapers, updateScrapedInfo
+from scraper.dateFieldScrapers import fillMissingDateFields
 from scraper.hotelScraper.hotelInfoScraper import scrapeHotelInfo 
 from scraper.db import saveUrls, flagUrlIsCatalogue, setScrapped
 from tqdm import tqdm
 from upload import uploadPackageDataToS3
+
+import argparse 
 from urllib.parse import urljoin
 
 root = getProjectRoot()
@@ -56,20 +59,6 @@ def isCataloguePage(url, soup, companyName, save=True):
     flagUrlIsCatalogue(url)
     return True
 
-def smartDateFieldUpdate(year, season, month, islamicMonth):
-  if month is not None and season is None:
-    if month in ['December', 'Janurary', 'February']:
-      season = 'Winter'
-    elif month in ['March', 'April', 'May']:
-      season = 'Spring'
-    elif month in ['June', 'July', 'August']:
-      season = 'Summer'
-    else:
-      season = 'Autumn' 
-  
-
-  return [year, season, month, islamicMonth]
-
 def scrapePackageInfo(hajjOrUmrah, url, companyName, tempSaveFlag = False):
   packageInfo = {'url':url, 'company': companyName}
 
@@ -90,14 +79,18 @@ def scrapePackageInfo(hajjOrUmrah, url, companyName, tempSaveFlag = False):
   if isCataloguePage(url, soup, companyName, save=True):
     return None
 
-  newScrapedInfo = runScrapers(soup, hajjOrUmrah)
-  # print(f"NEW scraped PackageInfo: {newScrapedInfo} ")
-  packageInfo = updateScrapedInfo(oldScrapedInfo=packageInfo, newScrapedInfo=newScrapedInfo)
-  # print("")
-  # print(f"updated package info: {packageInfo}")
+  scrapedInfo = runScrapers(soup, hajjOrUmrah)
+  packageInfo = updateScrapedInfo(oldScrapedInfo=packageInfo, newScrapedInfo=scrapedInfo)
+
+  if hajjOrUmrah == 'umrah':
+    inferedDataFields = fillMissingDateFields(year=packageInfo.get('year'), season=packageInfo.get('season'), month=packageInfo.get('month'), islamicMonth=packageInfo.get('islamicMonth'))
+    packageInfo = updateScrapedInfo(oldScrapedInfo=packageInfo, newScrapedInfo=inferedDataFields)
+  
 
   packageInfo['makkahHotel'] = scrapeHotelInfo(soup, 'makkah', url)
   packageInfo['madinahHotel'] = scrapeHotelInfo(soup, 'madinah', url)    
+
+  packageInfo = {key: list(value) if isinstance(value, set) else value for key,value in packageInfo.items()}
   if tempSaveFlag:
     tempSave(hajjOrUmrah, packageInfo)
 
@@ -121,21 +114,29 @@ if __name__ == "__main__":
   alhaqnew = "https://www.alhaqtravel.co.uk/book/19-days-economy-hajj-packages/"
   eliteumrah = "https://eliteumrah.co.uk/21-days-economy-hajj-package/"
   hajjUmrahHub = "https://www.hajjumrahhub.co.uk/hajj/2-3-weeks-hajj-package-non-shifting.html"
+
+  umrah1 = "https://www.safamarwahtravel.co.uk/deals/4-star-14-nights-muharram-umrah-package-from-birmingham/"
   
 
-  urls = [temp2, url, url2, url3, url4, url5, url6, alhaqnew, eliteumrah, hajjUmrahHub]
-  if len(sys.argv) >= 2:
-    userChosenUrl = int(sys.argv[1])
-  else:
-    userChosenUrl = 2
+  hajjUrls = [temp2, url, url2, url3, url4, url5, url6, alhaqnew, eliteumrah, hajjUmrahHub]
+  umrahUrls = [umrah1]
+  
+  parser = argparse.ArgumentParser(description='scrapePackageInfo script')
+  parser.add_argument("hajjOrUmrah", choices=['hajj', 'umrah'], help='choose whether to scan for hajj packages or umrah pacakges')
+  parser.add_argument("index", type=int, default=0)
+  args = parser.parse_args()
 
-
-  print(urls[userChosenUrl]) 
-  packageInfo = scrapePackageInfo('hajj', urls[userChosenUrl], 'safamarwahtravel', tempSaveFlag=True) 
-  if packageInfo:
-    pass
+  l = hajjUrls if args.hajjOrUmrah == 'hajj' else umrahUrls
+  if len(l) -1 < args.index:
+    print(f"index out of range for {args.hajjOrUmrah} list: {l}")
   else:
-    print("no package info. Possible JSON validation error")
+
+    print(l[args.index]) 
+    packageInfo = scrapePackageInfo(args.hajjOrUmrah, l[args.index], 'safamarwahtravel', tempSaveFlag=True) 
+    if packageInfo:
+      pass
+    else:
+      print("no package info. Possible JSON validation error")
 
 
 

@@ -34,12 +34,6 @@ def updateScrapedInfo(oldScrapedInfo, newScrapedInfo):
       if key not in oldScrapedInfo:
           oldScrapedInfo[key] = newScrapedInfo[key]
       else:
-        if isinstance(oldScrapedInfo[key], set):
-          oldScrapedInfo[key] = list(oldScrapedInfo[key])
-        
-        if isinstance(newScrapedInfo[key], set):
-          newScrapedInfo[key] = list(newScrapedInfo[key])
-
         if newScrapedInfo[key] == oldScrapedInfo[key] or newScrapedInfo[key] is None:
           pass
 
@@ -53,17 +47,19 @@ def updateScrapedInfo(oldScrapedInfo, newScrapedInfo):
         elif oldScrapedInfo[key] is True or newScrapedInfo[key] is True:
           oldScrapedInfo[key] = True 
         
-        elif isinstance(oldScrapedInfo[key], str):
-          oldScrapedInfo[key] = newScrapedInfo[key]
-        
         elif isinstance(oldScrapedInfo[key], list):
-          oldScrapedInfo[key].extend(newScrapedInfo[key])  
+          #THIS IS NOT USED IN CURRENT SCHEMA (16/06/2026)
+          oldScrapedInfo[key] = list(dict.fromkeys(oldScrapedInfo[key] + newScrapedInfo[key]))
+        
+        elif isinstance(oldScrapedInfo[key], set):
+          oldScrapedInfo[key] = oldScrapedInfo[key].union(newScrapedInfo[key])
 
         elif key == "ppp":
           oldScrapedInfo[key] = max(oldScrapedInfo[key], newScrapedInfo[key])
+        
         else:
-          oldScrapedInfo[key] = min(oldScrapedInfo[key], newScrapedInfo[key])
-
+          oldScrapedInfo[key] = newScrapedInfo[key]
+        
           
   except ValueError:
     print("error")

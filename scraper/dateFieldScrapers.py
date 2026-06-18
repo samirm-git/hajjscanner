@@ -100,4 +100,5 @@ def fillMissingDateFields(year, season, month, islamicMonth):
   if month is not None and season is None:
     season = MONTH_TO_SEASON.get(month)
  
-  return [year, season, month, islamicMonth]
+  output = {'year': year, 'season': season, 'month': month, 'islamicMonth': islamicMonth}
+  return output
