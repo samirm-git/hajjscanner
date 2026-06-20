@@ -8,6 +8,13 @@ from scraper.regexConsts import DEPARTURE_CITY_RE, HOTEL_KEYWORDS, DISTANCE_RE, 
 from urllib.parse import urljoin, urlparse
 from rapidfuzz import process, fuzz, utils
 
+import logging
+from collections import Counter
+
+logger = logging.getLogger(__name__)
+_typeMismatchCounts = Counter()
+_mergeErrorCounts = Counter()
+
 #MAIN FUNCTION
 def runScrapers(soup, scraperName):
   scraperName = scraperName.lower()
@@ -27,44 +34,58 @@ def runScrapers(soup, scraperName):
   return scrapedInfo
 
 def updateScrapedInfo(oldScrapedInfo, newScrapedInfo):
-  try:
-    for key in newScrapedInfo.keys(): 
-      if key == 'images':
-        print("images key found in updateScrapedInfo.")
+  for key in newScrapedInfo.keys(): 
+    try:
       if key not in oldScrapedInfo:
           oldScrapedInfo[key] = newScrapedInfo[key]
       else:
-        if newScrapedInfo[key] == oldScrapedInfo[key] or newScrapedInfo[key] is None:
+        oldVal = oldScrapedInfo[key]
+        newVal = newScrapedInfo[key]
+
+        if newVal == oldVal or newVal is None:
           pass
 
-        elif oldScrapedInfo[key] is None:
-          oldScrapedInfo[key] = newScrapedInfo[key]
+        elif oldVal is None:
+          oldScrapedInfo[key] = newVal
 
-        elif type(oldScrapedInfo[key]) is not type(newScrapedInfo[key]):
-          print(f"type mismatch: old value: {oldScrapedInfo[key]} is type: {type(oldScrapedInfo[key])}, while new value: {newScrapedInfo[key]} is type: {type(newScrapedInfo[key])}")
-
+        elif type(oldVal) is not type(newVal):
+          _typeMismatchCounts[key] += 1
+          logger.debug("Type mismatch for key=%s: old=%r (%s), new=%r (%s)", key, oldVal, type(oldVal), newVal, type(newVal))
         
-        elif oldScrapedInfo[key] is True or newScrapedInfo[key] is True:
+        elif oldVal is True or newVal is True:
           oldScrapedInfo[key] = True 
         
-        elif isinstance(oldScrapedInfo[key], list):
-          #THIS IS NOT USED IN CURRENT SCHEMA (16/06/2026)
-          oldScrapedInfo[key] = list(dict.fromkeys(oldScrapedInfo[key] + newScrapedInfo[key]))
+        elif isinstance(oldVal, list):
+          #THIS IS NOT USED IN CURRENT SCHEMA (16/06/2026), BUT KEEPING IT HERE FOR FUTURE PROOF
+          oldScrapedInfo[key] = list(dict.fromkeys(oldVal + newVal))
         
-        elif isinstance(oldScrapedInfo[key], set):
-          oldScrapedInfo[key] = oldScrapedInfo[key].union(newScrapedInfo[key])
+        elif isinstance(oldVal, set):
+          oldScrapedInfo[key] = oldVal.union(newVal)
 
         elif key == "ppp":
-          oldScrapedInfo[key] = max(oldScrapedInfo[key], newScrapedInfo[key])
+          oldScrapedInfo[key] = max(oldVal, newVal)
         
         else:
-          oldScrapedInfo[key] = newScrapedInfo[key]
-        
-          
-  except ValueError:
-    print("error")
+          oldScrapedInfo[key] = newVal
+            
+    except Exception:
+      _mergeErrorCounts[key] += 1
+      logger.exception("Failed merging key=%s (old=%r, new=%r)", key, oldScrapedInfo.get(key), newScrapedInfo.get(key))
   
   return oldScrapedInfo
+
+def logScrapeMergeSummary(reset: bool = True):
+  """Call once after a full pipeline run (all webpages scraped)."""
+  if _typeMismatchCounts:
+    for key, count in _typeMismatchCounts.most_common():
+      logger.warning("Type mismatch occurred %d times for key=%s", count, key)
+  if _mergeErrorCounts:
+    for key, count in _mergeErrorCounts.most_common():
+      logger.warning("Merge error occurred %d times for key=%s", count, key)
+
+  if reset:
+    _typeMismatchCounts.clear()
+    _mergeErrorCounts.clear()
 
 #==============================================
 #PACKAGE INFO SCRAPERS

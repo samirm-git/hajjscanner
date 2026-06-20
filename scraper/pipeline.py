@@ -1,5 +1,6 @@
 from scraper.scrapePackageInfo import scrapePackageInfo
 from scraper.scrapePackageUrls import scrapePackageUrls
+from scraper.scrapers import logScrapeMergeSummary
 from scraper.db import getAllUrls, getAllProviders
 from upload import uploadPackageDataToS3
 from scraper.helpers import getProjectRoot
@@ -48,7 +49,7 @@ def main(hajjOrUmrah, useCache=False, scrapeNewOnly=False, uploadToS3=False):
       if packageInfo and uploadToS3:
         uploadPackageDataToS3(hajjOrUmrah, packageInfo, companyName)
      
-  
+  logScrapeMergeSummary()
   print(f"time taken: {time.time() - start}")
   
   return None  
