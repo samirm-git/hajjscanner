@@ -41,5 +41,10 @@ def regexSearch(regex, soup):
 
   return None
 
+#FUTURE: POSSIBLE IMPROVEMENT WILL TEST LATER
+# def regexSearch(regex, soup):
+#     blob = "\n".join(soup.stripped_strings)
+#     return regex.search(blob)
+
 def getCompanyNameFromUrl(baseUrl):
   return re.search(r'(?:www\.)?([^.]+)\.', baseUrl.split('//')[-1]).group(1)
