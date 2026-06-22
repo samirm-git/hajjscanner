@@ -1,11 +1,11 @@
-import sys, json, os
+import json
 from dotenv import load_dotenv
 from scraper.helpers import makeRequest, getSoup, removeFooterHeaderNav, getProjectRoot
 from scraper.validator import validateData
 from scraper.regexConsts import HAJJREGEX, UMRAHREGEX
-from scraper.scrapers import runScrapers, updateScrapedInfo
-from scraper.dateFieldScrapers import fillMissingDateFields
-from scraper.hotelScraper.hotelInfoScraper import scrapeHotelInfo 
+from scraper.hajj_packagescraper import Hajj_PackageScraper
+from scraper.umrah_packagescraper import Umrah_PackageScraper
+from scraper.fillMissingDateFields import fillMissingDateFields
 from scraper.db import saveUrls, flagUrlIsCatalogue, setScrapped
 from tqdm import tqdm
 from upload import uploadPackageDataToS3
@@ -60,8 +60,6 @@ def isCataloguePage(url, soup, companyName, save=True):
     return True
 
 def scrapePackageInfo(hajjOrUmrah, url, companyName, tempSaveFlag = False):
-  packageInfo = {'url':url, 'company': companyName}
-
   resp, err = makeRequest(url)
   if err:
     tqdm.write(f"{url}: {err}")
@@ -78,17 +76,12 @@ def scrapePackageInfo(hajjOrUmrah, url, companyName, tempSaveFlag = False):
   
   if isCataloguePage(url, soup, companyName, save=True):
     return None
-
-  scrapedInfo = runScrapers(soup, hajjOrUmrah)
-  packageInfo = updateScrapedInfo(oldScrapedInfo=packageInfo, newScrapedInfo=scrapedInfo)
-
-  if hajjOrUmrah == 'umrah':
-    inferedDataFields = fillMissingDateFields(year=packageInfo.get('year'), season=packageInfo.get('season'), month=packageInfo.get('month'), islamicMonth=packageInfo.get('islamicMonth'))
-    packageInfo = updateScrapedInfo(oldScrapedInfo=packageInfo, newScrapedInfo=inferedDataFields)
   
+  scraper = Hajj_PackageScraper if hajjOrUmrah == 'hajj' else Umrah_PackageScraper
+  packageInfo = scraper.run(soup, url, companyName)
 
-  packageInfo['makkahHotel'] = scrapeHotelInfo(soup, 'makkah', url)
-  packageInfo['madinahHotel'] = scrapeHotelInfo(soup, 'madinah', url)    
+  # packageInfo['makkahHotel'] = scrapeHotelInfo(soup, 'makkah', url)
+  # packageInfo['madinahHotel'] = scrapeHotelInfo(soup, 'madinah', url)    
 
   packageInfo = {key: list(value) if isinstance(value, set) else value for key,value in packageInfo.items()}
   if tempSaveFlag:
@@ -116,10 +109,12 @@ if __name__ == "__main__":
   hajjUmrahHub = "https://www.hajjumrahhub.co.uk/hajj/2-3-weeks-hajj-package-non-shifting.html"
 
   umrah1 = "https://www.safamarwahtravel.co.uk/deals/4-star-14-nights-muharram-umrah-package-from-birmingham/"
+  umrah2 = "https://www.safamarwahtravel.co.uk/deals/3-star-7-nights-january-umrah-package-from-glasgow/"
+  pppoutlier = "https://www.safamarwahtravel.co.uk/deals/5-star-14-nights-february-umrah-package-with-doha-holidays/"
   
 
   hajjUrls = [temp2, url, url2, url3, url4, url5, url6, alhaqnew, eliteumrah, hajjUmrahHub]
-  umrahUrls = [umrah1]
+  umrahUrls = [umrah1, umrah2, pppoutlier]
   
   parser = argparse.ArgumentParser(description='scrapePackageInfo script')
   parser.add_argument("hajjOrUmrah", choices=['hajj', 'umrah'], help='choose whether to scan for hajj packages or umrah pacakges')

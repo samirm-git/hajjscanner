@@ -13,6 +13,8 @@ UMRAHREGEX = re.compile(
     re.IGNORECASE
 )
 
+TOTAL_DAYS_REGEX = re.compile(r"\b(\d{1,2})[-\s]?(?:night|day)s?\b",re.IGNORECASE) 
+
 ISLAMIC_MONTH_PATTERNS = {
   "Muharram":        r"muharram",
   "Safar":           r"safar",
