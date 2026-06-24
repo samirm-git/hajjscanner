@@ -5,7 +5,7 @@ from scraper.validator import validateData
 from scraper.regexConsts import HAJJREGEX, UMRAHREGEX
 from scraper.hajj_packagescraper import Hajj_PackageScraper
 from scraper.umrah_packagescraper import Umrah_PackageScraper
-from scraper.fillMissingDateFields import fillMissingDateFields
+from scraper.hotelScraper.scrapeHotelInfo import scrapeHotelInfo
 from scraper.db import saveUrls, flagUrlIsCatalogue, setScrapped
 from tqdm import tqdm
 from upload import uploadPackageDataToS3
@@ -80,8 +80,8 @@ def scrapePackageInfo(hajjOrUmrah, url, companyName, tempSaveFlag = False):
   scraper = Hajj_PackageScraper if hajjOrUmrah == 'hajj' else Umrah_PackageScraper
   packageInfo = scraper.run(soup, url, companyName)
 
-  # packageInfo['makkahHotel'] = scrapeHotelInfo(soup, 'makkah', url)
-  # packageInfo['madinahHotel'] = scrapeHotelInfo(soup, 'madinah', url)    
+  packageInfo['makkahHotel'] = scrapeHotelInfo(soup, 'makkah', url)
+  packageInfo['madinahHotel'] = scrapeHotelInfo(soup, 'madinah', url)    
 
   packageInfo = {key: list(value) if isinstance(value, set) else value for key,value in packageInfo.items()}
   if tempSaveFlag:
