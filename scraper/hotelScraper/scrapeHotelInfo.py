@@ -3,7 +3,7 @@ import copy
 import re
 from scraper.consts import CONTAINER_TAGS
 from scraper.regexConsts import CITY_PATTERNS
-from scraper.hotelScraper.hotelInfoScraper import HotelInfoScraper
+from scraper.hotelScraper.hotelFieldScraper import HotelFieldScraper
 
 def _mergeContainers(containers):
   """Combine multiple non-overlapping soup containers into a single soup without modifying the original soup."""
@@ -64,7 +64,7 @@ def scrapeHotelInfo(soup, city, url):
       return None
 
   mergedSoup = _mergeContainers(matchedContainers)
-  hotelInfo = HotelInfoScraper.run(mergedSoup, city, url)  
+  hotelInfo = HotelFieldScraper.run(mergedSoup, city, url)  
 
   if hotelInfo == {}:
     return None

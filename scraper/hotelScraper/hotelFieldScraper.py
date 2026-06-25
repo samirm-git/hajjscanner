@@ -8,7 +8,7 @@ from rapidfuzz import process, fuzz, utils
 from scraper.hotelScraper.scrapeHotelNames import HOTELS
 from urllib.parse import urljoin, urlparse
 
-class HotelInfoScraper:
+class HotelFieldScraper:
   SCHEMA_PATH = getProjectRoot() / "schema" / "hotel.json" 
 
   @classmethod
