@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema",
-  "$id": "hajjPackage.json",
+  "$id": "umrahPackage.json",
   "title": "Package",
-  "description": "Hajj package details",
+  "description": "Umrah package details",
   "type": "object",
   "properties": {
     "company":{
@@ -17,8 +17,8 @@
     "ppp" : {
       "description": "price per person in £", 
       "type": ["integer", "null"],
-      "minimum": 2000,
-      "maximum": 25000,
+      "minimum": 100,
+      "maximum": 10000,
       "minItems": 1
       },
     "year":{
@@ -26,10 +26,25 @@
       "type": ["integer", "null"],
       "minimum": 2020
     },
+    "season":{
+      "description": "season when the package is offered",
+      "type": ["string", "null"],
+      "enum": ["Winter", "Spring", "Summer", "Autumn", null]
+    },
+    "month":{
+      "description": "month in which the package is offered",
+      "type": ["string", "null"],
+      "enum": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December", null]
+    },
+    "islamicMonth":{
+      "description": "islamic month in which package is offered",
+      "type": ["string", "null"],
+      "enum": ["Muharram", "Safar", "Rabi' al-Awwal", "Rabi' al-Thani", "Jumada al-Ula", "Jumada al-Akhirah", "Rajab", "Sha'ban", "Ramadan", "Shawwal", "Dhu al-Qa'dah", "Dhu al-Hijjah", null]
+    },
     "total_days":{
       "description": "total number of days in package",
       "type": ["integer", "null"],
-      "minimum": 10,
+      "minimum": 5,
       "maximum": 30
     },
     "tier":{
@@ -41,11 +56,8 @@
       "description": "star rating (1-5)",
       "type": ["integer", "null"],
       "minimum": 1,
-      "maximum": 5
-    },
-    "isShifting":{
-      "description": "True if shifting package, False if non shifting",
-      "type": ["boolean", "null"]
+      "maximum": 5,
+      "minItems": 1
     },
     "departureCity":{
       "description": "The deparature city where the umrah is being offered from.",
@@ -55,7 +67,10 @@
       "description": "True if visa included in package, False if visa not included",
       "type": ["boolean", "null"]
     },
-
+    "isZiyaratIncluded":{
+      "description": "Is guided tours of religious sites included in the package",
+      "type": ["boolean", "null"]
+    },
     "makkahHotel": {
       "description": "Makkah hotel details",
       "$ref": "hotel.json"
@@ -65,5 +80,5 @@
       "$ref": "hotel.json"
     }
   },
-  "required": ["company","ppp", "year", "total_days", "stars", "isShifting", "departureCity", "isVisaIncluded", "makkahHotel", "madinahHotel"]
+  "required": ["company","ppp", "year", "season", "month", "islamicMonth", "total_days", "stars", "departureCity", "isVisaIncluded", "isZiyaratIncluded", "makkahHotel", "madinahHotel"]
 }
