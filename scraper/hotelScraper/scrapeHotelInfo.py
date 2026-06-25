@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup
 import copy
 import re
-from scraper.gemini_helpers import *
 from scraper.consts import CONTAINER_TAGS
 from scraper.regexConsts import CITY_PATTERNS
 from scraper.hotelScraper.hotelInfoScraper import HotelInfoScraper

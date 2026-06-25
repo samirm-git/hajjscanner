@@ -1,9 +1,9 @@
 import re
-from scraper.packagescraper import PackageScraper
+from scraper.baseFieldScraper import BaseFieldScraper
 from scraper.helpers import getProjectRoot
 from scraper.regexHelpers import regexSearch
 
-class Hajj_PackageScraper(PackageScraper):
+class Hajj_FieldScraper(BaseFieldScraper):
   SCHEMA_PATH = getProjectRoot() / "schema" / "hajjPackage.json"
 
   @staticmethod

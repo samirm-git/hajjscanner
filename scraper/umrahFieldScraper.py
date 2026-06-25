@@ -1,11 +1,11 @@
 import re
-from scraper.packagescraper import PackageScraper
+from scraper.baseFieldScraper import BaseFieldScraper
 from scraper.regexHelpers import hasKeywordPattern, regexSearch
 from scraper.regexConsts import ISLAMIC_MONTH_PATTERNS, ISLAMIC_MONTH_REGEX
 from scraper.helpers import getProjectRoot
 from scraper.fillMissingDateFields import fillMissingDateFields
 
-class Umrah_PackageScraper(PackageScraper):
+class Umrah_FieldScraper(BaseFieldScraper):
   SCHEMA_PATH = getProjectRoot() / "schema" / "umrahPackage.json"
 
   @classmethod

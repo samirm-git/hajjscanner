@@ -6,7 +6,7 @@ from scraper.regexConsts import DEPARTURE_CITY_RE, TOTAL_DAYS_REGEX
 from hijridate import Hijri
 from datetime import date
 
-class PackageScraper:
+class BaseFieldScraper:
   SCHEMA_PATH = None
   PPP_MINMAX = [None, None]
   TOTALDAYS_MINMAX = [None, None]

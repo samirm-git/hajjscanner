@@ -3,8 +3,8 @@ from dotenv import load_dotenv
 from scraper.helpers import makeRequest, getSoup, removeFooterHeaderNav, getProjectRoot
 from scraper.validator import validateData
 from scraper.regexConsts import HAJJREGEX, UMRAHREGEX
-from scraper.hajj_packagescraper import Hajj_PackageScraper
-from scraper.umrah_packagescraper import Umrah_PackageScraper
+from scraper.hajjFieldScraper import Hajj_FieldScraper
+from scraper.umrahFieldScraper import Umrah_FieldScraper
 from scraper.hotelScraper.scrapeHotelInfo import scrapeHotelInfo
 from scraper.db import saveUrls, flagUrlIsCatalogue, setScrapped
 from tqdm import tqdm
@@ -77,7 +77,7 @@ def scrapePackageInfo(hajjOrUmrah, url, companyName, tempSaveFlag = False):
   if isCataloguePage(url, soup, companyName, save=True):
     return None
   
-  scraper = Hajj_PackageScraper if hajjOrUmrah == 'hajj' else Umrah_PackageScraper
+  scraper = Hajj_FieldScraper if hajjOrUmrah == 'hajj' else Umrah_FieldScraper
   packageInfo = scraper.run(soup, url, companyName)
 
   packageInfo['makkahHotel'] = scrapeHotelInfo(soup, 'makkah', url)
