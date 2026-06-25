@@ -112,7 +112,7 @@ class BaseFieldScraper:
     tierRegex = re.compile(r"\b(luxury|premium|economy)\b", re.IGNORECASE)
     match = regexSearch(tierRegex, soup)
     if match:
-      return match.group(1)
+      return match.group(1).lower()
     else: 
       return None
 
