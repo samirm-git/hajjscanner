@@ -1,6 +1,5 @@
 import re
 import json
-from scraper.consts import HEADING_TAGS 
 from scraper.regexHelpers import hasKeywordPattern, regexSearch
 from scraper.regexConsts import DEPARTURE_CITY_RE, TOTAL_DAYS_REGEX 
 from hijridate import Hijri
@@ -45,6 +44,7 @@ class BaseFieldScraper:
   @classmethod
   def scrapeTotalDays(cls, soup):
     totalDays = -1
+    HEADING_TAGS = ["h1", "h2", "h3", "h4", "h5", "h6", "small", "strong"]
     for tag in soup.find_all(HEADING_TAGS):
       match = regexSearch(TOTAL_DAYS_REGEX, tag)
       if match:

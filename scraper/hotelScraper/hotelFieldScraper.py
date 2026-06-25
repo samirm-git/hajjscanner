@@ -216,4 +216,4 @@ class HotelFieldScraper:
     #complete later
     return None
 
-HotelInfoScraper._load_bounds()
+HotelFieldScraper._load_bounds()
