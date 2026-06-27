@@ -33,11 +33,14 @@ def urlToKey(companyName: str, url: str) -> str:
     return f"{companyName}/{slug}.json"
 
 
-def uploadPackageDataToS3(packageInfo, companyName):
+def uploadPackageDataToS3(hajjOrUmrah, packageInfo, companyName):
+  assert hajjOrUmrah in {'hajj', 'umrah'}, f"{hajjOrUmrah} should be either 'hajj' or 'umrah'"
+
   url = packageInfo["url"]
   packageInfo = json.dumps(packageInfo, indent=4)
+  bucket = 'hajjpackagedata' if hajjOrUmrah == 'hajj' else 'umrahpackagedata'
   try:
-    response = s3.put_object(Bucket='hajjpackagedata', Key=f'raw/{urlToKey(companyName, url)}', Body=packageInfo, ContentType='application/json')
+    response = s3.put_object(Bucket=bucket, Key=f'raw/{urlToKey(companyName, url)}', Body=packageInfo, ContentType='application/json')
   except ClientError as e:
     print(e)
 

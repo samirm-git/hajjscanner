@@ -1,35 +1,36 @@
-import sys, json, os
+import json
 from dotenv import load_dotenv
 from scraper.helpers import makeRequest, getSoup, removeFooterHeaderNav, getProjectRoot
 from scraper.validator import validateData
 from scraper.regexConsts import HAJJREGEX, UMRAHREGEX
-from scraper.scrapers import runScrapers, updateScrapedInfo
-from scraper.hotelScraper.hotelInfoScraper import scrapeHotelInfo 
+from scraper.hajjFieldScraper import Hajj_FieldScraper
+from scraper.umrahFieldScraper import Umrah_FieldScraper
+from scraper.hotelScraper.scrapeHotelInfo import scrapeHotelInfo
 from scraper.db import saveUrls, flagUrlIsCatalogue, setScrapped
+from scraper.logger import getCategoryLogger
 from tqdm import tqdm
 from upload import uploadPackageDataToS3
+import argparse 
 from urllib.parse import urljoin
+
+inaccessibleLogger = getCategoryLogger("inaccessible_urls")
+invalidJsonLogger = getCategoryLogger("invalid_json")
 
 root = getProjectRoot()
 load_dotenv(dotenv_path= root/'.env.')
 
-def tempSave(packageInfo):
+def _tempSave(hajjOrUmrah, packageInfo):
   url = packageInfo['url']
   fname = url[8:-1].replace("/","").replace("\\","")
   print(f"Temp save: {fname}")
-  path = getProjectRoot() / 'scraperOutputs' / f"{fname}.txt"
+
+  path = getProjectRoot() / 'scraperOutputs' / hajjOrUmrah / f"{fname}.txt"
+  path.parent.mkdir(parents=True, exist_ok=True)
   with open(path,'a') as f:
-    f.write("=====================================")
+    f.write("=====================================\n")
     json.dump(packageInfo, f, indent=4)
     f.write('\n')
 
-def logInvalidJson(error, url):
-  path = getProjectRoot() / 'invalidJsonLog.txt'
-  with open(path, 'a') as f:
-    f.write("\n")    
-    f.write(url)
-    f.write(" : ")
-    f.write(error)
 
 def isCataloguePage(url, soup, companyName, save=True):
   hajjPackageLinks, umrahPackageLinks = set(), set()
@@ -52,16 +53,13 @@ def isCataloguePage(url, soup, companyName, save=True):
     flagUrlIsCatalogue(url)
     return True
 
-
-def scrapePackageInfo(url, companyName, tempSaveFlag = False):
-  packageInfo = {'url':url, 'company': companyName}
-
+def scrapePackageInfo(hajjOrUmrah, url, companyName, tempSaveFlag = False):
   resp, err = makeRequest(url)
   if err:
-    tqdm.write(f"{url}: {err}")
+    inaccessibleLogger.warning(f"[{companyName}] {url}: {err}")
     return None 
   if resp is None:  # 404
-    tqdm.write(f"{url} is not valid")
+    inaccessibleLogger.warning(f"[{companyName}] {url}: no response")
     return None
 
   soup = getSoup(resp.text, parser="lxml")
@@ -72,22 +70,20 @@ def scrapePackageInfo(url, companyName, tempSaveFlag = False):
   
   if isCataloguePage(url, soup, companyName, save=True):
     return None
-
-  newScrapedInfo = runScrapers(soup, 'package info')
-  # print(f"NEW scraped PackageInfo: {newScrapedInfo} ")
-  packageInfo = updateScrapedInfo(oldScrapedInfo=packageInfo, newScrapedInfo=newScrapedInfo)
-  # print("")
-  # print(f"updated package info: {packageInfo}")
+  
+  scraper = Hajj_FieldScraper if hajjOrUmrah == 'hajj' else Umrah_FieldScraper
+  packageInfo = scraper.run(soup, url, companyName)
 
   packageInfo['makkahHotel'] = scrapeHotelInfo(soup, 'makkah', url)
   packageInfo['madinahHotel'] = scrapeHotelInfo(soup, 'madinah', url)    
-  if tempSaveFlag:
-    tempSave(packageInfo)
 
-  error = validateData(packageInfo)
+  packageInfo = {key: list(value) if isinstance(value, set) else value for key,value in packageInfo.items()}
+  if tempSaveFlag:
+    _tempSave(hajjOrUmrah, packageInfo)
+
+  error = validateData(packageInfo, hajjOrUmrah)
   if error:
-    logInvalidJson(error, url)
-    tqdm.write("JSON validation error. See logs.")
+    invalidJsonLogger.error(f"[{companyName}] {url}: {error}")
     return None
   else:   
     setScrapped(url)
@@ -104,21 +100,31 @@ if __name__ == "__main__":
   alhaqnew = "https://www.alhaqtravel.co.uk/book/19-days-economy-hajj-packages/"
   eliteumrah = "https://eliteumrah.co.uk/21-days-economy-hajj-package/"
   hajjUmrahHub = "https://www.hajjumrahhub.co.uk/hajj/2-3-weeks-hajj-package-non-shifting.html"
+
+  umrah1 = "https://www.safamarwahtravel.co.uk/deals/4-star-14-nights-muharram-umrah-package-from-birmingham/"
+  umrah2 = "https://www.safamarwahtravel.co.uk/deals/3-star-7-nights-january-umrah-package-from-glasgow/"
+  pppoutlier = "https://www.safamarwahtravel.co.uk/deals/5-star-14-nights-february-umrah-package-with-doha-holidays/"
   
 
-  urls = [temp2, url, url2, url3, url4, url5, url6, alhaqnew, eliteumrah, hajjUmrahHub]
-  if len(sys.argv) >= 2:
-    userChosenUrl = int(sys.argv[1])
-  else:
-    userChosenUrl = 2
+  hajjUrls = [temp2, url, url2, url3, url4, url5, url6, alhaqnew, eliteumrah, hajjUmrahHub]
+  umrahUrls = [umrah1, umrah2, pppoutlier]
+  
+  parser = argparse.ArgumentParser(description='scrapePackageInfo script')
+  parser.add_argument("hajjOrUmrah", choices=['hajj', 'umrah'], help='choose whether to scan for hajj packages or umrah pacakges')
+  parser.add_argument("index", type=int, default=0)
+  args = parser.parse_args()
 
-
-  print(urls[userChosenUrl]) 
-  packageInfo = scrapePackageInfo(urls[userChosenUrl], 'safamarwahtravel', tempSaveFlag=True) 
-  if packageInfo:
-    pass
+  l = hajjUrls if args.hajjOrUmrah == 'hajj' else umrahUrls
+  if len(l) -1 < args.index:
+    print(f"index out of range for {args.hajjOrUmrah} list: {l}")
   else:
-    print("no package info. Possible JSON validation error")
+
+    print(l[args.index]) 
+    packageInfo = scrapePackageInfo(args.hajjOrUmrah, l[args.index], 'safamarwahtravel', tempSaveFlag=True) 
+    if packageInfo:
+      pass
+    else:
+      print("no package info. Possible JSON validation error")
 
 
 
