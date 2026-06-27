@@ -7,16 +7,19 @@ from scraper.hajjFieldScraper import Hajj_FieldScraper
 from scraper.umrahFieldScraper import Umrah_FieldScraper
 from scraper.hotelScraper.scrapeHotelInfo import scrapeHotelInfo
 from scraper.db import saveUrls, flagUrlIsCatalogue, setScrapped
+from scraper.logger import getCategoryLogger
 from tqdm import tqdm
 from upload import uploadPackageDataToS3
-
 import argparse 
 from urllib.parse import urljoin
+
+inaccessibleLogger = getCategoryLogger("inaccessible_urls")
+invalidJsonLogger = getCategoryLogger("invalid_json")
 
 root = getProjectRoot()
 load_dotenv(dotenv_path= root/'.env.')
 
-def tempSave(hajjOrUmrah, packageInfo):
+def _tempSave(hajjOrUmrah, packageInfo):
   url = packageInfo['url']
   fname = url[8:-1].replace("/","").replace("\\","")
   print(f"Temp save: {fname}")
@@ -28,15 +31,6 @@ def tempSave(hajjOrUmrah, packageInfo):
     json.dump(packageInfo, f, indent=4)
     f.write('\n')
 
-def logInvalidJson(error, url):
-  path = getProjectRoot() / 'invalidJsonLog.txt'
-  path.parent.mkdir(parents=True, exist_ok=True)
-
-  with open(path, 'a') as f:
-    f.write("\n")    
-    f.write(url)
-    f.write(" : ")
-    f.write(str(error))
 
 def isCataloguePage(url, soup, companyName, save=True):
   hajjPackageLinks, umrahPackageLinks = set(), set()
@@ -62,10 +56,10 @@ def isCataloguePage(url, soup, companyName, save=True):
 def scrapePackageInfo(hajjOrUmrah, url, companyName, tempSaveFlag = False):
   resp, err = makeRequest(url)
   if err:
-    tqdm.write(f"{url}: {err}")
+    inaccessibleLogger.warning(f"[{companyName}] {url}: {err}")
     return None 
   if resp is None:  # 404
-    tqdm.write(f"{url} is not valid")
+    inaccessibleLogger.warning(f"[{companyName}] {url}: no response")
     return None
 
   soup = getSoup(resp.text, parser="lxml")
@@ -85,12 +79,11 @@ def scrapePackageInfo(hajjOrUmrah, url, companyName, tempSaveFlag = False):
 
   packageInfo = {key: list(value) if isinstance(value, set) else value for key,value in packageInfo.items()}
   if tempSaveFlag:
-    tempSave(hajjOrUmrah, packageInfo)
+    _tempSave(hajjOrUmrah, packageInfo)
 
   error = validateData(packageInfo, hajjOrUmrah)
   if error:
-    logInvalidJson(error, url)
-    tqdm.write("JSON validation error. See logs.")
+    invalidJsonLogger.error(f"[{companyName}] {url}: {error}")
     return None
   else:   
     setScrapped(url)
