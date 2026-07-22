@@ -1,22 +1,25 @@
 import re
-from scraper.baseFieldScraper import BaseFieldScraper
+import json
+from scraper.scraperClasses.baseFieldScraper import BaseFieldScraper
 from scraper.regexHelpers import hasKeywordPattern, regexSearch
 from scraper.regexConsts import ISLAMIC_MONTH_PATTERNS, ISLAMIC_MONTH_REGEX
 from scraper.helpers import getProjectRoot
 from scraper.fillMissingDateFields import fillMissingDateFields
+from schema.fields import UmrahField, BaseField
 
 class Umrah_FieldScraper(BaseFieldScraper):
-  SCHEMA_PATH = getProjectRoot() / "schema" / "umrahPackage.json"
+  SCHEMA = json.loads((getProjectRoot() / "schema" / "umrahPackage.json").read_text())
 
   @classmethod
   def get_scrapers(cls):
-    return {**super().get_scrapers(), 'isZiyaratIncluded': cls.scrapeIsZiyaratIncluded, 'season': cls.scrapeSeason,
-            'month': cls.scrapeMonth, 'islamicMonth': cls.scrapeIslamicMonth}
+    return {**super().get_scrapers(), UmrahField.IS_ZIYARAT_INCLUDED: cls.scrapeIsZiyaratIncluded, UmrahField.SEASON: cls.scrapeSeason,
+            UmrahField.MONTH: cls.scrapeMonth, UmrahField.ISLAMIC_MONTH: cls.scrapeIslamicMonth}
   
   @classmethod
   def run(cls, soup, url=None, company=None):
     scrapedInfo = super().run(soup, url, company)
-    inferedDateFields = fillMissingDateFields(scrapedInfo.get('year'), scrapedInfo.get('season'), scrapedInfo.get('month'), scrapedInfo.get('islamicMonth'))
+    inferedDateFields = fillMissingDateFields(scrapedInfo.get(BaseField.YEAR), scrapedInfo.get(UmrahField.SEASON),
+                                scrapedInfo.get(UmrahField.MONTH), scrapedInfo.get(UmrahField.ISLAMIC_MONTH))
     scrapedInfo.update(inferedDateFields)
     return scrapedInfo 
 

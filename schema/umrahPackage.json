@@ -36,7 +36,7 @@
       "type": ["string", "null"],
       "enum": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December", null]
     },
-    "islamicMonth":{
+    "islamic_month":{
       "description": "islamic month in which package is offered",
       "type": ["string", "null"],
       "enum": ["Muharram", "Safar", "Rabi' al-Awwal", "Rabi' al-Thani", "Jumada al-Ula", "Jumada al-Akhirah", "Rajab", "Sha'ban", "Ramadan", "Shawwal", "Dhu al-Qa'dah", "Dhu al-Hijjah", null]
@@ -59,26 +59,26 @@
       "maximum": 5,
       "minItems": 1
     },
-    "departureCity":{
+    "departure_city":{
       "description": "The deparature city where the umrah is being offered from.",
       "type": ["string", "null"]
     },
-    "isVisaIncluded":{
+    "is_visa_included":{
       "description": "True if visa included in package, False if visa not included",
       "type": ["boolean", "null"]
     },
-    "isZiyaratIncluded":{
+    "is_ziyarat_included":{
       "description": "Is guided tours of religious sites included in the package",
       "type": ["boolean", "null"]
     },
-    "makkahHotel": {
+    "makkah_hotel": {
       "description": "Makkah hotel details",
       "$ref": "hotel.json"
     },
-    "madinahHotel":{
+    "madinah_hotel":{
       "description": "Madinah hotel details",
       "$ref": "hotel.json"
     }
   },
-  "required": ["company","ppp", "year", "season", "month", "islamicMonth", "total_days", "stars", "departureCity", "isVisaIncluded", "isZiyaratIncluded", "makkahHotel", "madinahHotel"]
+  "required": ["company","ppp", "year", "season", "month", "islamic_month", "total_days", "stars", "departure_city", "is_visa_included", "is_ziyarat_included", "makkah_hotel", "madinah_hotel"]
 }

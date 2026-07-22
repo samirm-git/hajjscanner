@@ -43,27 +43,27 @@
       "minimum": 1,
       "maximum": 5
     },
-    "isShifting":{
+    "is_shifting":{
       "description": "True if shifting package, False if non shifting",
       "type": ["boolean", "null"]
     },
-    "departureCity":{
+    "departure_city":{
       "description": "The deparature city where the umrah is being offered from.",
       "type": ["string", "null"]
     },
-    "isVisaIncluded":{
+    "is_visa_included":{
       "description": "True if visa included in package, False if visa not included",
       "type": ["boolean", "null"]
     },
 
-    "makkahHotel": {
+    "makkah_hotel": {
       "description": "Makkah hotel details",
       "$ref": "hotel.json"
     },
-    "madinahHotel":{
+    "madinah_hotel":{
       "description": "Madinah hotel details",
       "$ref": "hotel.json"
     }
   },
-  "required": ["company","ppp", "year", "total_days", "stars", "isShifting", "departureCity", "isVisaIncluded", "makkahHotel", "madinahHotel"]
+  "required": ["company","ppp", "year", "total_days", "stars", "is_shifting", "departure_city", "is_visa_included", "makkah_hotel", "madinah_hotel"]
 }

@@ -3,9 +3,10 @@ from dotenv import load_dotenv
 from scraper.helpers import makeRequest, getSoup, removeFooterHeaderNav, getProjectRoot
 from scraper.validator import validateData
 from scraper.regexConsts import HAJJREGEX, UMRAHREGEX
-from scraper.hajjFieldScraper import Hajj_FieldScraper
-from scraper.umrahFieldScraper import Umrah_FieldScraper
+from scraper.scraperClasses.hajjFieldScraper import Hajj_FieldScraper
+from scraper.scraperClasses.umrahFieldScraper import Umrah_FieldScraper
 from scraper.hotelScraper.scrapeHotelInfo import scrapeHotelInfo
+from schema.fields import BaseField
 from scraper.db import saveUrls, flagUrlIsCatalogue, setScrapped
 from scraper.logger import getCategoryLogger
 from tqdm import tqdm
@@ -74,14 +75,14 @@ def scrapePackageInfo(hajjOrUmrah, url, companyName, tempSaveFlag = False):
   scraper = Hajj_FieldScraper if hajjOrUmrah == 'hajj' else Umrah_FieldScraper
   packageInfo = scraper.run(soup, url, companyName)
 
-  packageInfo['makkahHotel'] = scrapeHotelInfo(soup, 'makkah', url)
-  packageInfo['madinahHotel'] = scrapeHotelInfo(soup, 'madinah', url)    
+  packageInfo[BaseField.MAKKAH_HOTEL] = scrapeHotelInfo(soup, 'makkah', url)
+  packageInfo[BaseField.MADINAH_HOTEL] = scrapeHotelInfo(soup, 'madinah', url)    
 
   packageInfo = {key: list(value) if isinstance(value, set) else value for key,value in packageInfo.items()}
   if tempSaveFlag:
     _tempSave(hajjOrUmrah, packageInfo)
 
-  error = validateData(packageInfo, hajjOrUmrah)
+  error = validateData(packageInfo, scraper.SCHEMA, )
   if error:
     invalidJsonLogger.error(f"[{companyName}] {url}: {error}")
     return None

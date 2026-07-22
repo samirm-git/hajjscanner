@@ -7,35 +7,31 @@ from scraper.helpers import cleanText
 from rapidfuzz import process, fuzz, utils
 from scraper.hotelScraper.scrapeHotelNames import HOTELS
 from urllib.parse import urljoin, urlparse
+from schema.fields import HotelField
 
 class HotelFieldScraper:
-  SCHEMA_PATH = getProjectRoot() / "schema" / "hotel.json" 
+  SCHEMA  = json.loads((getProjectRoot() / "schema" / "hotel.json").read_text())
+  _properties = SCHEMA['properties']
 
-  @classmethod
-  def _load_bounds(cls):
-    with open(cls.SCHEMA_PATH) as f:
-      schema = json.load(f)
-      properties = schema["properties"]
-    
-    cls.TOTALDAYS_MINMAX = [properties["total_days"]["minimum"], properties["total_days"]["maximum"]]
-    cls.DISTANCETOHARAM_MINMAX = [properties["distanceToHaram"]["minimum"], properties["distanceToHaram"]["maximum"]]
-    cls.WALKTOHARAM_MINMAX = [properties["walkToHaram"]["minimum"], properties["walkToHaram"]["maximum"]]
-    cls.NUMBEROFBEDS_MINMAX = [properties["numberOfBeds"]["minimum"], properties["numberOfBeds"]["maximum"]]
+  TOTALDAYS_MINMAX = [_properties[HotelField.TOTAL_DAYS]["minimum"], _properties[HotelField.TOTAL_DAYS]["maximum"]]
+  DISTANCETOHARAM_MINMAX = [_properties[HotelField.DISTANCE_TO_HARAM]["minimum"], _properties[HotelField.DISTANCE_TO_HARAM]["maximum"]]
+  WALKTOHARAM_MINMAX = [_properties[HotelField.WALK_TO_HARAM]["minimum"], _properties[HotelField.WALK_TO_HARAM]["maximum"]]
+  NUMBEROFBEDS_MINMAX = [_properties[HotelField.NUMBER_OF_BEDS]["minimum"], _properties[HotelField.NUMBER_OF_BEDS]["maximum"]]
   
   @classmethod 
   def get_scrapers(cls):
-    return {'total_days': cls.scrapeTotalDaysHotel, 'name': cls.scrapeHotelName, 'images': cls.scrapeHotelImages,
-            'stars': cls.scrapeStars, 'hasWifi': cls.scrapeHasWifi, 'hasAC': cls.scrapeHasAC,
-            'distanceToHaram': cls.scrapeDistanceToHaram, 'walkToHaram': cls.scrapeWalkToHaram, 'numberOfBeds': cls.scrapeNumberOfBeds }    
+    return {HotelField.TOTAL_DAYS: cls.scrapeTotalDaysHotel, HotelField.NAME: cls.scrapeHotelName, HotelField.IMAGES: cls.scrapeHotelImages,
+            HotelField.STARS: cls.scrapeStars, HotelField.HAS_WIFI: cls.scrapeHasWifi, HotelField.HAS_AC: cls.scrapeHasAC,
+            HotelField.DISTANCE_TO_HARAM: cls.scrapeDistanceToHaram, HotelField.WALK_TO_HARAM: cls.scrapeWalkToHaram, HotelField.NUMBER_OF_BEDS: cls.scrapeNumberOfBeds }    
   
   @classmethod
   def run(cls, soup, city, url):
     scrapedInfo = {}
     for field, fn in cls.get_scrapers().items():
-      if field == 'name':
-        scrapedInfo['name'] = fn(soup, city)
-      elif field == 'images':
-        scrapedInfo['images'] = fn(soup, url)
+      if field == HotelField.NAME:
+        scrapedInfo[HotelField.NAME] = fn(soup, city)
+      elif field == HotelField.IMAGES:
+        scrapedInfo[HotelField.IMAGES] = fn(soup, url)
       else: 
         scrapedInfo[field] = fn(soup)
     
@@ -215,5 +211,3 @@ class HotelFieldScraper:
   def scrapeNumberOfBeds(soup):
     #complete later
     return None
-
-HotelFieldScraper._load_bounds()

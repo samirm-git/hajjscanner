@@ -1,10 +1,12 @@
 import re
-from scraper.baseFieldScraper import BaseFieldScraper
+import json
+from scraper.scraperClasses.baseFieldScraper import BaseFieldScraper
 from scraper.helpers import getProjectRoot
 from scraper.regexHelpers import regexSearch
+from schema.fields import HajjField
 
 class Hajj_FieldScraper(BaseFieldScraper):
-  SCHEMA_PATH = getProjectRoot() / "schema" / "hajjPackage.json"
+  SCHEMA = json.loads((getProjectRoot() / "schema" / "hajjPackage.json").read_text())
 
   @staticmethod
   def scrapeIsShifting(soup):
@@ -17,4 +19,4 @@ class Hajj_FieldScraper(BaseFieldScraper):
   
   @classmethod
   def get_scrapers(cls):
-    return {**super().get_scrapers(), 'isShifting': cls.scrapeIsShifting}
+    return {**super().get_scrapers(), HajjField.IS_SHIFTING: cls.scrapeIsShifting}

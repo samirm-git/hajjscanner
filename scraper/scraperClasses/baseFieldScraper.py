@@ -4,9 +4,10 @@ from scraper.regexHelpers import hasKeywordPattern, regexSearch
 from scraper.regexConsts import DEPARTURE_CITY_RE, TOTAL_DAYS_REGEX 
 from hijridate import Hijri
 from datetime import date
+from schema.fields import BaseField
 
 class BaseFieldScraper:
-  SCHEMA_PATH = None
+  SCHEMA = None
   PPP_MINMAX = [None, None]
   TOTALDAYS_MINMAX = [None, None]
   YEAR_MIN = None
@@ -19,24 +20,21 @@ class BaseFieldScraper:
   
   @classmethod
   def _load_bounds(cls):
-    with open(cls.SCHEMA_PATH) as f:
-        schema = json.load(f)
-        properties = schema["properties"]
+    properties = cls.SCHEMA["properties"]
+    cls.PPP_MINMAX = [properties[BaseField.PPP]["minimum"], properties[BaseField.PPP]["maximum"]]
+    cls.TOTALDAYS_MINMAX = [properties[BaseField.TOTAL_DAYS]["minimum"], properties[BaseField.TOTAL_DAYS]["maximum"]]
+    cls.YEAR_MIN = properties[BaseField.YEAR]["minimum"]
 
-    cls.PPP_MINMAX = [properties["ppp"]["minimum"], properties["ppp"]["maximum"]]
-    cls.TOTALDAYS_MINMAX = [properties["total_days"]["minimum"], properties["total_days"]["maximum"]]
-    cls.YEAR_MIN = properties["year"]["minimum"]
-  
   @classmethod
   def get_scrapers(cls):
-    scrapers = {'ppp': cls.scrapePPP, 'year':cls.scrapeYear, 'total_days': cls.scrapeTotalDays, 
-                'tier': cls.scrapeTier, 'stars': cls.scrapeStars, 'departureCity': cls.scrapeDepartureCity,
-                'isVisaIncluded': cls.scrapeIsVisaIncluded}
+    scrapers = {BaseField.PPP: cls.scrapePPP, BaseField.YEAR: cls.scrapeYear, BaseField.TOTAL_DAYS: cls.scrapeTotalDays, 
+                BaseField.TIER: cls.scrapeTier, BaseField.STARS: cls.scrapeStars, BaseField.DEPARTURE_CITY: cls.scrapeDepartureCity,
+                BaseField.IS_VISA_INCLUDED: cls.scrapeIsVisaIncluded}
     return scrapers
 
   @classmethod
   def run(cls, soup, url=None, company=None):
-    scrapedInfo = {'url': url, 'company': company}
+    scrapedInfo = {BaseField.URL: url, BaseField.COMPANY: company}
     for field, fn in cls.get_scrapers().items():
       scrapedInfo[field] = fn(soup)
     return scrapedInfo
