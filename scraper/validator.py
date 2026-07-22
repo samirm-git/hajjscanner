@@ -10,7 +10,7 @@ from referencing.jsonschema import DRAFT7
 
 hajjPackageSchema = json.loads((getProjectRoot() / "schema" / "hajjPackage.json").read_text())
 umrahPackageSchema = json.loads((getProjectRoot() / "schema" / "umrahPackage.json").read_text())
-hotelSchema = json.loads((getProjectRoot / "schema" / "hotel.jsoon").read_text())
+hotelSchema = json.loads((getProjectRoot() / "schema" / "hotel.json").read_text())
 
 _registry = Registry().with_resources([
     ("hotel.json", Resource.from_contents(hotelSchema, default_specification=DRAFT7))

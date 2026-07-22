@@ -15,7 +15,7 @@ class BaseFieldScraper:
   @classmethod
   def __init_subclass__(cls, **kwargs):
     super().__init_subclass__(**kwargs)
-    if cls.SCHEMA_PATH is not None:
+    if cls.SCHEMA is not None:
         cls._load_bounds()
   
   @classmethod

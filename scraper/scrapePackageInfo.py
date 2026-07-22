@@ -82,7 +82,7 @@ def scrapePackageInfo(hajjOrUmrah, url, companyName, tempSaveFlag = False):
   if tempSaveFlag:
     _tempSave(hajjOrUmrah, packageInfo)
 
-  error = validateData(packageInfo, scraper.SCHEMA, )
+  error = validateData(packageInfo, hajjOrUmrah)
   if error:
     invalidJsonLogger.error(f"[{companyName}] {url}: {error}")
     return None
