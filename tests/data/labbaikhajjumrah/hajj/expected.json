@@ -1,0 +1,34 @@
+{
+    "url": "https://www.labbaikhajjumrah.co.uk/packages/shifting-hajj-package/",
+    "company": "labbaikhajjumrah",
+    "ppp": null,
+    "year": 2027,
+    "total_days": null,
+    "tier": "economy",
+    "stars": null,
+    "departure_city": null,
+    "is_visa_included": true,
+    "is_shifting": false,
+    "makkah_hotel": {
+        "total_days": null,
+        "name": "Emaar Al Khalil Hotel",
+        "images": null,
+        "stars": null,
+        "has_wifi": false,
+        "has_ac": false,
+        "distance_to_haram": null,
+        "walk_to_haram": null,
+        "number_of_beds": null
+    },
+    "madinah_hotel": {
+        "total_days": null,
+        "name": "Mirage Al Salam Hotel",
+        "images": null,
+        "stars": null,
+        "has_wifi": false,
+        "has_ac": false,
+        "distance_to_haram": null,
+        "walk_to_haram": null,
+        "number_of_beds": null
+    }
+}

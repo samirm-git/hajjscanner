@@ -1,0 +1,58 @@
+{
+    "url": "https://www.alhaqtravel.co.uk/book/hajj-package-for-21-nights-all-inclusive-with-flight-from-manchester/",
+    "company": "alhaqtravel",
+    "ppp": 7986,
+    "year": null,
+    "total_days": 21,
+    "tier": "luxury",
+    "stars": null,
+    "departure_city": "Manchester",
+    "is_visa_included": true,
+    "is_shifting": null,
+    "makkah_hotel": {
+        "total_days": 14,
+        "name": "Le Meridien Towers Makkah",
+        "images": [
+            "https://www.alhaqtravel.co.uk/media/hotels/7389472.jpg",
+            "https://www.alhaqtravel.co.uk/media/hotels/7389442.jpg",
+            "https://www.alhaqtravel.co.uk/media/hotels/20313067.jpg",
+            "https://www.alhaqtravel.co.uk/media/hotels/20313056.jpg",
+            "https://www.alhaqtravel.co.uk/media/hotels/20313094.jpg",
+            "https://www.alhaqtravel.co.uk/media/hotels/20313158.jpg",
+            "https://www.alhaqtravel.co.uk/media/hotels/20313161.jpg",
+            "https://www.alhaqtravel.co.uk/media/hotels/20313163.jpg",
+            "https://www.alhaqtravel.co.uk/media/hotels/20313167.jpg",
+            "https://www.alhaqtravel.co.uk/media/hotels/20313172.jpg",
+            "https://www.alhaqtravel.co.uk/media/hotels/327931616.jpg"
+        ],
+        "stars": null,
+        "has_wifi": false,
+        "has_ac": false,
+        "distance_to_haram": null,
+        "walk_to_haram": null,
+        "number_of_beds": null
+    },
+    "madinah_hotel": {
+        "total_days": 7,
+        "name": "Al-Aqeeq Al-Madinah Hotel",
+        "images": [
+            "https://www.alhaqtravel.co.uk/media/hotels/522052147.jpg",
+            "https://www.alhaqtravel.co.uk/media/hotels/3335278381.jpg",
+            "https://www.alhaqtravel.co.uk/media/hotels/5220521461.jpg",
+            "https://www.alhaqtravel.co.uk/media/hotels/5220521471.jpg",
+            "https://www.alhaqtravel.co.uk/media/hotels/522052148.jpg",
+            "https://www.alhaqtravel.co.uk/media/hotels/522052948.jpg",
+            "https://www.alhaqtravel.co.uk/media/hotels/522054710.jpg",
+            "https://www.alhaqtravel.co.uk/media/hotels/522054746.jpg",
+            "https://www.alhaqtravel.co.uk/media/hotels/522054738.jpg",
+            "https://www.alhaqtravel.co.uk/media/hotels/522055140.jpg",
+            "https://www.alhaqtravel.co.uk/media/hotels/522058600.jpg"
+        ],
+        "stars": null,
+        "has_wifi": false,
+        "has_ac": true,
+        "distance_to_haram": null,
+        "walk_to_haram": 10,
+        "number_of_beds": null
+    }
+}

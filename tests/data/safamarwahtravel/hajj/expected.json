@@ -1,0 +1,44 @@
+{
+    "url": "https://www.safamarwahtravel.co.uk/deals/3-star-21-days-shifting-hajj-package/",
+    "company": "safamarwahtravel",
+    "ppp": 8323,
+    "year": 2026,
+    "total_days": 21,
+    "tier": null,
+    "stars": 3,
+    "departure_city": null,
+    "is_visa_included": true,
+    "is_shifting": true,
+    "makkah_hotel": {
+        "total_days": 14,
+        "name": null,
+        "images": [
+            "https://www.safamarwahtravel.co.uk/theme/hotel_images/469043448.jpg",
+            "https://www.safamarwahtravel.co.uk/theme/hotel_images/4690433921.jpg",
+            "https://www.safamarwahtravel.co.uk/theme/hotel_images/469043420.jpg",
+            "https://www.safamarwahtravel.co.uk/theme/hotel_images/469043438.jpg",
+            "https://www.safamarwahtravel.co.uk/theme/hotel_images/4690433411.jpg",
+            "https://www.safamarwahtravel.co.uk/theme/hotel_images/469043392.jpg",
+            "https://www.safamarwahtravel.co.uk/theme/hotel_images/1862384711.jpg",
+            "https://www.safamarwahtravel.co.uk/theme/hotel_images/537212357.jpg",
+            "https://www.safamarwahtravel.co.uk/theme/hotel_images/469043407.jpg"
+        ],
+        "stars": 3,
+        "has_wifi": true,
+        "has_ac": true,
+        "distance_to_haram": null,
+        "walk_to_haram": 11,
+        "number_of_beds": null
+    },
+    "madinah_hotel": {
+        "total_days": 7,
+        "name": "Diyar Al-Madina Hotel",
+        "images": null,
+        "stars": 3,
+        "has_wifi": false,
+        "has_ac": false,
+        "distance_to_haram": null,
+        "walk_to_haram": 10,
+        "number_of_beds": null
+    }
+}

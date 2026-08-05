@@ -1,0 +1,46 @@
+{
+    "url": "https://www.alkhairtravel.co.uk/offer/27-days-economy-hajj-package/",
+    "company": "alkhairtravel",
+    "ppp": 6730,
+    "year": null,
+    "total_days": 27,
+    "tier": "economy",
+    "stars": 3,
+    "departure_city": "Manchester",
+    "is_visa_included": true,
+    "is_shifting": true,
+    "makkah_hotel": {
+        "total_days": null,
+        "name": "Azizia Hotel",
+        "images": [
+            "https://www.alkhairtravel.co.uk/theme/hotels/Abeer_Al_Azizia_Hotel_(5).webp",
+            "https://www.alkhairtravel.co.uk/theme/hotels/Abeer_Al_Azizia_Hotel_(4).webp",
+            "https://www.alkhairtravel.co.uk/theme/hotels/Abeer_Al_Azizia_Hotel_(6).webp",
+            "https://www.alkhairtravel.co.uk/theme/hotels/Abeer_Al_Azizia_Hotel_(2).webp",
+            "https://www.alkhairtravel.co.uk/theme/hotels/Abeer_Al_Azizia_Hotel_(3).webp"
+        ],
+        "stars": 3,
+        "has_wifi": true,
+        "has_ac": true,
+        "distance_to_haram": null,
+        "walk_to_haram": null,
+        "number_of_beds": null
+    },
+    "madinah_hotel": {
+        "total_days": null,
+        "name": "Manazil Al Aswaf",
+        "images": [
+            "https://www.alkhairtravel.co.uk/theme/hotels/Manazel_Alaswaf_Hotel_Bedroom.webp",
+            "https://www.alkhairtravel.co.uk/theme/hotels/Manazel_Alaswaf_Hotel_Counter.webp",
+            "https://www.alkhairtravel.co.uk/theme/hotels/Manazel_Alaswaf_Hotel_Dining_Table.webp",
+            "https://www.alkhairtravel.co.uk/theme/hotels/Manazel_Alaswaf_Hotel_Dining_Area.webp",
+            "https://www.alkhairtravel.co.uk/theme/hotels/Manazel_Alaswaf_Hotel_Bed.webp"
+        ],
+        "stars": 3,
+        "has_wifi": true,
+        "has_ac": true,
+        "distance_to_haram": 2574,
+        "walk_to_haram": 5,
+        "number_of_beds": null
+    }
+}

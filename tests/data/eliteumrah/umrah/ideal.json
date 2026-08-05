@@ -1,0 +1,37 @@
+{
+    "url": "https://eliteumrah.co.uk/7-nights-5-star-december-umrah-package/",
+    "company": "eliteumrah",
+    "ppp": 825,
+    "year": null,
+    "total_days": 7,
+    "tier": "luxury",
+    "stars": 5,
+    "departure_city": null,
+    "is_visa_included": true,
+    "is_ziyarat_included": true,
+    "season": "Winter",
+    "month": "December",
+    "islamic_month": null,
+    "makkah_hotel": {
+        "total_days": 4,
+        "name": null,
+        "images": null,
+        "stars": 5,
+        "has_wifi": false,
+        "has_ac": false,
+        "distance_to_haram": null,
+        "walk_to_haram": null,
+        "number_of_beds": 4
+    },
+    "madinah_hotel": {
+        "total_days": 3,
+        "name": null,
+        "images": null,
+        "stars": 5,
+        "has_wifi": false,
+        "has_ac": false,
+        "distance_to_haram": null,
+        "walk_to_haram": null,
+        "number_of_beds": 4
+    }
+}

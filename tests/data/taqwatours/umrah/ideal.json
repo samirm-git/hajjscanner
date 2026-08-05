@@ -1,0 +1,49 @@
+{
+    "url": "https://taqwatours.co.uk/5-star-umrah-package-london/",
+    "company": "taqwatours",
+    "ppp": 875,
+    "year": null,
+    "total_days": 7,
+    "tier": "premium",
+    "stars": 5,
+    "departure_city": "London",
+    "is_visa_included": true,
+    "is_ziyarat_included": false,
+    "season": null,
+    "month": null,
+    "islamic_month": null,
+    "makkah_hotel": {
+        "total_days": null,
+        "name": "Makarem Ajyad Makkah Hotel",
+        "images": [
+            "https://taqwatours.co.uk/wp-content/uploads/2025/07/MAKAREM-AJYAD-MAKKAH-HOTEL.webp",
+            "https://taqwatours.co.uk/wp-content/uploads/2025/07/MAKAREM-AJYAD-MAKKAH-premium-room-HOTEL.webp",
+            "https://taqwatours.co.uk/wp-content/uploads/2025/07/MAKAREM-AJYAD-MAKKAH-luxury-room-HOTEL.webp",
+            "https://taqwatours.co.uk/wp-content/uploads/2025/07/MAKAREM-AJYAD-MAKKAH-Best-room-HOTEL.webp"
+        ],
+        "stars": 5,
+        "has_wifi": true,
+        "has_ac": true,
+        "other_amenities": "Wheelchair accessible; daily housekeeping; on-site restaurant with buffet options; 24/7 room service; city or Haram view rooms (subject to availability); elevators; in-room safe and mini fridge; tea/coffee making facilities.",
+        "distance_to_haram": null,
+        "walk_to_haram": 5,
+        "number_of_beds": null
+    },
+    "madinah_hotel": {
+        "total_days": null,
+        "name": "Crowne Plaza Madinah",
+        "images": [
+            "https://taqwatours.co.uk/wp-content/uploads/2025/07/CROWNE-PLAZA-HOTEL.webp",
+            "https://taqwatours.co.uk/wp-content/uploads/2025/07/CROWNE-PLAZA-premium-room-HOTEL.webp",
+            "https://taqwatours.co.uk/wp-content/uploads/2025/07/CROWNE-PLAZA-luxury-room-HOTEL.webp",
+            "https://taqwatours.co.uk/wp-content/uploads/2025/07/CROWNE-PLAZA-Best-Room-HOTEL.webp"
+        ],
+        "stars": 5,
+        "has_wifi": true,
+        "has_ac": true,
+        "other_amenities": "Wheelchair accessible; daily housekeeping; on-site restaurant with buffet options; 24/7 room service; city or Haram view rooms (subject to availability); elevators; in-room safe and mini fridge; tea/coffee making facilities.",
+        "distance_to_haram": null,
+        "walk_to_haram": 5,
+        "number_of_beds": null
+    }
+}

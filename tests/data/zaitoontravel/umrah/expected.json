@@ -1,0 +1,60 @@
+{
+    "url": "https://www.zaitoontravel.co.uk/deal/16-nights-5-star-premium-umrah-packages/",
+    "company": "zaitoontravel",
+    "ppp": 480,
+    "year": null,
+    "total_days": 16,
+    "tier": "premium",
+    "stars": null,
+    "departure_city": "Birmingham",
+    "is_visa_included": false,
+    "is_ziyarat_included": true,
+    "season": null,
+    "month": null,
+    "islamic_month": null,
+    "makkah_hotel": {
+        "total_days": null,
+        "name": "Swissotel Al Maqam Makkah",
+        "images": [
+            "https://www.zaitoontravel.co.uk/theme/hotel_images/Swissotel_Al_Maqam_Bed.webp",
+            "https://www.zaitoontravel.co.uk/theme/hotel_images/Swissotel_Al_Maqam_Food.webp",
+            "https://www.zaitoontravel.co.uk/theme/hotel_images/Swissotel_Al_Maqam_Bedroom_.webp",
+            "https://www.zaitoontravel.co.uk/theme/hotel_images/Swissotel_Al_Maqam_Pray_Area.webp",
+            "https://www.zaitoontravel.co.uk/theme/hotel_images/Swissotel_Al_Maqam_Dining_Area_.webp",
+            "https://www.zaitoontravel.co.uk/theme/hotel_images/Swissotel_Al_Maqam_Counter.webp",
+            "https://www.zaitoontravel.co.uk/theme/hotel_images/Swissotel_Al_Maqam_Foods.webp",
+            "https://www.zaitoontravel.co.uk/theme/hotel_images/Swissotel_Al_Maqam_Bedroom.webp",
+            "https://www.zaitoontravel.co.uk/theme/hotel_images/Swissotel_Al_Maqam_Dining_Area.webp",
+            "https://www.zaitoontravel.co.uk/theme/hotel_images/Swissotel_Al_Maqam_Mall.webp"
+        ],
+        "stars": null,
+        "has_wifi": false,
+        "has_ac": false,
+        "distance_to_haram": null,
+        "walk_to_haram": 4,
+        "number_of_beds": null
+    },
+    "madinah_hotel": {
+        "total_days": null,
+        "name": "Anwar Al-Madinah Movenpick Hotel",
+        "images": [
+            "https://www.zaitoontravel.co.uk/theme/hotel_images/234959944.jpg",
+            "https://www.zaitoontravel.co.uk/theme/hotel_images/263783979.jpg",
+            "https://www.zaitoontravel.co.uk/theme/hotel_images/367360728.jpg",
+            "https://www.zaitoontravel.co.uk/theme/hotel_images/263784046.jpg",
+            "https://www.zaitoontravel.co.uk/theme/hotel_images/264054872.jpg",
+            "https://www.zaitoontravel.co.uk/theme/hotel_images/263784059.jpg",
+            "https://www.zaitoontravel.co.uk/theme/hotel_images/367360742.jpg",
+            "https://www.zaitoontravel.co.uk/theme/hotel_images/263784069.jpg",
+            "https://www.zaitoontravel.co.uk/theme/hotel_images/263783995.jpg",
+            "https://www.zaitoontravel.co.uk/theme/hotel_images/263783971.jpg",
+            "https://www.zaitoontravel.co.uk/theme/hotel_images/263784094.jpg"
+        ],
+        "stars": null,
+        "has_wifi": false,
+        "has_ac": false,
+        "distance_to_haram": null,
+        "walk_to_haram": 3,
+        "number_of_beds": null
+    }
+}

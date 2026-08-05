@@ -1,0 +1,47 @@
+{
+    "url": "https://duatravels.co.uk/package/october-standard-umrah-package/",
+    "company": "duatravels",
+    "ppp": 989,
+    "year": null,
+    "total_days": 14,
+    "tier": null,
+    "stars": 3,
+    "departure_city": "London",
+    "is_visa_included": true,
+    "is_ziyarat_included": true,
+    "season": "Autumn",
+    "month": "October",
+    "islamic_month": null,
+    "makkah_hotel": {
+        "total_days": null,
+        "name": "Emaar Khalil",
+        "images": [
+            "https://duatravels.co.uk/_next/image/?url=https%3A%2F%2Fres.cloudinary.com%2Fdlwxrcoi6%2Fimage%2Fupload%2Fv1776229433%2FDuaTravelsProduction%2Fmedia-library%2Ffile_ojvzen.webp&w=828&q=80",
+            "https://duatravels.co.uk/_next/image/?url=https%3A%2F%2Fres.cloudinary.com%2Fdlwxrcoi6%2Fimage%2Fupload%2Fv1776229463%2FDuaTravelsProduction%2Fmedia-library%2Ffile_yrcyyk.webp&w=828&q=80",
+            "https://duatravels.co.uk/_next/image/?url=https%3A%2F%2Fres.cloudinary.com%2Fdlwxrcoi6%2Fimage%2Fupload%2Fv1776229463%2FDuaTravelsProduction%2Fmedia-library%2Ffile_jyxv1b.webp&w=828&q=80",
+            "https://duatravels.co.uk/_next/image/?url=https%3A%2F%2Fres.cloudinary.com%2Fdlwxrcoi6%2Fimage%2Fupload%2Fv1776229463%2FDuaTravelsProduction%2Fmedia-library%2Ffile_tzuy4y.webp&w=828&q=80"
+        ],
+        "stars": 3,
+        "has_wifi": true,
+        "has_ac": true,
+        "distance_to_haram": null,
+        "walk_to_haram": 10,
+        "number_of_beds": 4
+    },
+    "madinah_hotel": {
+        "total_days": null,
+        "name": "Zaha Taiba",
+        "images": [
+            "https://duatravels.co.uk/_next/image/?url=https%3A%2F%2Fres.cloudinary.com%2Fdlwxrcoi6%2Fimage%2Fupload%2Fv1776250808%2FDuaTravelsProduction%2Fmedia-library%2Ffile_qb8eqj.webp&w=828&q=80",
+            "https://duatravels.co.uk/_next/image/?url=https%3A%2F%2Fres.cloudinary.com%2Fdlwxrcoi6%2Fimage%2Fupload%2Fv1776250838%2FDuaTravelsProduction%2Fmedia-library%2Ffile_gae4yo.webp&w=828&q=80",
+            "https://duatravels.co.uk/_next/image/?url=https%3A%2F%2Fres.cloudinary.com%2Fdlwxrcoi6%2Fimage%2Fupload%2Fv1776250838%2FDuaTravelsProduction%2Fmedia-library%2Ffile_jvkpw8.webp&w=828&q=80",
+            "https://duatravels.co.uk/_next/image/?url=https%3A%2F%2Fres.cloudinary.com%2Fdlwxrcoi6%2Fimage%2Fupload%2Fv1776250838%2FDuaTravelsProduction%2Fmedia-library%2Ffile_sde0xw.webp&w=828&q=80"
+        ],
+        "stars": 3,
+        "has_wifi": true,
+        "has_ac": true,
+        "distance_to_haram": null,
+        "walk_to_haram": 10,
+        "number_of_beds": 4
+    }
+}

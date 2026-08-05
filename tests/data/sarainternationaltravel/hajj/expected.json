@@ -1,0 +1,43 @@
+{
+    "url": "https://sarainternationaltravel.com/nusuk-hajj-packages-for-france/",
+    "company": "sarainternationaltravel",
+    "ppp": 8170,
+    "year": 2027,
+    "total_days": null,
+    "tier": "luxury",
+    "stars": 5,
+    "departure_city": null,
+    "is_visa_included": true,
+    "is_shifting": false,
+    "makkah_hotel": {
+        "total_days": 14,
+        "name": null,
+        "images": [
+            "https://sarainternationaltravel.com/wp-content/uploads/2026/06/Premium-Makkah-First.jpg-1024x682.webp",
+            "https://sarainternationaltravel.com/wp-content/uploads/2025/09/Premium-2-Makkah-First.jpg-1024x682.webp",
+            "https://sarainternationaltravel.com/wp-content/uploads/2026/06/Luxury-Makkah-First.jpg-1024x682.webp",
+            "https://sarainternationaltravel.com/wp-content/uploads/2026/06/Luxury-Two-Bedroom-Makkah-First.jpg-1024x682.webp"
+        ],
+        "stars": null,
+        "has_wifi": false,
+        "has_ac": false,
+        "distance_to_haram": null,
+        "walk_to_haram": null,
+        "number_of_beds": null
+    },
+    "madinah_hotel": {
+        "total_days": 14,
+        "name": null,
+        "images": [
+            "https://sarainternationaltravel.com/wp-content/uploads/2026/06/Luxury-Madinah-First.jpg-1024x682.webp",
+            "https://sarainternationaltravel.com/wp-content/uploads/2025/10/WhatsApp-Image-2026-06-20-at-12.19.22-PM-1024x682.webp",
+            "https://sarainternationaltravel.com/wp-content/uploads/2025/09/Premium-2-Madinah-First.jpg-1024x682.webp"
+        ],
+        "stars": null,
+        "has_wifi": false,
+        "has_ac": false,
+        "distance_to_haram": null,
+        "walk_to_haram": null,
+        "number_of_beds": null
+    }
+}

@@ -1,0 +1,49 @@
+{
+    "url": "https://www.labbaikhajjumrah.co.uk/packages/shifting-hajj-package/",
+    "company": "labbaikhajjumrah",
+    "ppp": null,
+    "year": 2027,
+    "total_days": null,
+    "tier": null,
+    "stars": null,
+    "departure_city": null,
+    "is_visa_included": true,
+    "is_shifting": true,
+    "makkah_hotel": {
+        "total_days": null,
+        "name": "Emaar Al Khalil Hotel",
+        "images": [
+            "https://www.labbaikhajjumrah.co.uk/wp-content/uploads/2024/07/Emaar-al-khalil-building.jpg",
+            "https://www.labbaikhajjumrah.co.uk/wp-content/uploads/2024/07/Emaar-al-khalil-double-single-room.jpg",
+            "https://www.labbaikhajjumrah.co.uk/wp-content/uploads/2024/07/Emaar-al-khalil-quad-room.jpg",
+            "https://www.labbaikhajjumrah.co.uk/wp-content/uploads/2024/07/Emaar-al-khalil-reception.jpg",
+            "https://www.labbaikhajjumrah.co.uk/wp-content/uploads/2024/07/Emaar-al-khalil-tripple-room.jpg",
+            "https://www.labbaikhajjumrah.co.uk/wp-content/uploads/2024/07/Emaar-al-khalil-washroom.jpg"
+        ],
+        "stars": 2,
+        "has_wifi": false,
+        "has_ac": false,
+        "distance_to_haram": null,
+        "walk_to_haram": null,
+        "number_of_beds": null
+    },
+    "madinah_hotel": {
+        "total_days": null,
+        "name": "Mirage Al Salam Hotel",
+        "images": [
+            "https://www.labbaikhajjumrah.co.uk/wp-content/uploads/2024/07/Mirage-Al-Salam-Hotel-buffet.jpg",
+            "https://www.labbaikhajjumrah.co.uk/wp-content/uploads/2024/07/Mirage-Al-Salam-Hotel-Building.jpg",
+            "https://www.labbaikhajjumrah.co.uk/wp-content/uploads/2024/07/Mirage-Al-Salam-Hotel-Restaurant.jpg",
+            "https://www.labbaikhajjumrah.co.uk/wp-content/uploads/2024/07/Mirage-Al-Salam-Hotel-room-amenities.jpg",
+            "https://www.labbaikhajjumrah.co.uk/wp-content/uploads/2024/07/Mirage-Al-Salam-Hotel-single.jpg",
+            "https://www.labbaikhajjumrah.co.uk/wp-content/uploads/2024/07/Mirage-Al-Salam-Hotel-washroom.jpg",
+            "https://www.labbaikhajjumrah.co.uk/wp-content/uploads/2024/07/Mirage-Al-Salam-Hotel-3.jpg"
+        ],
+        "stars": 1,
+        "has_wifi": false,
+        "has_ac": false,
+        "distance_to_haram": null,
+        "walk_to_haram": null,
+        "number_of_beds": null
+    }
+}

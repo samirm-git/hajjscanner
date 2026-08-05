@@ -201,6 +201,8 @@ cython_debug/
 .cursorignore
 .cursorindexingignore
 
+.claude/
+
 # Marimo
 marimo/_static/
 marimo/_lsp/
@@ -214,3 +216,4 @@ temp2.py
 invalidJsonLog.txt
 /scraperOutputs/
 logs/
+/db/scraper.db.bak-20260803122726

@@ -1,0 +1,37 @@
+{
+    "url": "https://ihramtravel.co.uk/package/10-nights-5-star-glasgow-umrah-package/",
+    "company": "ihramtravel",
+    "ppp": 1225,
+    "year": null,
+    "total_days": 10,
+    "tier": "luxury",
+    "stars": 5,
+    "departure_city": "Glasgow",
+    "is_visa_included": true,
+    "is_ziyarat_included": false,
+    "season": null,
+    "month": null,
+    "islamic_month": null,
+    "makkah_hotel": {
+        "total_days": 5,
+        "name": "Hotel Pullmann ZamZam Makkah",
+        "images": ["https://ihramtravel.co.uk/wp-content/uploads/2025/06/Pullman-Zamzam-Makkah.webp"],
+        "stars": 5,
+        "has_wifi": true,
+        "has_ac": false,
+        "distance_to_haram": null,
+        "walk_to_haram": null,
+        "number_of_beds": 4
+    },
+    "madinah_hotel": {
+        "total_days": 5,
+        "name": "Anwar Al-Madinah Movenpick Hotel",
+        "images": ["https://ihramtravel.co.uk/wp-content/uploads/2025/06/Anwar-Al-Madinah-Movenpick.webp"],
+        "stars": 5,
+        "has_wifi": true,
+        "has_ac": false,
+        "distance_to_haram": null,
+        "walk_to_haram": null,
+        "number_of_beds": 4
+    }
+}

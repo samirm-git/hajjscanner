@@ -1,0 +1,43 @@
+{
+    "url": "https://kiswahtravels.co.uk/umrah-package/5-star-7-nights-easter-umrah-package/",
+    "company": "kiswahtravels",
+    "ppp": 935,
+    "year": 2026,
+    "total_days": 7,
+    "tier": null,
+    "stars": 5,
+    "departure_city": null,
+    "is_visa_included": true,
+    "is_ziyarat_included": false,
+    "season": "Spring",
+    "month": null,
+    "islamic_month": null,
+    "makkah_hotel": {
+        "name": "Al Safwah Royale Orchid",
+        "total_days": 4,
+        "images": [
+            "https://kiswahtravels.co.uk/wp-content/uploads/elementor/thumbs/2861bd99-rbuu5vrr9rsd31xke5yt5yis944jyljjl94icy2x40.avif"
+        ],
+        "stars": 5,
+        "has_wifi": false,
+        "has_ac": false,
+        "other_amenities": "Minibars, prayer rugs, luxury bathrooms, multiple restaurants, a cafe, 24-hour room service, family-friendly facilities, multilingual front desk, and accessibility options",
+        "distance_to_haram": null,
+        "walk_to_haram": null,
+        "number_of_beds": null
+    },
+    "madinah_hotel": {
+        "name": "ZamZam Pullman Madinah",
+        "total_days": 3,
+        "images": [
+            "https://kiswahtravels.co.uk/wp-content/uploads/elementor/thumbs/maxresdefault-68bf4f7ae6b9f-rbh1uxw79daj6anss2yizmakn005y50x43thx5km5c.webp"
+        ],
+        "stars": null,
+        "has_wifi": false,
+        "has_ac": false,
+        "other_amenities": "Over 800 rooms and suites, modern and spacious, with some rooms offering views of the Haram or the Green Dome; blend of Arabic and French design",
+        "distance_to_haram": null,
+        "walk_to_haram": null,
+        "number_of_beds": null
+    }
+}

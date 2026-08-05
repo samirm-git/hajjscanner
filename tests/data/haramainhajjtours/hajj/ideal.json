@@ -1,0 +1,34 @@
+{
+    "url": "https://haramainhajjtours.co.uk/blog/packages/hajj-2026-14-days-test-package/",
+    "company": "haramainhajjtours",
+    "ppp": null,
+    "year": 2026,
+    "total_days": 14,
+    "tier": "luxury",
+    "stars": 5,
+    "departure_city": "Manchester",
+    "is_visa_included": true,
+    "is_shifting": false,
+    "makkah_hotel": {
+        "total_days": 5,
+        "name": "Makkah Towers",
+        "images": null,
+        "stars": 5,
+        "has_wifi": false,
+        "has_ac": false,
+        "distance_to_haram": null,
+        "walk_to_haram": null,
+        "number_of_beds": null
+    },
+    "madinah_hotel": {
+        "total_days": 3,
+        "name": "Dar Al-Eiman Al-Haram Hotel",
+        "images": null,
+        "stars": 4,
+        "has_wifi": false,
+        "has_ac": false,
+        "distance_to_haram": null,
+        "walk_to_haram": null,
+        "number_of_beds": null
+    }
+}

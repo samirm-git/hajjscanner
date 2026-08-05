@@ -1,0 +1,34 @@
+{
+    "url": "https://kiswahtravels.co.uk/hajj-packages/",
+    "company": "kiswahtravels",
+    "ppp": 7685,
+    "year": 2027,
+    "total_days": null,
+    "tier": "luxury",
+    "stars": 3,
+    "departure_city": null,
+    "is_visa_included": true,
+    "is_shifting": null,
+    "makkah_hotel": {
+        "total_days": null,
+        "name": "Tera Ajyad Hotel",
+        "images": null,
+        "stars": 3,
+        "has_wifi": false,
+        "has_ac": false,
+        "distance_to_haram": null,
+        "walk_to_haram": null,
+        "number_of_beds": 4
+    },
+    "madinah_hotel": {
+        "total_days": null,
+        "name": "Durrat Al-Madinah Hotel",
+        "images": null,
+        "stars": 3,
+        "has_wifi": false,
+        "has_ac": false,
+        "distance_to_haram": null,
+        "walk_to_haram": null,
+        "number_of_beds": 4
+    }
+}

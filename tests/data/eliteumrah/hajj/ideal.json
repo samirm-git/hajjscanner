@@ -1,0 +1,36 @@
+{
+  "url": "https://eliteumrah.co.uk/14-days-economy-hajj-package/",
+  "company": "eliteumrah",
+  "ppp": 4685,
+  "year": null,
+  "total_days": 14,
+  "tier": "economy",
+  "stars": null,
+  "departure_city": null,
+  "is_visa_included": true,
+  "is_shifting": true,
+  "makkah_hotel": {
+    "name": null,
+    "total_days": 8,
+    "images": null,
+    "stars": null,
+    "has_wifi": false,
+    "has_ac": false,
+    "other_amenities": "Breakfast included",
+    "distance_to_haram": null,
+    "walk_to_haram": null,
+    "number_of_beds": null
+  },
+  "madinah_hotel": {
+    "name": null,
+    "total_days": 7,
+    "images": null,
+    "stars": null,
+    "has_wifi": false,
+    "has_ac": false,
+    "other_amenities": "Breakfast included",
+    "distance_to_haram": null,
+    "walk_to_haram": null,
+    "number_of_beds": null
+  }
+}

@@ -1,0 +1,57 @@
+{
+    "url": "https://www.bismillahtravel.co.uk/umrah/3-star-7-nights-umrah-package.html",
+    "company": "bismillahtravel",
+    "ppp": 569,
+    "year": null,
+    "total_days": 7,
+    "tier": null,
+    "stars": 3,
+    "departure_city": null,
+    "is_visa_included": true,
+    "is_ziyarat_included": false,
+    "season": null,
+    "month": null,
+    "islamic_month": null,
+    "makkah_hotel": {
+        "name": "Al Kiswah Tower",
+        "total_days": null,
+        "images": [
+            "https://www.bismillahtravel.co.uk/media/umrah/0ee41f0c_11zon_11zon%20%281%29.webp",
+            "https://www.bismillahtravel.co.uk/media/umrah/01bfed16_11zon%20%281%29.webp",
+            "https://www.bismillahtravel.co.uk/media/umrah/01cd4215_11zon_11zon.webp",
+            "https://www.bismillahtravel.co.uk/media/umrah/1ead7b9f_11zon_11zon.webp",
+            "https://www.bismillahtravel.co.uk/media/umrah/1540f0d8_11zon_11zon%20%281%29.webp",
+            "https://www.bismillahtravel.co.uk/media/umrah/a5471220_11zon_11zon.webp",
+            "https://www.bismillahtravel.co.uk/media/umrah/bea08f29_11zon_11zon.webp",
+            "https://www.bismillahtravel.co.uk/media/umrah/c0a51a9e_11zon_11zon%20%281%29.webp"
+        ],
+        "stars": 3,
+        "has_wifi": true,
+        "has_ac": false,
+        "other_amenities": "Dining halls, 24/7 room service, attached bathroom in every room, shuttle/transport service available at low cost.",
+        "distance_to_haram": null,
+        "walk_to_haram": 10,
+        "number_of_beds": null
+    },
+    "madinah_hotel": {
+        "name": "Dar Al Eiman Al Nour",
+        "total_days": null,
+        "images": [
+            "https://www.bismillahtravel.co.uk/media/umrah/9b680474_11zon.webp",
+            "https://www.bismillahtravel.co.uk/media/umrah/b831582a_11zon_11zon.webp",
+            "https://www.bismillahtravel.co.uk/media/umrah/bd3ee7d9_11zon.webp",
+            "https://www.bismillahtravel.co.uk/media/umrah/c2e59211_11zon.webp",
+            "https://www.bismillahtravel.co.uk/media/umrah/c658d68e_11zon.webp",
+            "https://www.bismillahtravel.co.uk/media/umrah/cf7010b4_11zon.webp",
+            "https://www.bismillahtravel.co.uk/media/umrah/d8c47c9c_11zon.webp",
+            "https://www.bismillahtravel.co.uk/media/umrah/d289234f_11zon.webp"
+        ],
+        "stars": 3,
+        "has_wifi": false,
+        "has_ac": false,
+        "other_amenities": "Furnished rooms with attached bathroom, shuttle/transport service at low cost, complimentary parking; no complimentary breakfast included; near Jannat Ul Baqi Graveyard (~5 min walk).",
+        "distance_to_haram": null,
+        "walk_to_haram": 3,
+        "number_of_beds": null
+    }
+}

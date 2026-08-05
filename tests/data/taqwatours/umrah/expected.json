@@ -1,0 +1,37 @@
+{
+    "url": "https://taqwatours.co.uk/5-star-umrah-package-london/",
+    "company": "taqwatours",
+    "ppp": null,
+    "year": 2026,
+    "total_days": 30,
+    "tier": "premium",
+    "stars": 5,
+    "departure_city": null,
+    "is_visa_included": false,
+    "is_ziyarat_included": true,
+    "season": "Summer",
+    "month": "August",
+    "islamic_month": "Safar",
+    "makkah_hotel": {
+        "total_days": null,
+        "name": "Makarem Ajyad Makkah Hotel",
+        "images": null,
+        "stars": 5,
+        "has_wifi": true,
+        "has_ac": true,
+        "distance_to_haram": null,
+        "walk_to_haram": 5,
+        "number_of_beds": null
+    },
+    "madinah_hotel": {
+        "total_days": null,
+        "name": "Crowne Plaza Madinah",
+        "images": null,
+        "stars": 5,
+        "has_wifi": true,
+        "has_ac": true,
+        "distance_to_haram": null,
+        "walk_to_haram": 5,
+        "number_of_beds": null
+    }
+}
