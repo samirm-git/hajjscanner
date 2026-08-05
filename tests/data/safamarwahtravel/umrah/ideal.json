@@ -1,0 +1,57 @@
+{
+    "url": "https://www.safamarwahtravel.co.uk/deals/5-star-10-nights-ramadan-umrah-package-from-birmingham/",
+    "company": "safamarwahtravel",
+    "ppp": 1721,
+    "year": 2027,
+    "total_days": 10,
+    "tier": null,
+    "stars": 5,
+    "departure_city": "Birmingham",
+    "is_visa_included": true,
+    "is_ziyarat_included": false,
+    "season": "Winter",
+    "month": "February",
+    "islamic_month": "Ramadan",
+    "makkah_hotel": {
+        "total_days": 5,
+        "name": "Raffles Makkah Palace",
+        "images": [
+            "https://www.safamarwahtravel.co.uk/theme/hotel_images/5366269921.webp",
+            "https://www.safamarwahtravel.co.uk/theme/hotel_images/532249625.webp",
+            "https://www.safamarwahtravel.co.uk/theme/hotel_images/557347537.webp",
+            "https://www.safamarwahtravel.co.uk/theme/hotel_images/557347539.webp",
+            "https://www.safamarwahtravel.co.uk/theme/hotel_images/550608318.jpg",
+            "https://www.safamarwahtravel.co.uk/theme/hotel_images/550608315.jpg",
+            "https://www.safamarwahtravel.co.uk/theme/hotel_images/557347536.jpg",
+            "https://www.safamarwahtravel.co.uk/theme/hotel_images/532249746.jpg",
+            "https://www.safamarwahtravel.co.uk/theme/hotel_images/532249767.jpg"
+        ],
+        "stars": 5,
+        "has_wifi": true,
+        "has_ac": true,
+        "distance_to_haram": null,
+        "walk_to_haram": 12,
+        "number_of_beds": 4
+    },
+    "madinah_hotel": {
+        "total_days": 5,
+        "name": "Maden Hotel",
+        "images": [
+            "https://www.safamarwahtravel.co.uk/theme/hotel_images/391091743.jpg",
+            "https://www.safamarwahtravel.co.uk/theme/hotel_images/281430368.jpg",
+            "https://www.safamarwahtravel.co.uk/theme/hotel_images/391091801.jpg",
+            "https://www.safamarwahtravel.co.uk/theme/hotel_images/391099985.jpg",
+            "https://www.safamarwahtravel.co.uk/theme/hotel_images/391091786.jpg",
+            "https://www.safamarwahtravel.co.uk/theme/hotel_images/281429940.jpg",
+            "https://www.safamarwahtravel.co.uk/theme/hotel_images/391092851.jpg",
+            "https://www.safamarwahtravel.co.uk/theme/hotel_images/391092955.jpg",
+            "https://www.safamarwahtravel.co.uk/theme/hotel_images/391092940.jpg"
+        ],
+        "stars": 5,
+        "has_wifi": true,
+        "has_ac": true,
+        "distance_to_haram": 100,
+        "walk_to_haram": 4,
+        "number_of_beds": 4
+    }
+}

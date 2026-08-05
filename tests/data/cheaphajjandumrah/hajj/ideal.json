@@ -1,0 +1,34 @@
+{
+    "url": "https://cheaphajjandumrah.co.uk/hajj-packages/",
+    "company": "cheaphajjandumrah",
+    "ppp": null,
+    "year": 2026,
+    "total_days": null,
+    "tier": null,
+    "stars": null,
+    "departure_city": null,
+    "is_visa_included": true,
+    "is_shifting": null,
+    "makkah_hotel": {
+        "total_days": null,
+        "name": null,
+        "images": null,
+        "stars": null,
+        "has_wifi": false,
+        "has_ac": false,
+        "distance_to_haram": null,
+        "walk_to_haram": null,
+        "number_of_beds": null
+    },
+    "madinah_hotel": {
+        "total_days": null,
+        "name": null,
+        "images": null,
+        "stars": null,
+        "has_wifi": false,
+        "has_ac": false,
+        "distance_to_haram": null,
+        "walk_to_haram": null,
+        "number_of_beds": null
+    }
+}

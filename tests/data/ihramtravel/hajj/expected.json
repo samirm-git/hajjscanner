@@ -1,0 +1,24 @@
+{
+    "url": "https://ihramtravel.co.uk/hajj-packages/",
+    "company": "ihramtravel",
+    "ppp": null,
+    "year": 2026,
+    "total_days": null,
+    "tier": "luxury",
+    "stars": 5,
+    "departure_city": null,
+    "is_visa_included": true,
+    "is_shifting": false,
+    "makkah_hotel": {
+        "total_days": null,
+        "name": null,
+        "images": null,
+        "stars": 5,
+        "has_wifi": false,
+        "has_ac": false,
+        "distance_to_haram": null,
+        "walk_to_haram": null,
+        "number_of_beds": null
+    },
+    "madinah_hotel": null
+}

@@ -1,0 +1,38 @@
+{
+    "url": "https://traveltoharam.co.uk/package/21-days-5-star-shifting-hajj-package/",
+    "company": "traveltoharam",
+    "ppp": 5980,
+    "year": null,
+    "total_days": 21,
+    "tier": "luxury",
+    "stars": 5,
+    "departure_city": null,
+    "is_visa_included": true,
+    "is_shifting": true,
+    "makkah_hotel": {
+        "total_days": null,
+        "name": null,
+        "images": [
+            "https://traveltoharam.co.uk/wp-content/uploads/2025/11/Screenshot_328.png"
+        ],
+        "stars": null,
+        "has_wifi": true,
+        "has_ac": false,
+        "distance_to_haram": null,
+        "walk_to_haram": null,
+        "number_of_beds": null
+    },
+    "madinah_hotel": {
+        "total_days": null,
+        "name": "Anwar Al-Madinah Movenpick Hotel",
+        "images": [
+            "https://traveltoharam.co.uk/wp-content/uploads/2025/11/Screenshot_328.png"
+        ],
+        "stars": null,
+        "has_wifi": false,
+        "has_ac": false,
+        "distance_to_haram": null,
+        "walk_to_haram": null,
+        "number_of_beds": null
+    }
+}

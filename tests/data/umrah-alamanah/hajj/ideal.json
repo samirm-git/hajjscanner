@@ -1,0 +1,38 @@
+{
+    "url": "https://umrah-alamanah.com/hajj-packages-2026/",
+    "company": "umrah-alamanah",
+    "ppp": 9250,
+    "year": 2027,
+    "total_days": 17,
+    "tier": null,
+    "stars": 5,
+    "departure_city": "London",
+    "is_visa_included": true,
+    "is_shifting": true,
+    "makkah_hotel": {
+        "total_days": 6,
+        "name": "Swissotel Al Maqam Makkah",
+        "images": [
+            "https://umrah-alamanah.com/wp-content/uploads/elementor/thumbs/Swiss-Al-muqam-hajj-2026-from-Uk--rn7flovecw46milkq1gegrgmm5irj7lpk5y5ybzboc.png"
+        ],
+        "stars": null,
+        "has_wifi": false,
+        "has_ac": false,
+        "distance_to_haram": null,
+        "walk_to_haram": null,
+        "number_of_beds": 4
+    },
+    "madinah_hotel": {
+        "total_days": 3,
+        "name": "Dar Al-Hijra InterContinental Hotel",
+        "images": [
+            "https://umrah-alamanah.com/wp-content/uploads/elementor/thumbs/dar-ul-Hijra-Madinah-rn7flovecw46milkq1gegrgmm5irj7lpk5y5ybzboc.png"
+        ],
+        "stars": null,
+        "has_wifi": false,
+        "has_ac": false,
+        "distance_to_haram": 120,
+        "walk_to_haram": null,
+        "number_of_beds": 4
+    }
+}

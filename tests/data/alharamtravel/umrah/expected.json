@@ -1,0 +1,37 @@
+{
+    "url": "https://www.alharamtravel.co.uk/offers/4-star-ramadan-umrah-packages/",
+    "company": "alharamtravel",
+    "ppp": 765,
+    "year": null,
+    "total_days": 7,
+    "tier": "luxury",
+    "stars": 4,
+    "departure_city": null,
+    "is_visa_included": false,
+    "is_ziyarat_included": false,
+    "season": "Winter",
+    "month": "January",
+    "islamic_month": "Ramadan",
+    "makkah_hotel": {
+        "total_days": 4,
+        "name": "Royal Majestic Hotel",
+        "images": null,
+        "stars": null,
+        "has_wifi": false,
+        "has_ac": false,
+        "distance_to_haram": null,
+        "walk_to_haram": null,
+        "number_of_beds": null
+    },
+    "madinah_hotel": {
+        "total_days": 3,
+        "name": "Dar Al-Eiman Al-Haram Hotel",
+        "images": null,
+        "stars": null,
+        "has_wifi": false,
+        "has_ac": false,
+        "distance_to_haram": null,
+        "walk_to_haram": null,
+        "number_of_beds": null
+    }
+}

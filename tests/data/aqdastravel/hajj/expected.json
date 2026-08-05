@@ -1,0 +1,34 @@
+{
+    "url": "https://aqdastravel.co.uk/package/21-days-non-shifting-hajj-package/",
+    "company": "aqdastravel",
+    "ppp": null,
+    "year": null,
+    "total_days": 21,
+    "tier": "economy",
+    "stars": 3,
+    "departure_city": "Manchester",
+    "is_visa_included": false,
+    "is_shifting": false,
+    "makkah_hotel": {
+        "total_days": null,
+        "name": "voco Makkah",
+        "images": null,
+        "stars": null,
+        "has_wifi": false,
+        "has_ac": false,
+        "distance_to_haram": null,
+        "walk_to_haram": null,
+        "number_of_beds": null
+    },
+    "madinah_hotel": {
+        "total_days": null,
+        "name": "Nusk Al-Madinah Hotel",
+        "images": null,
+        "stars": null,
+        "has_wifi": false,
+        "has_ac": false,
+        "distance_to_haram": null,
+        "walk_to_haram": null,
+        "number_of_beds": null
+    }
+}

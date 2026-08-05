@@ -1,0 +1,45 @@
+{
+    "url": "https://www.islamictravel.co.uk/umrah/14-nights-5-star-easter-umrah-package.html",
+    "company": "islamictravel",
+    "ppp": 979,
+    "year": 2026,
+    "total_days": 14,
+    "tier": null,
+    "stars": 5,
+    "departure_city": "Manchester",
+    "is_visa_included": true,
+    "is_ziyarat_included": false,
+    "season": "Winter",
+    "month": "December",
+    "islamic_month": "Ramadan",
+    "makkah_hotel": {
+        "total_days": 7,
+        "name": "Swissotel Makkah",
+        "images": [
+            "https://www.islamictravel.co.uk/media/hotel/Swissotel%20Makkah03.jpg",
+            "https://www.islamictravel.co.uk/media/hotel/Swissotel%20Makkah02.jpg",
+            "https://www.islamictravel.co.uk/media/hotel/Swissotel%20Makkah01.jpg"
+        ],
+        "stars": null,
+        "has_wifi": false,
+        "has_ac": false,
+        "distance_to_haram": null,
+        "walk_to_haram": null,
+        "number_of_beds": null
+    },
+    "madinah_hotel": {
+        "total_days": 7,
+        "name": "Millennium Al Aqeeq Hotel",
+        "images": [
+            "https://www.islamictravel.co.uk/media/hotel/Millennium-Taiba-Madinah-3%20%281%29.jpg",
+            "https://www.islamictravel.co.uk/media/hotel/Saraya-Taba-Hotel-2%20%281%29.jpg",
+            "https://www.islamictravel.co.uk/media/hotel/Makarim-Umm-Al-Qura-Hotel-2%20%281%29.jpg"
+        ],
+        "stars": null,
+        "has_wifi": false,
+        "has_ac": false,
+        "distance_to_haram": null,
+        "walk_to_haram": null,
+        "number_of_beds": null
+    }
+}

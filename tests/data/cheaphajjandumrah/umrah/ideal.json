@@ -1,0 +1,56 @@
+{
+    "url": "https://cheaphajjandumrah.co.uk/packages/14-nights-4-star-september-umrah-package/",
+    "company": "cheaphajjandumrah",
+    "ppp": 384,
+    "year": 2026,
+    "total_days": 15,
+    "tier": "luxury",
+    "stars": 4,
+    "departure_city": null,
+    "is_visa_included": true,
+    "is_ziyarat_included": false,
+    "season": "Autumn",
+    "month": "September",
+    "islamic_month": "Rabi' al-Awwal",
+    "makkah_hotel": {
+        "total_days": 7,
+        "name": "DoubleTree by Hilton Jabal Omar Makkah",
+        "images": [
+            "http://cheaphajjandumrah.co.uk/wp-content/uploads/2024/12/DoubleTree-by-Hilton-Makkah-Jabal-Omar-Building.jpg",
+            "http://cheaphajjandumrah.co.uk/wp-content/uploads/2024/12/DoubleTree-by-Hilton-Makkah-Jabal-Omar-entrance.jpg",
+            "http://cheaphajjandumrah.co.uk/wp-content/uploads/2024/12/DoubleTree-by-Hilton-Makkah-Jabal-Omar-restaurant.jpg",
+            "http://cheaphajjandumrah.co.uk/wp-content/uploads/2024/12/DoubleTree-by-Hilton-Makkah-Jabal-Omar-lobby.jpg",
+            "http://cheaphajjandumrah.co.uk/wp-content/uploads/2024/12/DoubleTree-by-Hilton-Makkah-Jabal-Omar-double-single-room.jpg",
+            "http://cheaphajjandumrah.co.uk/wp-content/uploads/2024/12/DoubleTree-by-Hilton-Makkah-Jabal-Omar-haram-view.jpg",
+            "http://cheaphajjandumrah.co.uk/wp-content/uploads/2024/12/DoubleTree-by-Hilton-Makkah-Jabal-Omar-hotel-fitness-centre.jpg",
+            "http://cheaphajjandumrah.co.uk/wp-content/uploads/2024/12/DoubleTree-by-Hilton-Makkah-Jabal-Omar-Room.jpg",
+            "http://cheaphajjandumrah.co.uk/wp-content/uploads/2024/12/DoubleTree-by-Hilton-Makkah-Jabal-Omar-Restroom.jpg",
+            "http://cheaphajjandumrah.co.uk/wp-content/uploads/2024/12/DoubleTree-by-Hilton-Makkah-Jabal-Omar-Bathroom.jpg"
+        ],
+        "stars": 4,
+        "has_wifi": true,
+        "has_ac": false,
+        "distance_to_haram": null,
+        "walk_to_haram": null,
+        "number_of_beds": 4
+    },
+    "madinah_hotel": {
+        "total_days": 7,
+        "name": "Rawda Al Aqiq Hotel",
+        "images": [
+            "http://cheaphajjandumrah.co.uk/wp-content/uploads/2024/12/Rawda-Al-Aqiq-Hotel-Building.jpg",
+            "http://cheaphajjandumrah.co.uk/wp-content/uploads/2024/12/Rawda-Al-Aqiq-Hotel-Single-room.jpg",
+            "http://cheaphajjandumrah.co.uk/wp-content/uploads/2024/12/Rawda-Al-Aqiq-Hotel-Sitting-area.jpg",
+            "http://cheaphajjandumrah.co.uk/wp-content/uploads/2024/12/Rawda-Al-Aqiq-Hotel-Restaurant.jpg",
+            "http://cheaphajjandumrah.co.uk/wp-content/uploads/2024/12/Rawda-Al-Aqiq-Hotel-Lobby.jpg",
+            "http://cheaphajjandumrah.co.uk/wp-content/uploads/2024/12/Rawda-Al-Aqiq-Hotel-Corridor.jpg",
+            "http://cheaphajjandumrah.co.uk/wp-content/uploads/2024/12/Rawda-Al-Aqiq-Hotel-Buffet-Area.jpg"
+        ],
+        "stars": 3,
+        "has_wifi": false,
+        "has_ac": true,
+        "distance_to_haram": null,
+        "walk_to_haram": null,
+        "number_of_beds": 4
+    }
+}

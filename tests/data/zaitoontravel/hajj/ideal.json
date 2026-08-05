@@ -1,0 +1,58 @@
+{
+    "url": "https://www.zaitoontravel.co.uk/deal/21-days-non-shifting-hajj-package/",
+    "company": "zaitoontravel",
+    "ppp": 7885,
+    "year": null,
+    "total_days": 21,
+    "tier": null,
+    "stars": null,
+    "departure_city": null,
+    "is_visa_included": true,
+    "is_shifting": false,
+    "makkah_hotel": {
+        "total_days": null,
+        "name": "Sheraton Makkah - Jabal Al Kaaba Hotel",
+        "images": [
+            "https://www.zaitoontravel.co.uk/theme/hotel_images/Sheraton_Makkah_Jabal_Al_Kaaba_Hotel_9.webp",
+            "https://www.zaitoontravel.co.uk/theme/hotel_images/Sheraton_Makkah_Jabal_Al_Kaaba_Hotel_4.webp",
+            "https://www.zaitoontravel.co.uk/theme/hotel_images/365327199.jpg",
+            "https://www.zaitoontravel.co.uk/theme/hotel_images/Sheraton_Makkah_Jabal_Al_Kaaba_Hotel_5.webp",
+            "https://www.zaitoontravel.co.uk/theme/hotel_images/Sheraton_Makkah_Jabal_Al_Kaaba_Hotel_6.webp",
+            "https://www.zaitoontravel.co.uk/theme/hotel_images/Sheraton_Makkah_Jabal_Al_Kaaba_Hotel_8.webp",
+            "https://www.zaitoontravel.co.uk/theme/hotel_images/Sheraton_Makkah_Jabal_Al_Kaaba_Hotel_10.webp",
+            "https://www.zaitoontravel.co.uk/theme/hotel_images/Sheraton_Makkah_Jabal_Al_Kaaba_Hotel_11.webp",
+            "https://www.zaitoontravel.co.uk/theme/hotel_images/Sheraton_Makkah_Jabal_Al_Kaaba_Hotel_12.webp",
+            "https://www.zaitoontravel.co.uk/theme/hotel_images/Sheraton_Makkah_Jabal_Al_Kaaba_Hotel_14.webp",
+            "https://www.zaitoontravel.co.uk/theme/hotel_images/Sheraton_Makkah_Jabal_Al_Kaaba_Hotel_15.webp"
+        ],
+        "stars": null,
+        "has_wifi": true,
+        "has_ac": true,
+        "distance_to_haram": 570,
+        "walk_to_haram": 15,
+        "number_of_beds": null
+    },
+    "madinah_hotel": {
+        "total_days": null,
+        "name": "Al-Aqeeq Al-Madinah Hotel",
+        "images": [
+            "https://www.zaitoontravel.co.uk/theme/hotel_images/522052148.jpg",
+            "https://www.zaitoontravel.co.uk/theme/hotel_images/522056930.jpg",
+            "https://www.zaitoontravel.co.uk/theme/hotel_images/522052147.jpg",
+            "https://www.zaitoontravel.co.uk/theme/hotel_images/522052938.jpg",
+            "https://www.zaitoontravel.co.uk/theme/hotel_images/522052725.jpg",
+            "https://www.zaitoontravel.co.uk/theme/hotel_images/522054111.jpg",
+            "https://www.zaitoontravel.co.uk/theme/hotel_images/522054681.jpg",
+            "https://www.zaitoontravel.co.uk/theme/hotel_images/522054724.jpg",
+            "https://www.zaitoontravel.co.uk/theme/hotel_images/522054739.jpg",
+            "https://www.zaitoontravel.co.uk/theme/hotel_images/522055140.jpg",
+            "https://www.zaitoontravel.co.uk/theme/hotel_images/522058552.jpg"
+        ],
+        "stars": null,
+        "has_wifi": true,
+        "has_ac": true,
+        "distance_to_haram": null,
+        "walk_to_haram": 15,
+        "number_of_beds": null
+    }
+}

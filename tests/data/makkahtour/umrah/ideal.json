@@ -1,0 +1,60 @@
+{
+    "url": "https://www.makkahtour.co.uk/budget-september-umrah-package-10-days.php",
+    "company": "makkahtour",
+    "ppp": 960,
+    "year": null,
+    "total_days": 10,
+    "tier": null,
+    "stars": 3,
+    "departure_city": null,
+    "is_visa_included": true,
+    "is_ziyarat_included": false,
+    "season": "Autumn",
+    "month": "September",
+    "islamic_month": null,
+    "makkah_hotel": {
+        "total_days": 5,
+        "name": "Al Kiswah Tower Hotel",
+        "images": [
+            "https://www.makkahtour.co.uk/images/hotels/makkah/al-kiswah-tower-hotel/deluxe-bedroom.webp",
+            "https://www.makkahtour.co.uk/images/hotels/makkah/al-kiswah-tower-hotel/dining-area-luxury.webp",
+            "https://www.makkahtour.co.uk/images/hotels/makkah/al-kiswah-tower-hotel/lavish-bedroom.webp",
+            "https://www.makkahtour.co.uk/images/hotels/makkah/al-kiswah-tower-hotel/luxury-hotel-front-view.webp",
+            "https://www.makkahtour.co.uk/images/hotels/makkah/al-kiswah-tower-hotel/premium-bed.webp",
+            "https://www.makkahtour.co.uk/images/hotels/makkah/al-kiswah-tower-hotel/refined-bedroom.webp",
+            "https://www.makkahtour.co.uk/images/hotels/makkah/al-kiswah-tower-hotel/sophisticated-sitting-area.webp",
+            "https://www.makkahtour.co.uk/images/hotels/makkah/al-kiswah-tower-hotel/sumptuous-bedroom.webp",
+            "https://www.makkahtour.co.uk/images/hotels/makkah/al-kiswah-tower-hotel/upscale-bedroom.webp"
+        ],
+        "stars": 3,
+        "has_wifi": true,
+        "has_ac": false,
+        "other_amenities": "Dining, Fitness, 24h Shuttle",
+        "distance_to_haram": null,
+        "walk_to_haram": 25,
+        "number_of_beds": 4
+    },
+    "madinah_hotel": {
+        "total_days": 5,
+        "name": "Swiss International Madina",
+        "images": [
+            "https://www.makkahtour.co.uk/images/hotels/madinah/swiss-international-madina/contemporary-hotel-bed-room-decor.webp",
+            "https://www.makkahtour.co.uk/images/hotels/madinah/swiss-international-madina/deluxe-bedroom-suite-hotel.webp",
+            "https://www.makkahtour.co.uk/images/hotels/madinah/swiss-international-madina/deluxe-room-with-king-size-bed.webp",
+            "https://www.makkahtour.co.uk/images/hotels/madinah/swiss-international-madina/hotel-luxury-bed-suite.webp",
+            "https://www.makkahtour.co.uk/images/hotels/madinah/swiss-international-madina/hotel-room-with-night-view.webp",
+            "https://www.makkahtour.co.uk/images/hotels/madinah/swiss-international-madina/luxury-bedroom-suite-in-hotel.webp",
+            "https://www.makkahtour.co.uk/images/hotels/madinah/swiss-international-madina/modern-bed-suite-in-3-star-hotel.webp",
+            "https://www.makkahtour.co.uk/images/hotels/madinah/swiss-international-madina/premium-3-star-hotel-bed.webp",
+            "https://www.makkahtour.co.uk/images/hotels/madinah/swiss-international-madina/spacious-luxury-bedroom-hotel.webp",
+            "https://www.makkahtour.co.uk/images/hotels/madinah/swiss-international-madina/well-designed-sitting-hall-hotel.webp"
+        ],
+        "stars": 3,
+        "has_wifi": true,
+        "has_ac": false,
+        "other_amenities": "Restaurant, 24h Front Desk, Family Rooms",
+        "distance_to_haram": 700,
+        "walk_to_haram": 10,
+        "number_of_beds": 4
+    }
+}

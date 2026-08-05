@@ -1,0 +1,53 @@
+{
+    "url": "https://www.bismillahtravel.co.uk/hajj/2-3-weeks-non-shifting-hajj-package.html",
+    "company": "bismillahtravel",
+    "ppp": 5785,
+    "year": null,
+    "total_days": 14,
+    "tier": null,
+    "stars": 3,
+    "departure_city": null,
+    "is_visa_included": true,
+    "is_shifting": false,
+    "makkah_hotel": {
+        "name": "Al Saher Hotel",
+        "total_days": null,
+        "images": [
+            "https://www.bismillahtravel.co.uk/media/umrah/Al%20Saher%20Hotel14%20%281%29_11zon.webp",
+            "https://www.bismillahtravel.co.uk/media/umrah/Al%20Saher%20Hotel2%20%281%29_11zon.webp",
+            "https://www.bismillahtravel.co.uk/media/umrah/Al%20Saher%20Hotel1_11zon.webp",
+            "https://www.bismillahtravel.co.uk/media/umrah/Al%20Saher%20Hotel_11zon.webp",
+            "https://www.bismillahtravel.co.uk/media/umrah/Al%20Saher%20Hotel11_11zon.webp",
+            "https://www.bismillahtravel.co.uk/media/umrah/Al%20Saher%20Hotel12_11zon.webp",
+            "https://www.bismillahtravel.co.uk/media/umrah/Al%20Saher%20Hotel9_11zon.webp"
+        ],
+        "stars": 2,
+        "has_wifi": true,
+        "has_ac": true,
+        "other_amenities": "Flat-screen TV, telephone, electric kettle, living room and kitchen with fridge and stove; free private parking on site.",
+        "distance_to_haram": null,
+        "walk_to_haram": null,
+        "number_of_beds": null
+    },
+    "madinah_hotel": {
+        "name": "Saja Al Madinah Hotel",
+        "total_days": null,
+        "images": [
+            "https://www.bismillahtravel.co.uk/media/umrah/5fc633b1_11zon_11zon.webp",
+            "https://www.bismillahtravel.co.uk/media/umrah/110051580_11zon.webp",
+            "https://www.bismillahtravel.co.uk/media/umrah/165046405_11zon.webp",
+            "https://www.bismillahtravel.co.uk/media/umrah/165046548_11zon.webp",
+            "https://www.bismillahtravel.co.uk/media/umrah/165047307_11zon.webp",
+            "https://www.bismillahtravel.co.uk/media/umrah/165047883_11zon.webp",
+            "https://www.bismillahtravel.co.uk/media/umrah/211677897_11zon.webp",
+            "https://www.bismillahtravel.co.uk/media/umrah/ba06dbd5_11zon.webp"
+        ],
+        "stars": 4,
+        "has_wifi": true,
+        "has_ac": false,
+        "other_amenities": "Complimentary breakfast and shuttle service; mini bar, LCD TV, modernly designed bathrooms.",
+        "distance_to_haram": null,
+        "walk_to_haram": 3,
+        "number_of_beds": null
+    }
+}

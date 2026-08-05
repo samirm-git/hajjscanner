@@ -1,0 +1,37 @@
+{
+    "url": "https://duatravels.co.uk/package/october-standard-umrah-package/",
+    "company": "duatravels",
+    "ppp": 1040,
+    "year": null,
+    "total_days": 14,
+    "tier": "economy",
+    "stars": 3,
+    "departure_city": null,
+    "is_visa_included": true,
+    "is_ziyarat_included": true,
+    "season": "Autumn",
+    "month": "October",
+    "islamic_month": null,
+    "makkah_hotel": {
+        "total_days": null,
+        "name": null,
+        "images": null,
+        "stars": null,
+        "has_wifi": false,
+        "has_ac": false,
+        "distance_to_haram": null,
+        "walk_to_haram": null,
+        "number_of_beds": null
+    },
+    "madinah_hotel": {
+        "total_days": null,
+        "name": null,
+        "images": null,
+        "stars": null,
+        "has_wifi": false,
+        "has_ac": false,
+        "distance_to_haram": null,
+        "walk_to_haram": null,
+        "number_of_beds": null
+    }
+}

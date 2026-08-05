@@ -1,0 +1,41 @@
+{
+    "url": "https://haramainhajjtours.co.uk/umrah-packages/",
+    "company": "haramainhajjtours",
+    "ppp": null,
+    "year": 2026,
+    "total_days": 15,
+    "tier": null,
+    "stars": null,
+    "departure_city": "Birmingham",
+    "is_visa_included": false,
+    "is_ziyarat_included": false,
+    "season": "Winter",
+    "month": "February",
+    "islamic_month": "Ramadan",
+    "makkah_hotel": {
+        "total_days": 15,
+        "name": null,
+        "images": [
+            "https://haramainhajjtours.co.uk/wp-content/uploads/2024/12/1734111615465-1024x648.jpg"
+        ],
+        "stars": null,
+        "has_wifi": false,
+        "has_ac": false,
+        "distance_to_haram": null,
+        "walk_to_haram": null,
+        "number_of_beds": null
+    },
+    "madinah_hotel": {
+        "total_days": 15,
+        "name": null,
+        "images": [
+            "https://haramainhajjtours.co.uk/wp-content/uploads/2024/12/1734111615465-1024x648.jpg"
+        ],
+        "stars": null,
+        "has_wifi": false,
+        "has_ac": false,
+        "distance_to_haram": null,
+        "walk_to_haram": null,
+        "number_of_beds": null
+    }
+}

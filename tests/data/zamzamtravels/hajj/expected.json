@@ -1,0 +1,50 @@
+{
+    "url": "https://www.zamzamtravels.org.uk/hajj-packages-2022-uk/5-star-late-hajj-package-2022-uk-two-weeks-non-shifting",
+    "company": "zamzamtravels",
+    "ppp": null,
+    "year": 2022,
+    "total_days": null,
+    "tier": "luxury",
+    "stars": 5,
+    "departure_city": "Birmingham",
+    "is_visa_included": true,
+    "is_shifting": false,
+    "makkah_hotel": {
+        "total_days": 15,
+        "name": "Elaf Kinda Hotel",
+        "images": [
+            "https://cdn.zamzamtravels.org.uk/images/hotels/makkah/elaf-kinda/68828349.jpg",
+            "https://cdn.zamzamtravels.org.uk/images/hotels/makkah/elaf-kinda/68828377.jpg",
+            "https://cdn.zamzamtravels.org.uk/images/hotels/makkah/elaf-kinda/68828388.jpg",
+            "https://cdn.zamzamtravels.org.uk/images/hotels/makkah/elaf-kinda/68828356.jpg",
+            "https://cdn.zamzamtravels.org.uk/images/hotels/makkah/elaf-kinda/68828365.jpg",
+            "https://cdn.zamzamtravels.org.uk/images/hotels/makkah/elaf-kinda/68828374.jpg",
+            "https://cdn.zamzamtravels.org.uk/images/hotels/makkah/elaf-kinda/68828386.jpg"
+        ],
+        "stars": 5,
+        "has_wifi": true,
+        "has_ac": false,
+        "distance_to_haram": null,
+        "walk_to_haram": null,
+        "number_of_beds": null
+    },
+    "madinah_hotel": {
+        "total_days": null,
+        "name": "Anwar Al-Madinah Movenpick Hotel",
+        "images": [
+            "https://cdn.zamzamtravels.org.uk/images/hotels/medinah/shaza-al-madina/45329372.jpg",
+            "https://cdn.zamzamtravels.org.uk/images/hotels/medinah/shaza-al-madina/45331151.jpg",
+            "https://cdn.zamzamtravels.org.uk/images/hotels/medinah/shaza-al-madina/45331319.jpg",
+            "https://cdn.zamzamtravels.org.uk/images/hotels/medinah/shaza-al-madina/19731927.jpg",
+            "https://cdn.zamzamtravels.org.uk/images/hotels/medinah/shaza-al-madina/45329391.jpg",
+            "https://cdn.zamzamtravels.org.uk/images/hotels/medinah/shaza-al-madina/19731918.jpg",
+            "https://cdn.zamzamtravels.org.uk/images/hotels/medinah/shaza-al-madina/19731930.jpg"
+        ],
+        "stars": 5,
+        "has_wifi": false,
+        "has_ac": false,
+        "distance_to_haram": null,
+        "walk_to_haram": null,
+        "number_of_beds": null
+    }
+}

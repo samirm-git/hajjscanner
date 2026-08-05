@@ -1,0 +1,50 @@
+{
+    "url": "https://aqdastravel.co.uk/package/21-days-non-shifting-hajj-package/",
+    "company": "aqdastravel",
+    "ppp": 5390,
+    "year": null,
+    "total_days": 21,
+    "tier": "economy",
+    "stars": 3,
+    "departure_city": "London, Manchester, Birmingham, Glasgow",
+    "is_visa_included": true,
+    "is_shifting": false,
+    "makkah_hotel": {
+        "name": "voco Makkah",
+        "total_days": 11,
+        "images": [
+            "https://aqdastravel.co.uk/wp-content/uploads/2025/06/Low-Priced-Umrah-Services-in-the-UK.jpg",
+            "https://aqdastravel.co.uk/wp-content/uploads/2025/06/book-hajj-package-uk.jpg",
+            "https://aqdastravel.co.uk/wp-content/uploads/2025/06/cheap-hajj-package-uk.jpg",
+            "https://aqdastravel.co.uk/wp-content/uploads/2025/06/hajj-packages-booking.jpg",
+            "https://aqdastravel.co.uk/wp-content/uploads/2025/06/best-hajj-packages.jpg",
+            "https://aqdastravel.co.uk/wp-content/uploads/2025/06/best-hajj-services-near-me.jpg"
+        ],
+        "stars": 3,
+        "has_wifi": true,
+        "has_ac": true,
+        "other_amenities": "Wheelchair accessible; 24/7 dedicated shuttle service to Masjid al-Haram; breakfast optional/can be included; large prayer halls and multiple dining outlets.",
+        "distance_to_haram": null,
+        "walk_to_haram": 25,
+        "number_of_beds": null
+    },
+    "madinah_hotel": {
+        "name": "Nusk Al-Madinah Hotel",
+        "total_days": 10,
+        "images": [
+            "https://aqdastravel.co.uk/wp-content/uploads/2025/07/hajj-advance-booking.jpg",
+            "https://aqdastravel.co.uk/wp-content/uploads/2025/07/affordable-hajj-packages.jpg",
+            "https://aqdastravel.co.uk/wp-content/uploads/2025/07/uk-hajj-packages.jpg",
+            "https://aqdastravel.co.uk/wp-content/uploads/2025/07/buy-hajj-packages.jpg",
+            "https://aqdastravel.co.uk/wp-content/uploads/2025/07/hajj-packages.jpg",
+            "https://aqdastravel.co.uk/wp-content/uploads/2025/07/book-you-cheap-hajj.jpg"
+        ],
+        "stars": 3,
+        "has_wifi": true,
+        "has_ac": true,
+        "other_amenities": "Wheelchair accessible; city view rooms; breakfast optional/can be included; daily housekeeping; restaurant available; 24-hour front desk service.",
+        "distance_to_haram": null,
+        "walk_to_haram": 7,
+        "number_of_beds": null
+    }
+}

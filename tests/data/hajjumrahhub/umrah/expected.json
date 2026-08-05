@@ -1,0 +1,41 @@
+{
+    "url": "https://www.hajjumrahhub.co.uk/umrah/10-night-3-star-dec-umrah-package.html",
+    "company": "hajjumrahhub",
+    "ppp": 799,
+    "year": null,
+    "total_days": 10,
+    "tier": null,
+    "stars": 3,
+    "departure_city": "Belfast",
+    "is_visa_included": false,
+    "is_ziyarat_included": false,
+    "season": "Winter",
+    "month": "December",
+    "islamic_month": null,
+    "makkah_hotel": {
+        "total_days": null,
+        "name": null,
+        "images": null,
+        "stars": null,
+        "has_wifi": false,
+        "has_ac": false,
+        "distance_to_haram": null,
+        "walk_to_haram": null,
+        "number_of_beds": null
+    },
+    "madinah_hotel": {
+        "total_days": null,
+        "name": "Grand Zowar Hotel",
+        "images": [
+            "https://www.hajjumrahhub.co.uk/media/hotel/room-at-the-grand-zowar-hotel-in-madinah.webp",
+            "https://www.hajjumrahhub.co.uk/media/hotel/room-at-the-grand-zowar-hotel.webp",
+            "https://www.hajjumrahhub.co.uk/media/hotel/lobby-of-the-grand-zowar-hotel.webp"
+        ],
+        "stars": null,
+        "has_wifi": true,
+        "has_ac": true,
+        "distance_to_haram": null,
+        "walk_to_haram": 6,
+        "number_of_beds": null
+    }
+}

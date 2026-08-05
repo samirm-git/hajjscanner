@@ -1,0 +1,49 @@
+{
+    "url": "https://www.alkhairtravel.co.uk/offer/10-nights-5-star-december-umrah-package/",
+    "company": "alkhairtravel",
+    "ppp": 1495,
+    "year": null,
+    "total_days": 10,
+    "tier": "luxury",
+    "stars": 5,
+    "departure_city": "Manchester",
+    "is_visa_included": true,
+    "is_ziyarat_included": false,
+    "season": "Winter",
+    "month": "December",
+    "islamic_month": null,
+    "makkah_hotel": {
+        "total_days": 5,
+        "name": "Shaza Makkah",
+        "images": [
+            "https://www.alkhairtravel.co.uk/theme/hotels/shaza_Makkah_5.webp",
+            "https://www.alkhairtravel.co.uk/theme/hotels/shaza_Makkah_4.webp",
+            "https://www.alkhairtravel.co.uk/theme/hotels/shaza_Makkah_6.webp",
+            "https://www.alkhairtravel.co.uk/theme/hotels/shaza_Makkah_7.webp",
+            "https://www.alkhairtravel.co.uk/theme/hotels/shaza_Makkah_8.webp"
+        ],
+        "stars": 5,
+        "has_wifi": true,
+        "has_ac": false,
+        "distance_to_haram": null,
+        "walk_to_haram": null,
+        "number_of_beds": null
+    },
+    "madinah_hotel": {
+        "total_days": 5,
+        "name": "Rove Al Madinah Hotel",
+        "images": [
+            "https://www.alkhairtravel.co.uk/theme/hotels/4788709.jpg",
+            "https://www.alkhairtravel.co.uk/theme/hotels/4788772.jpg",
+            "https://www.alkhairtravel.co.uk/theme/hotels/4788834.jpg",
+            "https://www.alkhairtravel.co.uk/theme/hotels/5597082.jpg",
+            "https://www.alkhairtravel.co.uk/theme/hotels/5597123.jpg"
+        ],
+        "stars": 5,
+        "has_wifi": true,
+        "has_ac": false,
+        "distance_to_haram": 200,
+        "walk_to_haram": null,
+        "number_of_beds": null
+    }
+}
