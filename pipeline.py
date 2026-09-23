@@ -1,7 +1,7 @@
 import urlScraper
 import pageScraper
 from db import providerQueries, packageUrlQueries
-from HajjUmrahEnum import HajjOrUmrahEnum
+from hajjUmrahEnum import HajjOrUmrahEnum
 from utils import getProjectRoot, getSoup
 from tqdm import tqdm
 import time

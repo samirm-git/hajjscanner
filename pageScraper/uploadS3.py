@@ -4,7 +4,8 @@ import json
 from botocore.exceptions import ClientError
 from dotenv import load_dotenv
 from urllib.parse import urlparse
-from HajjUmrahEnum import HajjOrUmrahEnum
+from hajjUmrahEnum import HajjOrUmrahEnum
+from schema import models
 
 load_dotenv()
 s3 = boto3.client('s3')
@@ -34,11 +35,11 @@ def urlToKey(companyName: str, url: str) -> str:
     return f"{companyName}/{slug}.json"
 
 
-def uploadPackageDataToS3(hajjOrUmrah: HajjOrUmrahEnum, packageInfo, companyName):
+def uploadPackageDataToS3(hajjOrUmrah: HajjOrUmrahEnum, packageInfo: models.HajjPackage | models.UmrahPackage, companyName: str):
 
-  url = packageInfo["url"]
-  packageInfo = json.dumps(packageInfo, indent=4)
-  bucket = 'hajjpackagedata' if hajjOrUmrah == HajjOrUmrahEnum.HAJJ else 'umrahpackagedata'
+  url = packageInfo.url
+  packageInfo = packageInfo.model_dump_json(indent=4)
+  bucket = 'hajjpackageinfo' if hajjOrUmrah == HajjOrUmrahEnum.HAJJ else 'umrahpackageinfo'
   try:
     response = s3.put_object(Bucket=bucket, Key=f'raw/{urlToKey(companyName, url)}', Body=packageInfo, ContentType='application/json')
   except ClientError as e:

@@ -217,3 +217,5 @@ invalidJsonLog.txt
 /scraperOutputs/
 logs/
 /db/scraper.db.bak-20260803122726
+
+extras/

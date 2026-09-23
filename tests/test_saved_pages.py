@@ -2,14 +2,14 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Any
+from typing import Any, Union
 
 import pytest
-import pickle
+# import pickle
 from utils import createSoup 
-from HajjUmrahEnum import HajjOrUmrahEnum
-from pageScraper.schema.fields import BaseField
-from pageScraper.scrapePage import scrapePage
+from hajjUmrahEnum import HajjOrUmrahEnum
+from schema import models
+import pageScraper
 
 
 DATA_ROOT = Path(__file__).parent/ "data" 
@@ -43,19 +43,14 @@ def load_json(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def canonicalise_result(result: dict[str, Any]) -> dict[str, Any]:
-    # Also converts StrEnum dictionary keys into ordinary JSON strings,
-    # making pytest's diff easier to read.
-    normalised = json.loads(json.dumps(result))
+def sortHotelImages(result: dict[str, Any]) -> dict[str, Any]:
 
     for hotel_key in ("makkah_hotel", "madinah_hotel"):
-        hotel = normalised.get(hotel_key)
+        if result[hotel_key] is not None:
+            if result[hotel_key]["images"] is not None:
+                result[hotel_key]["images"] = sorted(result[hotel_key]["images"])
 
-        if hotel is not None and "images" in hotel and hotel["images"] is not None:
-            # Sorting retains duplicate counts, unlike converting to a set.
-            hotel["images"] = sorted(hotel["images"])
-
-    return normalised
+    return result
 
 
 def assert_golden_case(
@@ -72,13 +67,11 @@ def assert_golden_case(
 
     expected = load_json(expected_path)
 
-    assert BaseField.COMPANY in expected, (
-        f"{expected_path} must contain "
-        f"{BaseField.COMPANY.value!r}"
+    assert "company" in expected, (
+        f"{expected_path} must contain company"
     )
-    assert BaseField.URL in expected, (
-        f"{expected_path} must contain "
-        f"{BaseField.URL.value!r}"
+    assert "url" in expected, (
+        f"{expected_path} must contain url"
     )
 
     # with open(soup_pkl_path, "rb") as f:
@@ -87,9 +80,9 @@ def assert_golden_case(
     with open(page_html_path, "r", encoding='utf-8', newline="") as f:
         soup = createSoup(f)
 
-    actual = scrapePage(
-        company=expected[BaseField.COMPANY],
-        url=expected[BaseField.URL],
+    actual = pageScraper.scrape(
+        company=expected["company"],
+        url=expected["url"],
         soup=soup,
         hajjOrUmrah=package_type,
     )
@@ -99,7 +92,8 @@ def assert_golden_case(
         "The scraped data probably failed schema validation."
     )
 
-    assert canonicalise_result(actual) == canonicalise_result(expected)
+    actual = actual.model_dump()
+    assert sortHotelImages(actual) == sortHotelImages(expected)
 
 
 HAJJ_CASES = discover_cases(HajjOrUmrahEnum.HAJJ)
