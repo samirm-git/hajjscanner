@@ -1,4 +1,4 @@
-from HajjUmrahEnum import HajjOrUmrahEnum
+from hajjUmrahEnum import HajjOrUmrahEnum
 from urllib.parse import urljoin
 from db import packageUrlQueries
 
